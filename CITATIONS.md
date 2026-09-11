@@ -36,3 +36,7 @@ The DobeWorks snapshot contains historical private records and identity material
 
 - JSON Schema Test Suite contributors. (n.d.). *JSON Schema Test Suite* [Test data, commit `f6fd52a0a95472e079cbfc6ef7f089702b80e045`]. GitHub. [Pinned source](https://github.com/json-schema-org/JSON-Schema-Test-Suite/tree/f6fd52a0a95472e079cbfc6ef7f089702b80e045). MIT; original copyright and permission text retained in [the corpus license](benchmarks/data/LICENSE).
 - [Benchmark selection research](benchmarks/selection.md) records the primary-source basis and scope. These supplemental references do not alter the fixed APA PDF or imply its citations were reverified.
+
+## Revised reading edition
+
+The dated [44-work APA edition](references/engineering-foundations-references.pdf), [HTML equivalent](references/engineering-foundations-references.html), and [verification audit](references/verification.md) apply supported corrections while retaining explicit access and metadata limits. The earlier `references/dobeworks-apa-references.pdf` remains byte-identical to the original. [Figure-specific citation notes](references/figure-citation-notes.md) document the additional source selections.

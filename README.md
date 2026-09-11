@@ -1,5 +1,9 @@
 # DEGS — v2.1 development draft
 
+## Figures and references
+
+[Read the illustrated system guide](docs/figures/README.md) for the relevant PDF figures and reflowable HTML equivalents. The [44-work APA reference edition](references/engineering-foundations-references.pdf) includes a [source-verification audit](references/verification.md).
+
 ## Public-data benchmark
 
 **241 of 241 cases matched after the recursive equality correction. All 14 former false acceptances now reject correctly; the first run is preserved.** See [benchmark results and reproduction](benchmarks/benchmark.md).

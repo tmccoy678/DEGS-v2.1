@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>DobeWorks: useful work, inspectable evidence</title><style>body{font-family:"Times New Roman",serif;color:#1F2933;background:white;max-width:75ch;margin:2rem auto;padding:0 1rem;font-size:1.15rem;line-height:1.6}h1,h2{color:#005A78}section{margin-bottom:3rem}a{color:#005A78}pre,code{font-family:monospace}pre{white-space:pre-wrap;overflow-wrap:anywhere}li{margin-bottom:1rem}</style></head><body><section><h1>DobeWorks</h1><p>Useful work. Evidence you can inspect. A clear explanation when something needs attention.</p>
+<p><b>Figure 1</b><br/><i>The current staged components and their separate responsibilities</i></p>
+<h2>1. Define the work</h2>
+<p>State the outcome, scope, risk, acceptance criteria, and responsible decision maker.</p>
+<h2>2. Evaluate the record</h2>
+<p>DEGS checks the recorded controls and returns a readiness decision with rule-linked findings.</p>
+<h2>3. Run a bounded task</h2>
+<p>The synthetic Worker verifies identity and limits, then writes staged output. It does not promote it.</p>
+<h2>4. Inspect and decide</h2>
+<p>The Observer reports permitted signals and explicit unknowns. A person decides whether results are acceptable.</p>
+<h2>What is present now</h2>
+<p>The drafts contain the standalone evidence gate, source and policy documents, a synthetic Worker and Observer, and runnable examples. They preserve the core behavior while making its decisions easier to inspect.</p>
+<h2>What requires a separate decision</h2>
+<p>A recorded PASS does not approve work. Staged output does not become accepted output by being written. Tests do not qualify hardware or establish operating effectiveness.</p>
+<p><b>Reading the figure.</b> The numbered sequence explains responsibility. It is not an automatically connected execution pipeline. Each component has an explicit interface and limits.</p>
+</section>
+<section><h1>Evidence has a boundary</h1><p>The strength of the explanation should match the strength of the observation.</p>
+<h2>The gate evaluates records</h2>
+<p>A structured task record enters DEGS. Source code does not run inside the gate. The evaluator checks schema, declared risk and authority, required controls, warnings, and stop states. Its output names unmet fields and stable rule IDs.</p>
+<p><b>Figure 2</b><br/><i>From an engineering claim to an inspectable readiness result</i></p>
+<h2>1. Record</h2>
+<p>Objective, requirements, risk, artifact identity, tests, review, recovery, and approval evidence.</p>
+<h2>2. Check</h2>
+<p>Schema and supported rules; cumulative requirements for the declared risk tier.</p>
+<h2>3. Report</h2>
+<p>PASS, PASS_WITH_WARNINGS, BLOCKED, or FAIL, plus actionable diagnostics.</p>
+<h2>Human judgment remains necessary</h2>
+<p>The gate can inspect a recorded status or evidence path without proving the underlying evidence true, independent, complete, or technically sound. Reviewers still judge consequential evidence (Hirshorn et al., 2017; Souppaya et al., 2022).</p>
+</section>
+<section><h1>What the current evidence supports</h1><p>Observed scenarios are useful evidence. They are not a promise of defect freedom.</p>
+<h2>DEGS: a useful failure is still a result</h2>
+<p>The corrected public schema-helper subset matched 241 of 241 examples; 67 core/port tests and five benchmark tests pass. The first run matched 227; its 14 false acceptances traced to one nested boolean/number comparison defect. That observation is preserved. No bypass of the current fixed task schema was demonstrated.</p>
+<h2>DobeWorks: controlled handling of unusable input</h2>
+<p>The actual Observer command-line interface (CLI) produced controlled, unusable outcomes for 318 out-of-contract public JSON inputs. Its native fresh and stale examples behaved as expected in the measured run. The repaired harness retains timeout diagnostics, requires stale freshness, and records actual invocation arguments. Six benchmark tests pass.</p>
+<h2>Current qualification limits</h2>
+<p>The recorded Worker/Observer suite passed 70 tests. Historical DobeWorks Engineering Assurance Standard (DEAS), Phase 3, and Phase 4 package checks also have inherited identity/scope failures in the draft baseline. The drafts remain private, unqualified development copies. Apple silicon is the tested host scope; other platforms are not claimed.</p>
+<h2>Credit where it belongs</h2>
+<p>The foundations span systems engineering, secure development, modular design, verification, and human responsibility. The DEGS draft also preserves a small Sashiko-derived Python review-data component. Muchun Song contributed dismissed-concern and conflict-resolution work; Chris Mason contributed the separate review-prompts foundation. These contributions do not imply a running Sashiko auditing service.</p>
+<p>Source basis: the four staged repositories and their recorded artifacts, inspected 11 September 2026. Private device state, activation records, and personal workstreams are outside this edition.</p>
+</section>
+<section><h1>The intended complete release</h1><p>DobeWorks/DEGS should carry its own useful capabilities with it.</p>
+<p><b>Figure 3</b><br/><i>Intended full-bundle composition - packaging remains to be verified</i></p>
+<h2>1. DobeWorks + DEGS</h2>
+<p>The engineering system, evidence gate, bounded operational roles, and inspectable core.</p>
+<h2>2. Native Pickup</h2>
+<p>The original integrated Trash Pickup and Treasure Pickup workflows preserve context within the system.</p>
+<h2>3. FigureMe</h2>
+<p>The source-grounded figure skill turns current work into clear engineering explanations with faithful visual identity.</p>
+<h2>A separate gift for Pickup-only users</h2>
+<p>The standalone Draft2Staged Trash/Treasure pair serves people who want those context-transfer skills without DobeWorks/DEGS. It is not a substitute dependency for the full system's integrated workflows.</p>
+<h2>Preserve the useful core</h2>
+<p>Release preparation should remove personal identifiers while keeping core behavior, source structure, and FigureMe's explanatory character as close to the originals as possible. This diagram records intended composition; it does not claim the current drafts already package every component.</p>
+</section>
+<section><h1>References</h1><p></p>
+<p>Hirshorn, S. R., Voss, L. D., &amp; Bromley, L. K. (2017). <i>NASA systems engineering handbook</i> (NASA/SP-2016-6105 Rev. 2). National Aeronautics and Space Administration. <a href="https://ntrs.nasa.gov/citations/20170001761">https://ntrs.nasa.gov/citations/20170001761</a></p>
+<p>Parnas, D. L. (1972). On the criteria to be used in decomposing systems into modules. <i>Communications of the ACM, 15</i>(12), 1053-1058. <a href="https://doi.org/10.1145/361598.361623">https://doi.org/10.1145/361598.361623</a></p>
+<p>Souppaya, M., Scarfone, K., &amp; Dodson, D. (2022). <i>Secure software development framework (SSDF) version 1.1: Recommendations for mitigating the risk of software vulnerabilities</i> (NIST Special Publication 800-218). <a href="https://doi.org/10.6028/NIST.SP.800-218">https://doi.org/10.6028/NIST.SP.800-218</a></p>
+</section></body></html>
