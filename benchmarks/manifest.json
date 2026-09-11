@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "repository": "json-schema-org/JSON-Schema-Test-Suite",
+  "commit": "f6fd52a0a95472e079cbfc6ef7f089702b80e045",
+  "upstream_directory": "tests/draft2020-12",
+  "files": {
+    "LICENSE": "837402bd25fad9b704265801ca3f92566a98157c1f9a7acd6f446299ba1c305a",
+    "additionalProperties.json": "b96bd533416386ac6421737b48c5c072870ab5dbea910585e9e8fa6305c7ca91",
+    "allOf.json": "81045b06706a28f6aa337b485b41a764098e10ac73bb1d346ba0a4285a63e970",
+    "const.json": "83a148d2589cbd211e7e64b31763290f8869d763f513de4658e8d25f0fcc025e",
+    "enum.json": "1abe7eb883bde4a78c62f08e484e16f32b72ca5c1be725aa54d85cc4546b5031",
+    "if-then-else.json": "4bc76318e6df0e8294cb9aa8a3bf95f04fa9cfea96f295a3b55e725d1289c809",
+    "items.json": "d924a8171f1f1d04ff026a4e3491d1376297145563158543005b7073b69ab913",
+    "minItems.json": "9792cedc446be654836b42d0312eca12051e9e2f24cd5d95dcd3f3fc9adccd0a",
+    "minLength.json": "999e9731c57a1296e06e8b9b36b0531614ab7a6ac3c20db6fed50badbf3850ab",
+    "not.json": "1fd6ef263efd365680c6aaf8f23aa5430d7b9f80b84f46b1208b1ed8353c28b4",
+    "oneOf.json": "a8d80a786d07769cb9b8b9a8903ca4f7aa564446ae6b781c7f7f6ffea11ed363",
+    "pattern.json": "60713a3b01957fad54f00ab30b378463b3e07b35242c945a9325f8d6ae7080fc",
+    "properties.json": "58f01566cfe3e1fc4fb851d3b2eab13768d65ba5dbc4e9f9387ceaf4244a0522",
+    "ref.json": "ae53f3f57c220879729225eb416cecac909f06b5adaf15f799b4f3e7c0612998",
+    "required.json": "3e3900dd0e546c1cb4aaab6b24ea0e06a8f7f8c05b272dcc87e85332501ed42e",
+    "type.json": "4c5cbe6cbcd28af73761091367b20e07d0403847e236c06c31fc27061bd81192"
+  },
+  "selection": {
+    "type.json": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10
+    ],
+    "minLength.json": "all",
+    "minItems.json": "all",
+    "required.json": "all",
+    "enum.json": "all",
+    "const.json": "all",
+    "pattern.json": [
+      0,
+      1
+    ],
+    "additionalProperties.json": [
+      4
+    ],
+    "properties.json": [
+      4
+    ],
+    "allOf.json": [
+      6,
+      7,
+      10
+    ],
+    "oneOf.json": [
+      8,
+      10
+    ],
+    "not.json": [
+      2,
+      3,
+      4,
+      7
+    ],
+    "if-then-else.json": [
+      0,
+      1
+    ],
+    "ref.json": [
+      7,
+      8,
+      14
+    ],
+    "items.json": [
+      9
+    ]
+  },
+  "outside_files": [
+    "anchor.json",
+    "anyOf.json",
+    "boolean_schema.json",
+    "contains.json",
+    "content.json",
+    "default.json",
+    "defs.json",
+    "dependentRequired.json",
+    "dependentSchemas.json",
+    "dynamicRef.json",
+    "exclusiveMaximum.json",
+    "exclusiveMinimum.json",
+    "format.json",
+    "infinite-loop-detection.json",
+    "maxContains.json",
+    "maxItems.json",
+    "maxLength.json",
+    "maxProperties.json",
+    "maximum.json",
+    "minContains.json",
+    "minProperties.json",
+    "minimum.json",
+    "multipleOf.json",
+    "patternProperties.json",
+    "prefixItems.json",
+    "propertyNames.json",
+    "refRemote.json",
+    "unevaluatedItems.json",
+    "unevaluatedProperties.json",
+    "uniqueItems.json",
+    "vocabulary.json"
+  ],
+  "outside_optional_directories": [
+    "optional"
+  ]
+}

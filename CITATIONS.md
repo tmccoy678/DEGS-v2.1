@@ -1,5 +1,10 @@
 # Citations and source credit
 
+## Original APA reference collection
+
+[Read the complete APA references PDF](references/dobeworks-apa-references.pdf). This is the original seven-page document, reused byte-for-byte at Taylor's request. Its formatting, wording, order, and links are unchanged. SHA-256: `fc6f090f2f9a937f6ab6d62cc505611969a18e00dde1ef026f5f981ad150c557`. The sources below supplement that fixed reference collection; this copy does not update its retrieval dates or claim a new verification of every citation.
+
+
 This list records the sources used for the private v2.1 draft and its documentation. Research informs how results are presented; none of these publications evaluates, certifies, or endorses DobeWorks or DEGS. PubMed is a biomedical citation index, not a software-engineering journal ranking. Sources were chosen for relevance, with publication types kept explicit.
 
 ## Source-derived engineering
@@ -26,3 +31,8 @@ This list records the sources used for the private v2.1 draft and its documentat
 The [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0), especially sections 2, 4, and 6, provides the terms for Sashiko-derived reuse. Keep the license, applicable notices, and prominent modification notices; do not imply transfer of copyright or endorsement. MIT source notices continue to apply to MIT material. Exact source ancestry is useful evidence but is not itself license compliance.
 
 The DobeWorks snapshot contains historical private records and identity material. The DEGS draft retains MIT coverage for original code and Apache-2.0 coverage for the identified Sashiko-derived portions. A uniform public Apache-2.0 release has not been declared. Its exact file/asset rights and license coverage need a final review, and the inherited DobeWorks Phase 3 manifest mismatch remains unresolved. Citations expose uncertainty; they do not resolve rights or turn a failing test into a pass.
+
+## Public benchmark data
+
+- JSON Schema Test Suite contributors. (n.d.). *JSON Schema Test Suite* [Test data, commit `f6fd52a0a95472e079cbfc6ef7f089702b80e045`]. GitHub. [Pinned source](https://github.com/json-schema-org/JSON-Schema-Test-Suite/tree/f6fd52a0a95472e079cbfc6ef7f089702b80e045). MIT; original copyright and permission text retained in [the corpus license](benchmarks/data/LICENSE).
+- [Benchmark selection research](benchmarks/selection.md) records the primary-source basis and scope. These supplemental references do not alter the fixed APA PDF or imply its citations were reverified.

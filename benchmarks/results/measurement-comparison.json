@@ -1,0 +1,78 @@
+{
+  "previous_run_sha256": "2f0ab57eaa64d9172880ca05338d2bbc19aa906d7cae45288e34939b489e8e0f",
+  "corrected_run_sha256": "400c4efcd8207c20065047ed6b7e55ab92f9dd1cd5dec749ff7c945e6eb898cd",
+  "manifest_unchanged": true,
+  "changed_cases": [
+    {
+      "id": "enum.json:6:1",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "enum.json:6:2",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "enum.json:8:1",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "enum.json:8:2",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "enum.json:10:0",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "enum.json:12:0",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "const.json:6:1",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "const.json:6:2",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "const.json:7:1",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "const.json:7:2",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "const.json:8:1",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "const.json:8:2",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "const.json:9:1",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "const.json:9:2",
+      "before": false,
+      "after": true
+    }
+  ],
+  "expected_changes": 14
+}
