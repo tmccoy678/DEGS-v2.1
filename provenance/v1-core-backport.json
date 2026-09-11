@@ -1,0 +1,21 @@
+{
+  "base": "5cbeb5b1aedf6ee85f02c2cc2e1c01895a728928",
+  "historical_gate_sha256": "44c33ba743851d7befe11ebf93f2f4d9021b126f951a4587562adfca21f65c1e",
+  "historical_schema_sha256": "4be3bb18cc90f48d598704e152691dc1a872ad56b22ec16d6350fd4c4836346f",
+  "reused_files": {
+    "tests/test_json_equality.py": "4e79599278b593d3b36ec733e9e41955adcad8931cdba23dd842ad62f2bd9ff9",
+    "benchmarks/data/const.json": "83a148d2589cbd211e7e64b31763290f8869d763f513de4658e8d25f0fcc025e",
+    "benchmarks/data/enum.json": "1abe7eb883bde4a78c62f08e484e16f32b72ca5c1be725aa54d85cc4546b5031",
+    "benchmarks/data/LICENSE": "837402bd25fad9b704265801ca3f92566a98157c1f9a7acd6f446299ba1c305a"
+  },
+  "branch": "DW/v1-core-backport",
+  "scope": "Historical gate and schema byte identity only; not a complete historical v1 system distribution.",
+  "selected_dobeworks_commit": "f45ae80c64a0aa8c723a5a58b4fbc7073682d349",
+  "selected_degs_backup": "engineering-governance-tier3-activation-20260901-011851/governance",
+  "pairing": "User-confirmed; complete contemporaneous system manifest not established.",
+  "current_v2_commit": "f85d062c4b354c5b7cc299e7cdb1f4bc14d2c4fc",
+  "corrected_gate_sha256": "cdaf77937cbe54a7611825edddd9502a058245a933ef3fae683870d28de0bbde",
+  "upstream_test_suite_commit": "f6fd52a0a95472e079cbfc6ef7f089702b80e045",
+  "behavior_change": "const and enum preserve boolean/number distinctions inside containers using an explicit worklist.",
+  "preserved": "All gate source outside json_values_equal, schema, policy, existing fixtures, existing tests, and original source-baseline manifest."
+}

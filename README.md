@@ -1,3 +1,7 @@
+# DEGS historical core backport
+
+**The historical gate now preserves nested boolean/number distinctions.** Read [the executable correction and exact scope](docs/v1-core-backport.md). This branch retains the standalone draft packaging below; it does not claim to reconstruct the complete historical system v1 release.
+
 # DEGS — v2.1 development draft
 
 DEGS evaluates engineering task records and explains whether their recorded evidence satisfies its rules. Missing recovery evidence or an agent's claimed human approval can block a task. A passing result does not prove the evidence true, approve the work, or execute it.
