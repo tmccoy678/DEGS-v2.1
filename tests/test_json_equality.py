@@ -48,6 +48,17 @@ class JsonEqualityTests(unittest.TestCase):
                     self.assertIs(test["valid"], False)
                     self.assertTrue(GATE.json_schema_errors(test["data"], group["schema"], group["schema"]))
 
+    def test_deep_decodable_containers_preserve_existing_comparison_support(self):
+        for prefix, suffix in (("[", "]"), ('{"a":', "}")):
+            left = json.loads(prefix * 600 + "1" + suffix * 600)
+            equal = json.loads(prefix * 600 + "1.0" + suffix * 600)
+            different = json.loads(prefix * 600 + "true" + suffix * 600)
+            for keyword in ("const", "enum"):
+                for operand, expected in ((equal, True), (different, False)):
+                    schema = {keyword: [operand] if keyword == "enum" else operand}
+                    with self.subTest(kind=prefix, keyword=keyword, expected=expected):
+                        self.assertEqual(not GATE.json_schema_errors(left, schema, schema), expected)
+
 
 if __name__ == "__main__":
     unittest.main()

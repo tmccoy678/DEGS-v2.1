@@ -19,13 +19,13 @@ python3 -B -m unittest discover -s benchmarks -p 'test_*.py' -v
 
 Exit 0 is expected for the corrected candidate when all selected cases and controls pass. The original candidate exited 1 for fourteen failures and wrote a complete report. Harness exit 1 indicates measured mismatches or failed controls; exit 2 indicates input/configuration error. A failed control invalidates interpretation of the corpus score. Each candidate process has a five-second timeout. There are no automatic retries. Corpus and selection integrity must pass before scoring. The fixed selection manifest is hashed in the harness; changing it creates a new benchmark version and must be disclosed.
 
-Recorded host: macOS 26.6.2, arm64, Python 3.9.6. Corrected run started 2026-09-11T20:04:22.516567+00:00 and ended 2026-09-11T20:04:29.978398+00:00. Other platforms were not tested. This is an observed result for these exact source bytes, not a performance leaderboard or certification.
+Recorded host: macOS 26.6.2, arm64, Python 3.9.6. Corrected run started 2026-09-11T20:10:59.022826+00:00 and ended 2026-09-11T20:11:06.193573+00:00. Other platforms were not tested. This is an observed result for these exact source bytes, not a performance leaderboard or certification.
 
 ## Inspect the evidence
 
-- [Corrected machine-readable run](results/apple-silicon-v2.json): all case outcomes, stdout/stderr, exits, controls, identities, and environment.
+- [Corrected machine-readable run](results/apple-silicon-v3.json): all case outcomes, stdout/stderr, exits, controls, identities, and environment.
 - [Original observation, preserved unchanged](results/apple-silicon.json). Its command field was a hard-coded recipe; the new run records actual script arguments and interpreter state.
-- [Before/after comparison](results/measurement-comparison.json): exact changed outcomes and run hashes.
+- [Before/after comparison](results/measurement-comparison-v3.json): exact changed outcomes and run hashes.
 - [Current tests and limitations](../docs/benchmark-correction.md).
 - [Pinned input manifest](manifest.json): upstream commit and exact input SHA-256 hashes.
 - [Selection and research](selection.md): source fit, exclusions, and license inspection.
@@ -56,3 +56,5 @@ Source: [json-schema-org/JSON-Schema-Test-Suite at the pinned commit](https://gi
 [Evidence contract and change controls](evidence.md).
 
 Timeouts retain partial stdout and stderr. Stale controls require literal STALE freshness. Invocation provenance records executable, script arguments, working directory, and effective interpreter flags; original interpreter arguments are unavailable on Python 3.9. Corpus inputs and denominators are unchanged.
+
+Independent review found that the intermediate recursive implementation could raise RecursionError on deeply nested but previously supported JSON. The current comparator uses an explicit worklist; 600-level arrays and objects now pass valid numeric comparisons and reject nested booleans. [The intermediate observation](results/apple-silicon-v2.json) is preserved but does not describe the current source.
