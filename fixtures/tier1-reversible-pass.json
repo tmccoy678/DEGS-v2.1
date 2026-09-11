@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "task_id": "DEGS-FIX-T1-PASS",
+  "title": "Reversible workspace documentation change",
+  "objective": "Add a bounded document in an authorized workspace.",
+  "stakeholders": ["Taylor"],
+  "scope": {
+    "description": "Create one reversible documentation artifact.",
+    "read_only": false
+  },
+  "non_goals": ["Change configuration or startup behavior"],
+  "authority_lane": "TAYLOR_AI_WORKBENCH",
+  "risk_tier": "TIER_1",
+  "requirements": ["The document uses the approved identity."],
+  "acceptance_criteria": ["Static and positive checks pass."],
+  "assumptions": ["The workspace is writable by Taylor."],
+  "invariants": ["DEGS-SEC-002", "DEGS-CFG-001"],
+  "baseline": {
+    "status": "RECORDED",
+    "evidence_path": "tier1-reversible-pass.json"
+  },
+  "alternatives": ["Make no change"],
+  "selected_design": "Create the smallest reversible file change.",
+  "affected_files": ["example.md"],
+  "backup": {
+    "required": false,
+    "reason": "The new file is independently removable and no file is replaced."
+  },
+  "rollback": {
+    "required": false,
+    "reason": "Remove the newly created fixture artifact."
+  },
+  "risk_analysis": {
+    "status": "NOT_REQUIRED",
+    "summary": "Tier 1 reversible workspace change."
+  },
+  "tests": {
+    "static": [
+      {"status": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}
+    ],
+    "positive": [
+      {"status": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}
+    ],
+    "negative": [],
+    "security": [],
+    "failure_path": [],
+    "integration": [],
+    "end_to_end": []
+  },
+  "verification": {"status": "PASS", "evidence_path": "tier1-reversible-pass.json"},
+  "validation": {"status": "PASS", "evidence_path": "tier1-reversible-pass.json"},
+  "independent_review": {"required": false, "status": "NOT_REQUIRED"},
+  "human_approval": {"required": false, "status": "NOT_REQUIRED"},
+  "recovery_validation": {"required": false, "status": "NOT_REQUIRED"},
+  "target_identity": "example.md",
+  "blast_radius": "One new workspace file.",
+  "stop_conditions": ["Any unrelated file would change."],
+  "post_action_validation": {"status": "PASS", "evidence_path": "tier1-reversible-pass.json"},
+  "telemetry": {"status": "SANITIZED", "evidence_path": "tier1-reversible-pass.json"},
+  "documentation": {"status": "PASS", "evidence_path": "tier1-reversible-pass.json"},
+  "handoff": {"status": "PASS", "evidence_path": "tier1-reversible-pass.json"},
+  "secret_handling": {"exposure_possible": false, "controlled": true},
+  "warnings": [],
+  "unresolved_items": [],
+  "status": "READY_FOR_EXECUTION"
+}

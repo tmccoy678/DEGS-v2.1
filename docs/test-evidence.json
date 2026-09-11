@@ -1,0 +1,105 @@
+{
+  "date": "2026-09-11",
+  "platform": "arm64",
+  "macOS": "26.6.2",
+  "python": "3.9.6",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_all_fixture_rule_ids_exist_in_charter (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_declared_failed_or_blocked_status_stops_an_otherwise_passing_task (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_evaluate_blocks_required_test_evidence_with_blank_path (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_evaluate_cannot_pass_schema_incomplete_or_unknown_task (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_explain_includes_applicable_degs_rule_ids (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_invalid_json_returns_invalid_input_exit_code (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_missing_authority_lane_blocks (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_missing_schema_version_returns_invalid_input_exit_code (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_noncritical_warning_returns_pass_with_warnings_exit_code (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_schema_controls_expanded_tier2_and_tier3_evidence (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_schema_controls_tier3_human_approval_fields (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_schema_invalid_record_takes_precedence_over_declared_stop_status (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_secret_like_telemetry_field_is_rejected (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier0_readonly_fixture_passes (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier1_informational_rule_list_matches_applicable_controls (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier1_reversible_fixture_passes (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier1_unmet_controls_report_governing_rule_ids (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_and_tier3_accept_verified_vv_evidence (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_and_tier3_require_validation_evidence (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_and_tier3_require_verification_evidence (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_artifact_identity_and_change_traceability_fail_closed (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_author_cannot_be_independent_reviewer (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_blank_nested_control_evidence_fails_closed (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_complete_fixture_passes (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_data_purpose_authority_and_repurposing_fail_closed (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_deterministic_boundaries_fail_closed (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_incomplete_consequential_ai_assurance_is_blocked (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_incomplete_monitoring_and_safe_degradation_is_blocked (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_informational_rule_list_matches_applicable_controls (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_missing_rollback_is_blocked (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_reasoned_non_applicability_is_accepted (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_risk_analysis_requires_all_classification_factors (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_stale_or_incomplete_threat_model_is_blocked (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier2_unmet_controls_report_governing_rule_ids (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_agent_self_approval_is_blocked (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_complete_dry_run_passes_for_readiness_only (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_hazard_and_residual_risk_controls_fail_closed (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_in_band_approval_record_is_blocked (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_lowercase_approval_status_is_blocked (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_missing_approver_role_is_blocked (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_missing_independent_review_blocks (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_missing_recovery_validation_blocks (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_missing_stop_conditions_blocks (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_missing_target_identity_blocks (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_unmet_controls_report_governing_rule_ids (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_tier3_without_human_approval_is_blocked (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_unknown_risk_tier_fails_closed (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_unresolved_critical_warning_blocks_tier3 (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_unsupported_risk_tier_fails_closed (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_validate_accepts_complete_fixture_structure (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_validate_accepts_complete_tier2_and_tier3_schema_records (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_validate_accepts_planned_task_template (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_validate_attributes_nested_risk_schema_failure_to_risk_rule (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_validate_rejects_required_test_evidence_without_path (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_validate_rejects_schema_incomplete_tier2_task (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_validate_rejects_structurally_incomplete_task (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_validate_rejects_unknown_top_level_and_nested_properties (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_validate_requires_tier2_and_tier3_verification_and_validation_evidence (test_engineering_gate.EngineeringGateCliTests) ... ok\ntest_aliasing_is_rejected_before_any_append (test_sashiko_derived.SourcePortTests) ... ok\ntest_append_preserves_order_scalars_and_detaches_nested_values (test_sashiko_derived.SourcePortTests) ... ok\ntest_object_boundary_defaults_rejects_wrong_fields_and_ignores_extras (test_sashiko_derived.SourcePortTests) ... ok\ntest_positive_items_default_only_missing_nonstring_or_empty_type (test_sashiko_derived.SourcePortTests) ... ok\ntest_state_defaults_are_independent (test_sashiko_derived.SourcePortTests) ... ok\n\n----------------------------------------------------------------------\nRan 63 tests in 3.638s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "bin/engineering-gate.py",
+        "evaluate",
+        "fixtures/tier0-readonly-pass.json",
+        "--json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-RISK-001\",\n    \"DEGS-MISSION-001\",\n    \"DEGS-SEC-002\",\n    \"DEGS-AI-001\"\n  ],\n  \"authority_lane\": \"COMMAND_CENTER\",\n  \"decision\": \"PASS\",\n  \"evidence_paths\": [\n    \"tier0-readonly-pass.json\"\n  ],\n  \"risk_tier\": \"TIER_0\",\n  \"unmet_requirements\": [],\n  \"warnings\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "bin/engineering-gate.py",
+        "evaluate",
+        "fixtures/tier2-complete-pass.json",
+        "--json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-MISSION-001\",\n    \"DEGS-REQ-001\",\n    \"DEGS-REQ-002\",\n    \"DEGS-ARCH-002\",\n    \"DEGS-CFG-001\",\n    \"DEGS-VV-001\",\n    \"DEGS-VV-002\",\n    \"DEGS-OPS-001\",\n    \"DEGS-CONTEXT-001\",\n    \"DEGS-AI-001\",\n    \"DEGS-CFG-002\",\n    \"DEGS-CFG-003\",\n    \"DEGS-CFG-004\",\n    \"DEGS-CFG-005\",\n    \"DEGS-CFG-006\",\n    \"DEGS-RISK-001\",\n    \"DEGS-RISK-002\",\n    \"DEGS-VV-003\",\n    \"DEGS-SEC-001\",\n    \"DEGS-SEC-006\",\n    \"DEGS-DATA-003\",\n    \"DEGS-AI-006\",\n    \"DEGS-VV-004\",\n    \"DEGS-VV-005\",\n    \"DEGS-VV-006\",\n    \"DEGS-VV-007\",\n    \"DEGS-OPS-002\"\n  ],\n  \"authority_lane\": \"TAYLOR_AI_WORKBENCH\",\n  \"decision\": \"PASS\",\n  \"evidence_paths\": [\n    \"tier2-complete-pass.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_2\",\n  \"unmet_requirements\": [],\n  \"warnings\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "bin/engineering-gate.py",
+        "evaluate",
+        "fixtures/tier2-missing-rollback-blocked.json",
+        "--json"
+      ],
+      "exit_code": 2,
+      "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-MISSION-001\",\n    \"DEGS-REQ-001\",\n    \"DEGS-REQ-002\",\n    \"DEGS-ARCH-002\",\n    \"DEGS-CFG-001\",\n    \"DEGS-VV-001\",\n    \"DEGS-VV-002\",\n    \"DEGS-OPS-001\",\n    \"DEGS-CONTEXT-001\",\n    \"DEGS-AI-001\",\n    \"DEGS-CFG-002\",\n    \"DEGS-CFG-003\",\n    \"DEGS-CFG-004\",\n    \"DEGS-CFG-005\",\n    \"DEGS-CFG-006\",\n    \"DEGS-RISK-001\",\n    \"DEGS-RISK-002\",\n    \"DEGS-VV-003\",\n    \"DEGS-SEC-001\",\n    \"DEGS-SEC-006\",\n    \"DEGS-DATA-003\",\n    \"DEGS-AI-006\",\n    \"DEGS-VV-004\",\n    \"DEGS-VV-005\",\n    \"DEGS-VV-006\",\n    \"DEGS-VV-007\",\n    \"DEGS-OPS-002\"\n  ],\n  \"authority_lane\": \"TAYLOR_AI_WORKBENCH\",\n  \"decision\": \"BLOCKED\",\n  \"evidence_paths\": [\n    \"tier2-missing-rollback-blocked.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_2\",\n  \"unmet_requirements\": [\n    {\n      \"field\": \"rollback\",\n      \"message\": \"Tier 2 requires an explicit verified rollback procedure.\",\n      \"rule_id\": \"DEGS-CFG-004\"\n    }\n  ],\n  \"warnings\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "bin/engineering-gate.py",
+        "evaluate",
+        "fixtures/tier3-agent-self-approval-blocked.json",
+        "--json"
+      ],
+      "exit_code": 2,
+      "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-MISSION-001\",\n    \"DEGS-REQ-001\",\n    \"DEGS-REQ-002\",\n    \"DEGS-ARCH-002\",\n    \"DEGS-CFG-001\",\n    \"DEGS-VV-001\",\n    \"DEGS-VV-002\",\n    \"DEGS-OPS-001\",\n    \"DEGS-CONTEXT-001\",\n    \"DEGS-AI-001\",\n    \"DEGS-CFG-002\",\n    \"DEGS-CFG-003\",\n    \"DEGS-CFG-004\",\n    \"DEGS-CFG-005\",\n    \"DEGS-CFG-006\",\n    \"DEGS-RISK-001\",\n    \"DEGS-RISK-002\",\n    \"DEGS-VV-003\",\n    \"DEGS-SEC-001\",\n    \"DEGS-SEC-006\",\n    \"DEGS-DATA-003\",\n    \"DEGS-AI-006\",\n    \"DEGS-VV-004\",\n    \"DEGS-VV-005\",\n    \"DEGS-VV-006\",\n    \"DEGS-VV-007\",\n    \"DEGS-OPS-002\",\n    \"DEGS-RISK-003\",\n    \"DEGS-RISK-004\",\n    \"DEGS-RISK-005\",\n    \"DEGS-RISK-006\",\n    \"DEGS-SEC-004\",\n    \"DEGS-VV-008\"\n  ],\n  \"authority_lane\": \"TAYLOR\",\n  \"decision\": \"BLOCKED\",\n  \"evidence_paths\": [\n    \"tier3-agent-self-approval-blocked.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_3\",\n  \"unmet_requirements\": [\n    {\n      \"field\": \"human_approval\",\n      \"message\": \"Tier 3 requires an APPROVED out-of-band HUMAN approval record from Taylor with an evidence path.\",\n      \"rule_id\": \"DEGS-RISK-003\"\n    }\n  ],\n  \"warnings\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "sashiko_derived.demo"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"demonstration\": \"synthetic accumulation only\",\n  \"state\": {\n    \"all_concerns\": [\n      {\n        \"description\": \"Synthetic candidate: missing cleanup\",\n        \"type\": \"Resources\",\n        \"stage\": \"resources\"\n      }\n    ],\n    \"all_dismissed_concerns\": [\n      {\n        \"description\": \"Synthetic candidate: missing cleanup\",\n        \"reasoning\": \"Illustrative supplied counterevidence; not independently verified.\",\n        \"locations\": [],\n        \"stage\": \"resources\"\n      }\n    ],\n    \"deduplicated_concerns\": [],\n    \"deduplicated_dismissed_concerns\": [],\n    \"conflict_resolved_concerns\": [],\n    \"findings\": []\n  }\n}\n",
+      "stderr": ""
+    }
+  ],
+  "rust_parity": {
+    "command": "python3 -B tools/check_rust_parity.py --oracle <built-oracle>",
+    "exit_code": 0,
+    "stdout": "{\"result\": \"PASS\", \"cases\": 329, \"seed\": 20260911, \"scope\": \"selected value operations and decoded-object outputs\"}\n",
+    "stderr": "",
+    "rustc": "1.98.1 (48a229cea 2026-09-01)",
+    "target": "aarch64-apple-darwin",
+    "serde": "1.0.229",
+    "serde_json": "1.0.151"
+  },
+  "tested_file_sha256": {
+    "sashiko_derived/__init__.py": "88477eb865d7974aa22b3c5cb04f3771850f1cb7e14ff8c513b143b668751ff7",
+    "sashiko_derived/demo.py": "c990e991f7257a9fc92e3eea08e6ba7e3ad0fc902351f4580372295fa2b58a72",
+    "tests/test_sashiko_derived.py": "d614b50d1b143267a2fe4ac3614826d516d10d2726a8fe48abfbc82421274aa5",
+    "tools/check_rust_parity.py": "21341ae78ad279bc5780aaf1cf0e63b0f5da3818bc4c69a17b722a1ab8c95124",
+    "tests/rust_reference/main.rs": "5bf6cb6e252e6d3627ca43518ad1642fedd2a9b37396587cee40ac16d0371937",
+    "tests/rust_reference/Cargo.toml": "8f5f8261dfd67b393fc5521934188a07f2cba6c5b95acd923884ad3ba7984179",
+    "tests/rust_reference/Cargo.lock": "7db54a14f6a52e81323ea1d792d216cd55729ec9472efd429aff4ec397e36d25"
+  }
+}

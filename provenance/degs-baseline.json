@@ -1,0 +1,37 @@
+{
+  "source": "Taylor canonical governance tree, captured 2026-09-11",
+  "destination": "Standalone gate subset; no installed activation or context integrations",
+  "files": {
+    "bin/engineering-gate.py": "44c33ba743851d7befe11ebf93f2f4d9021b126f951a4587562adfca21f65c1e",
+    "gate.schema.json": "4be3bb18cc90f48d598704e152691dc1a872ad56b22ec16d6350fd4c4836346f",
+    "ENGINEERING_CHARTER.md": "3fe4599467802e185c4433532250a70cec615d231d929871a7289b5c039a7f40",
+    "ENGINEERING_GATE.md": "47004f14e0ea67282b947610c5a04a5259c624bf990f7de76f4796362d25370b",
+    "policy.json": "0d53ad1c572f277785b6d2ce284c199cfdb7a38a68a1a6c137d9e9524220f6e0",
+    "SOURCE_REGISTER.md": "0792d8005f3e78a70bd6c970cc7ece0a78f65e90743ea15b04f904b32d2a010b",
+    "source-register.json": "43fb687bd83b9b0e7e06f368694b97019c4259f50cab6ada1352faf906d289fe",
+    "TRACEABILITY_MATRIX.md": "fba3033cc54f2809e6440550db034abfa2be1e4d512558407235614a1cdd45dc",
+    "RISK_TIERS.md": "a9059e72f8813ffe6fdbd0b5195d0bb0104333b2d46b5b1160eae5c9a6df1c36",
+    "AUTHORITY_LANES.md": "ec917bbe3eb9f20f5d97e801d511b45f34ab2b82ee3135b65e606f7acabe8031",
+    "SECURITY_INVARIANTS.md": "812761c9e36a7dff5ee8b83b20081b4e9e9798c00ec3cb628a034642e2db82fc",
+    "templates/engineering-task.json": "3ea3baad63e24f8ae0486429e5dd2e336fcdb6493ba56b0fbf2905aecaa6999a",
+    "templates/engineering-task.md": "0e7f8fff437d34b0af8f0fc18796abff9b8657b03cd1fb0093b926ff4db50896",
+    "tests/test_engineering_gate.py": "ca84d6dcfbc0d0c1f2748828606c98321febd4db7127cc0ffe80bcfe547b2ce2",
+    "fixtures/tier0-readonly-pass.json": "5e8f6f123627a5a5347d0c4923abf42e5b609ca5dd431086eb10a53c05f0b769",
+    "fixtures/tier1-reversible-pass.json": "3769589821af8a6f76e3a95367f24a756d46e407750c77a647386d9775828a8b",
+    "fixtures/tier2-complete-pass.json": "2e29be817dee058f23d16242613ac41dec18c26c253c8c7fc11b4677d7a4c655",
+    "fixtures/tier2-missing-rollback-blocked.json": "9290e98bced40b69a5d6ca11c12e13145ac01e87a447692f260fbbd7f4b428b5",
+    "fixtures/tier3-agent-self-approval-blocked.json": "e4ea4f453bc7556ffbe959a23fc34cac6fe34e419f7774ac462dc88d176aa78a",
+    "fixtures/tier3-complete-dry-run-pass.json": "348ceafc30edab70f68e13567f9df98d1b6dbf28852a976fe22be2af24a07a3c",
+    "fixtures/tier3-no-human-approval-blocked.json": "8526ac2e32d65bae5846fb42824299a68ef55f54157da0e7056c6c4265e5323f"
+  },
+  "excluded": [
+    "state/",
+    "logs/",
+    "deas-adoption.json",
+    "bin/deas-gate.py",
+    "bin/context-governance.py",
+    "tests/test_context_skill_integration.py",
+    "tests/test_deas_gate.py",
+    "tests/test_policy_expansion.py (requires private audit/activation history)"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "repository": "https://github.com/sashiko-dev/sashiko",
+  "commit": "39f6ce95c797bb40023247916a8b16d0f4aaf0da",
+  "source_file": "src/worker/kernel_workflow.rs",
+  "source_sha256": "a0c682bc9ea004dd45a8d578184a7629efb961b24d32df1a79e4cc4da2d828b8",
+  "port_ranges": [
+    [
+      56,
+      70
+    ],
+    [
+      92,
+      110
+    ],
+    [
+      396,
+      429
+    ]
+  ],
+  "prompts": {
+    "sashiko_derived/prompts/deduplication.txt": {
+      "range": [
+        226,
+        238
+      ],
+      "source_block_sha256": "a7c2295479c9609ea54f4d51565cfc3c94538d453e8eeb8c06b1316853318fb7",
+      "text_sha256": "53b4ba307db32ab3277f383a0175abf521c81b7ffe2659be1095d89118a8157d",
+      "disposition": "verbatim reference; not executed"
+    },
+    "sashiko_derived/prompts/conflict_resolution.txt": {
+      "range": [
+        240,
+        251
+      ],
+      "source_block_sha256": "914b1b1308f5946bac0f358e39464051b6ae5abc927e568617d0d1402e294071",
+      "text_sha256": "306439ffe96dd289797f4a88b8bf5f361f5672a3da427c176ca0c272235e569b",
+      "disposition": "verbatim reference; not executed"
+    }
+  },
+  "python_adaptations": [
+    "Object-only decoded JSON adapter; not full model-response extraction",
+    "Explicit source/destination alias rejection; Rust forbids these simultaneous borrows",
+    "ReviewState is only the six selected fields, not the complete KernelReviewState"
+  ],
+  "not_implemented": [
+    "LLM invocation",
+    "deduplication/conflict execution",
+    "persistent audit ledger",
+    "DEGS integration adapter"
+  ]
+}
