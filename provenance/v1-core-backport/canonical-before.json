@@ -1,0 +1,184 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "validate",
+      "fixtures/tier0-readonly-pass.json",
+      "--json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-REQ-001\"\n  ],\n  \"authority_lane\": \"COMMAND_CENTER\",\n  \"decision\": \"PASS\",\n  \"evidence_paths\": [\n    \"tier0-readonly-pass.json\"\n  ],\n  \"risk_tier\": \"TIER_0\",\n  \"unmet_requirements\": [],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "evaluate",
+      "fixtures/tier0-readonly-pass.json",
+      "--json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-RISK-001\",\n    \"DEGS-MISSION-001\",\n    \"DEGS-SEC-002\",\n    \"DEGS-AI-001\"\n  ],\n  \"authority_lane\": \"COMMAND_CENTER\",\n  \"decision\": \"PASS\",\n  \"evidence_paths\": [\n    \"tier0-readonly-pass.json\"\n  ],\n  \"risk_tier\": \"TIER_0\",\n  \"unmet_requirements\": [],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "validate",
+      "fixtures/tier1-reversible-pass.json",
+      "--json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-REQ-001\"\n  ],\n  \"authority_lane\": \"TAYLOR_AI_WORKBENCH\",\n  \"decision\": \"PASS\",\n  \"evidence_paths\": [\n    \"tier1-reversible-pass.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_1\",\n  \"unmet_requirements\": [],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "evaluate",
+      "fixtures/tier1-reversible-pass.json",
+      "--json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-MISSION-001\",\n    \"DEGS-REQ-001\",\n    \"DEGS-REQ-002\",\n    \"DEGS-ARCH-002\",\n    \"DEGS-CFG-001\",\n    \"DEGS-VV-001\",\n    \"DEGS-VV-002\",\n    \"DEGS-OPS-001\",\n    \"DEGS-CONTEXT-001\",\n    \"DEGS-AI-001\"\n  ],\n  \"authority_lane\": \"TAYLOR_AI_WORKBENCH\",\n  \"decision\": \"PASS\",\n  \"evidence_paths\": [\n    \"tier1-reversible-pass.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_1\",\n  \"unmet_requirements\": [],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "validate",
+      "fixtures/tier2-complete-pass.json",
+      "--json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-REQ-001\"\n  ],\n  \"authority_lane\": \"TAYLOR_AI_WORKBENCH\",\n  \"decision\": \"PASS\",\n  \"evidence_paths\": [\n    \"tier2-complete-pass.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_2\",\n  \"unmet_requirements\": [],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "evaluate",
+      "fixtures/tier2-complete-pass.json",
+      "--json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-MISSION-001\",\n    \"DEGS-REQ-001\",\n    \"DEGS-REQ-002\",\n    \"DEGS-ARCH-002\",\n    \"DEGS-CFG-001\",\n    \"DEGS-VV-001\",\n    \"DEGS-VV-002\",\n    \"DEGS-OPS-001\",\n    \"DEGS-CONTEXT-001\",\n    \"DEGS-AI-001\",\n    \"DEGS-CFG-002\",\n    \"DEGS-CFG-003\",\n    \"DEGS-CFG-004\",\n    \"DEGS-CFG-005\",\n    \"DEGS-CFG-006\",\n    \"DEGS-RISK-001\",\n    \"DEGS-RISK-002\",\n    \"DEGS-VV-003\",\n    \"DEGS-SEC-001\",\n    \"DEGS-SEC-006\",\n    \"DEGS-DATA-003\",\n    \"DEGS-AI-006\",\n    \"DEGS-VV-004\",\n    \"DEGS-VV-005\",\n    \"DEGS-VV-006\",\n    \"DEGS-VV-007\",\n    \"DEGS-OPS-002\"\n  ],\n  \"authority_lane\": \"TAYLOR_AI_WORKBENCH\",\n  \"decision\": \"PASS\",\n  \"evidence_paths\": [\n    \"tier2-complete-pass.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_2\",\n  \"unmet_requirements\": [],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "validate",
+      "fixtures/tier2-missing-rollback-blocked.json",
+      "--json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-REQ-001\"\n  ],\n  \"authority_lane\": \"TAYLOR_AI_WORKBENCH\",\n  \"decision\": \"PASS\",\n  \"evidence_paths\": [\n    \"tier2-missing-rollback-blocked.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_2\",\n  \"unmet_requirements\": [],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "evaluate",
+      "fixtures/tier2-missing-rollback-blocked.json",
+      "--json"
+    ],
+    "exit_code": 2,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-MISSION-001\",\n    \"DEGS-REQ-001\",\n    \"DEGS-REQ-002\",\n    \"DEGS-ARCH-002\",\n    \"DEGS-CFG-001\",\n    \"DEGS-VV-001\",\n    \"DEGS-VV-002\",\n    \"DEGS-OPS-001\",\n    \"DEGS-CONTEXT-001\",\n    \"DEGS-AI-001\",\n    \"DEGS-CFG-002\",\n    \"DEGS-CFG-003\",\n    \"DEGS-CFG-004\",\n    \"DEGS-CFG-005\",\n    \"DEGS-CFG-006\",\n    \"DEGS-RISK-001\",\n    \"DEGS-RISK-002\",\n    \"DEGS-VV-003\",\n    \"DEGS-SEC-001\",\n    \"DEGS-SEC-006\",\n    \"DEGS-DATA-003\",\n    \"DEGS-AI-006\",\n    \"DEGS-VV-004\",\n    \"DEGS-VV-005\",\n    \"DEGS-VV-006\",\n    \"DEGS-VV-007\",\n    \"DEGS-OPS-002\"\n  ],\n  \"authority_lane\": \"TAYLOR_AI_WORKBENCH\",\n  \"decision\": \"BLOCKED\",\n  \"evidence_paths\": [\n    \"tier2-missing-rollback-blocked.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_2\",\n  \"unmet_requirements\": [\n    {\n      \"field\": \"rollback\",\n      \"message\": \"Tier 2 requires an explicit verified rollback procedure.\",\n      \"rule_id\": \"DEGS-CFG-004\"\n    }\n  ],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "validate",
+      "fixtures/tier3-agent-self-approval-blocked.json",
+      "--json"
+    ],
+    "exit_code": 4,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-RISK-003\"\n  ],\n  \"authority_lane\": \"TAYLOR\",\n  \"decision\": \"FAIL\",\n  \"evidence_paths\": [\n    \"tier3-agent-self-approval-blocked.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_3\",\n  \"unmet_requirements\": [\n    {\n      \"field\": \"human_approval.approver_role\",\n      \"message\": \"Value does not match the required constant.\",\n      \"rule_id\": \"DEGS-RISK-003\"\n    }\n  ],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "evaluate",
+      "fixtures/tier3-agent-self-approval-blocked.json",
+      "--json"
+    ],
+    "exit_code": 2,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-MISSION-001\",\n    \"DEGS-REQ-001\",\n    \"DEGS-REQ-002\",\n    \"DEGS-ARCH-002\",\n    \"DEGS-CFG-001\",\n    \"DEGS-VV-001\",\n    \"DEGS-VV-002\",\n    \"DEGS-OPS-001\",\n    \"DEGS-CONTEXT-001\",\n    \"DEGS-AI-001\",\n    \"DEGS-CFG-002\",\n    \"DEGS-CFG-003\",\n    \"DEGS-CFG-004\",\n    \"DEGS-CFG-005\",\n    \"DEGS-CFG-006\",\n    \"DEGS-RISK-001\",\n    \"DEGS-RISK-002\",\n    \"DEGS-VV-003\",\n    \"DEGS-SEC-001\",\n    \"DEGS-SEC-006\",\n    \"DEGS-DATA-003\",\n    \"DEGS-AI-006\",\n    \"DEGS-VV-004\",\n    \"DEGS-VV-005\",\n    \"DEGS-VV-006\",\n    \"DEGS-VV-007\",\n    \"DEGS-OPS-002\",\n    \"DEGS-RISK-003\",\n    \"DEGS-RISK-004\",\n    \"DEGS-RISK-005\",\n    \"DEGS-RISK-006\",\n    \"DEGS-SEC-004\",\n    \"DEGS-VV-008\"\n  ],\n  \"authority_lane\": \"TAYLOR\",\n  \"decision\": \"BLOCKED\",\n  \"evidence_paths\": [\n    \"tier3-agent-self-approval-blocked.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_3\",\n  \"unmet_requirements\": [\n    {\n      \"field\": \"human_approval\",\n      \"message\": \"Tier 3 requires an APPROVED out-of-band HUMAN approval record from Taylor with an evidence path.\",\n      \"rule_id\": \"DEGS-RISK-003\"\n    }\n  ],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "validate",
+      "fixtures/tier3-complete-dry-run-pass.json",
+      "--json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-REQ-001\"\n  ],\n  \"authority_lane\": \"TAYLOR\",\n  \"decision\": \"PASS\",\n  \"evidence_paths\": [\n    \"tier3-complete-dry-run-pass.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_3\",\n  \"unmet_requirements\": [],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "evaluate",
+      "fixtures/tier3-complete-dry-run-pass.json",
+      "--json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-MISSION-001\",\n    \"DEGS-REQ-001\",\n    \"DEGS-REQ-002\",\n    \"DEGS-ARCH-002\",\n    \"DEGS-CFG-001\",\n    \"DEGS-VV-001\",\n    \"DEGS-VV-002\",\n    \"DEGS-OPS-001\",\n    \"DEGS-CONTEXT-001\",\n    \"DEGS-AI-001\",\n    \"DEGS-CFG-002\",\n    \"DEGS-CFG-003\",\n    \"DEGS-CFG-004\",\n    \"DEGS-CFG-005\",\n    \"DEGS-CFG-006\",\n    \"DEGS-RISK-001\",\n    \"DEGS-RISK-002\",\n    \"DEGS-VV-003\",\n    \"DEGS-SEC-001\",\n    \"DEGS-SEC-006\",\n    \"DEGS-DATA-003\",\n    \"DEGS-AI-006\",\n    \"DEGS-VV-004\",\n    \"DEGS-VV-005\",\n    \"DEGS-VV-006\",\n    \"DEGS-VV-007\",\n    \"DEGS-OPS-002\",\n    \"DEGS-RISK-003\",\n    \"DEGS-RISK-004\",\n    \"DEGS-RISK-005\",\n    \"DEGS-RISK-006\",\n    \"DEGS-SEC-004\",\n    \"DEGS-VV-008\"\n  ],\n  \"authority_lane\": \"TAYLOR\",\n  \"decision\": \"PASS\",\n  \"evidence_paths\": [\n    \"tier3-complete-dry-run-pass.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_3\",\n  \"unmet_requirements\": [],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "validate",
+      "fixtures/tier3-no-human-approval-blocked.json",
+      "--json"
+    ],
+    "exit_code": 4,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-RISK-003\"\n  ],\n  \"authority_lane\": \"TAYLOR\",\n  \"decision\": \"FAIL\",\n  \"evidence_paths\": [\n    \"tier3-no-human-approval-blocked.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_3\",\n  \"unmet_requirements\": [\n    {\n      \"field\": \"human_approval.evidence_path\",\n      \"message\": \"Required property is missing.\",\n      \"rule_id\": \"DEGS-RISK-003\"\n    },\n    {\n      \"field\": \"human_approval.status\",\n      \"message\": \"Value does not match the required constant.\",\n      \"rule_id\": \"DEGS-RISK-003\"\n    }\n  ],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "bin/engineering-gate.py",
+      "evaluate",
+      "fixtures/tier3-no-human-approval-blocked.json",
+      "--json"
+    ],
+    "exit_code": 2,
+    "stdout": "{\n  \"applicable_rule_ids\": [\n    \"DEGS-MISSION-001\",\n    \"DEGS-REQ-001\",\n    \"DEGS-REQ-002\",\n    \"DEGS-ARCH-002\",\n    \"DEGS-CFG-001\",\n    \"DEGS-VV-001\",\n    \"DEGS-VV-002\",\n    \"DEGS-OPS-001\",\n    \"DEGS-CONTEXT-001\",\n    \"DEGS-AI-001\",\n    \"DEGS-CFG-002\",\n    \"DEGS-CFG-003\",\n    \"DEGS-CFG-004\",\n    \"DEGS-CFG-005\",\n    \"DEGS-CFG-006\",\n    \"DEGS-RISK-001\",\n    \"DEGS-RISK-002\",\n    \"DEGS-VV-003\",\n    \"DEGS-SEC-001\",\n    \"DEGS-SEC-006\",\n    \"DEGS-DATA-003\",\n    \"DEGS-AI-006\",\n    \"DEGS-VV-004\",\n    \"DEGS-VV-005\",\n    \"DEGS-VV-006\",\n    \"DEGS-VV-007\",\n    \"DEGS-OPS-002\",\n    \"DEGS-RISK-003\",\n    \"DEGS-RISK-004\",\n    \"DEGS-RISK-005\",\n    \"DEGS-RISK-006\",\n    \"DEGS-SEC-004\",\n    \"DEGS-VV-008\"\n  ],\n  \"authority_lane\": \"TAYLOR\",\n  \"decision\": \"BLOCKED\",\n  \"evidence_paths\": [\n    \"tier3-no-human-approval-blocked.json\",\n    \"../tests/test_engineering_gate.py\"\n  ],\n  \"risk_tier\": \"TIER_3\",\n  \"unmet_requirements\": [\n    {\n      \"field\": \"human_approval\",\n      \"message\": \"Tier 3 requires an APPROVED out-of-band HUMAN approval record from Taylor with an evidence path.\",\n      \"rule_id\": \"DEGS-RISK-003\"\n    }\n  ],\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  }
+]
