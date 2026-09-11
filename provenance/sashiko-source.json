@@ -40,7 +40,8 @@
   "python_adaptations": [
     "Object-only decoded JSON adapter; not full model-response extraction",
     "Explicit source/destination alias rejection; Rust forbids these simultaneous borrows",
-    "ReviewState is only the six selected fields, not the complete KernelReviewState"
+    "ReviewState is only the six selected fields, not the complete KernelReviewState",
+    "Recursive JSON copying expands repeated Python container references into independent Rust-style owned subtrees"
   ],
   "not_implemented": [
     "LLM invocation",

@@ -6,7 +6,7 @@ Copyright 2026 The Sashiko Authors.
 
 Source: [sashiko-dev/sashiko](https://github.com/sashiko-dev/sashiko), commit [39f6ce95c797bb40023247916a8b16d0f4aaf0da](https://github.com/sashiko-dev/sashiko/tree/39f6ce95c797bb40023247916a8b16d0f4aaf0da), `src/worker/kernel_workflow.rs`.
 
-The Python operations in `sashiko_derived/__init__.py` are translated selections. Changes are the Python syntax and ownership representation, a decoded-object adapter, an alias guard, and extraction of the six relevant state fields. The two prompt text files retain their selected upstream contents verbatim. The Rust reference file assembles upstream excerpts with an original test harness. Exact ranges and hashes are in `provenance/sashiko-source.json`.
+The Python operations in `sashiko_derived/__init__.py` are translated selections. Changes are the Python syntax and ownership representation, a decoded-object adapter, owned-subtree cloning, an alias guard, and extraction of the six relevant state fields. The two prompt text files retain their selected upstream contents verbatim. The Rust reference file assembles upstream excerpts with an original test harness. Exact ranges and hashes are in `provenance/sashiko-source.json`.
 
 These portions are licensed under the [Apache License, Version 2.0](LICENSES/Apache-2.0.txt). Original notices are retained and modified files identify their changes. No root upstream NOTICE file was present in the inspected snapshot; this acknowledgement is additional provenance, not a substitute for the license. No ownership transfer or upstream endorsement is implied.
 

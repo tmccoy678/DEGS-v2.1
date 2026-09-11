@@ -40,7 +40,7 @@ The Python port retains Sashiko's selected state names, independent list default
 python3 -B -m unittest discover -s tests -v
 ```
 
-The recorded run passed **63 tests**: 58 existing gate tests and 5 port tests. The tests exercise ordinary command input, valid and invalid records, required evidence, approval boundaries, and Python value semantics. A separate comparison passed **329 cases** against an executable harness containing the selected upstream Rust source. Instructions, raw outputs, source hashes, and exact environment are in [the test report](docs/test-report.md).
+The recorded run passed **64 tests**: 58 existing gate tests and 6 port tests. The tests exercise ordinary command input, valid and invalid records, required evidence, approval boundaries, and Python value semantics. A separate comparison passed **331 cases** against an executable harness containing the selected upstream Rust source. Instructions, raw outputs, source hashes, and exact environment are in [the test report](docs/test-report.md).
 
 These results concern the recorded scenarios. They do not establish defect freedom, semantic truth, AI review accuracy, security certification, full-system integration, or support for other platforms. The copied core is identified in [the baseline manifest](provenance/degs-baseline.json). Local activation history, private audits, context-skill integration, and the Workbench adapter are excluded, along with tests requiring those dependencies. The core's existing rules are unchanged.
 

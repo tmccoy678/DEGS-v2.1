@@ -59,6 +59,23 @@ class SourcePortTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             append_stage_items(values, values, "goal", "General", "description")
 
+    def test_shared_python_subtrees_become_independent_owned_json_subtrees(self):
+        shared = []
+        source = [{"left": shared, "right": shared}]
+        for append in [
+            lambda dest: append_stage_dismissed_concerns(dest, source, "goal"),
+            lambda dest: append_stage_items(dest, source, "goal", "General", "description"),
+        ]:
+            dest = []
+            append(dest)
+            dest[0]["left"].append("changed")
+            self.assertEqual(dest[0]["right"], [])
+            self.assertEqual(shared, [])
+        output = StageConcernsOutput.from_mapping({"concerns": source})
+        output.concerns[0]["left"].append("changed")
+        self.assertEqual(output.concerns[0]["right"], [])
+        self.assertEqual(shared, [])
+
 
 if __name__ == "__main__":
     unittest.main()

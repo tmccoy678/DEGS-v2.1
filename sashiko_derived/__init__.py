@@ -18,9 +18,21 @@
 
 """Selected Sashiko value operations; no semantic review or authority decisions."""
 
-from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Any
+
+
+def _clone_json(value):
+    """Clone owned JSON subtrees, including repeated Python container references.
+
+    Rust Value owns each subtree. A memoized deepcopy would preserve Python
+    aliases, so each occurrence of a JSON container is copied independently.
+    """
+    if isinstance(value, dict):
+        return {key: _clone_json(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_clone_json(item) for item in value]
+    return value
 
 
 def append_stage_dismissed_concerns(dest, src, stage):
@@ -32,7 +44,7 @@ def append_stage_dismissed_concerns(dest, src, stage):
     if dest is src:
         raise ValueError("source and destination must be distinct lists")
     for item in src:
-        obj = deepcopy(item)
+        obj = _clone_json(item)
         if isinstance(obj, dict):
             obj["stage"] = stage
         dest.append(obj)
@@ -43,7 +55,7 @@ def append_stage_items(dest, src, stage, default_type, _key):
     if dest is src:
         raise ValueError("source and destination must be distinct lists")
     for item in src:
-        obj = deepcopy(item)
+        obj = _clone_json(item)
         if isinstance(obj, dict):
             value = obj.get("type")
             if not isinstance(value, str) or not value:
@@ -58,7 +70,7 @@ def _array(payload, name):
     value = payload.get(name, [])
     if not isinstance(value, list):
         raise ValueError(name + " must be an array; null is not an omitted field")
-    return deepcopy(value)
+    return _clone_json(value)
 
 
 @dataclass

@@ -10,7 +10,7 @@ From the checkout root:
 python3 -B -m unittest discover -s tests -v
 ```
 
-Observed: 63 tests passed, zero failures or skips. This includes all 58 copied gate CLI tests and 5 new port tests. The port tests cover detached nested values, retained scalars and order, default-type rules, stage replacement, omitted versus null arrays, ignored extra fields, independent defaults, and source/destination alias rejection.
+Observed: 64 tests passed, zero failures or skips. This includes all 58 copied gate CLI tests and 6 new port tests. The port tests cover detached nested values, retained scalars and order, default-type rules, stage replacement, omitted versus null arrays, ignored extra fields, independent defaults, and source/destination alias rejection.
 
 The implementation followed failing-test then passing-test slices. The result above is the final recorded suite, not the initial red runs. Existing source files listed in the baseline manifest remain byte-identical to their local canonical counterparts.
 
@@ -28,7 +28,7 @@ python3 -B tools/check_rust_parity.py \
   --oracle "$CARGO_TARGET_DIR/debug/sashiko-parity-oracle"
 ```
 
-Observed: **329 cases matched**, seed 20260911. Cases cover both append operations and three decoded-object output types. Numeric, boolean, string, null, nested-value, missing-field, wrong-type, and extra-field cases are included. This compares observable results with independently executed Rust source; it does not prove equivalence for every possible input or implement Sashiko's entire parser and review workflow. Rust is needed only for this optional comparison, not ordinary DEGS use.
+Observed: **331 cases matched**, seed 20260911. Cases cover both append operations and three decoded-object output types. Numeric, boolean, string, null, nested-value, missing-field, wrong-type, and extra-field cases are included. Two additional cases mutate a copied branch and verify that shared Python input references become independent owned JSON subtrees, matching Rust. This compares observable results with independently executed Rust source; it does not prove equivalence for every possible input or implement Sashiko's entire parser and review workflow. Rust is needed only for this optional comparison, not ordinary DEGS use.
 
 ## Demo observations
 

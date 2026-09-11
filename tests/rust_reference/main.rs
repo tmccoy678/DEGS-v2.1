@@ -84,6 +84,9 @@ fn main() {
                 let stage = input["stage"].as_str().unwrap();
                 if op == "dismissed" { append_stage_dismissed_concerns(&mut dest, src, stage); }
                 else { append_stage_items(&mut dest, src, stage, "General", "description"); }
+                if input["mutate_left"].as_bool().unwrap_or(false) {
+                    dest.last_mut().unwrap()["left"].as_array_mut().unwrap().push(json!("changed"));
+                }
                 json!({"ok":dest})
             }
         };
