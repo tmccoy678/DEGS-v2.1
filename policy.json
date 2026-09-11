@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "policy_id": "dobeworks-egs",
+  "policy_name": "Dobeworks Engineering Governance System",
+  "short_name": "Dobeworks EGS",
+  "acronym": "DEGS",
+  "policy_version": "1.1.0",
+  "policy_status": "ACTIVE",
+  "effective_date": "2026-09-01",
+  "policy_owner": "Dobeworks",
+  "policy_steward": "Taylor",
+  "owner": "Dobeworks",
+  "steward": "Taylor",
+  "disclaimer": "The Dobeworks Engineering Governance System is a tailored local engineering-governance framework informed by selected authoritative standards, handbooks, primary literature and public industry practices. It does not by itself constitute certification, accreditation, formal regulatory compliance, equivalence to private internal procedures, or endorsement by MIT, NASA, NIST, INCOSE, ISO, OWASP, CISA, Lockheed Martin, NVIDIA, Apple, Microsoft, IBM, the U.S. Department of Defense, or any other referenced organization.",
+  "authority_lanes": {
+    "COMMAND_CENTER": {
+      "purpose": ["architecture", "research", "planning", "independent audit"],
+      "mode": "read-mostly"
+    },
+    "TAYLOR_AI_WORKBENCH": {
+      "purpose": ["supervised local implementation", "bounded workspace changes", "verified configuration work"],
+      "mode": "supervised"
+    },
+    "AGENTOPS": {
+      "purpose": ["deliberately delegated autonomous work"],
+      "mode": "non-admin; no automatic privilege increase"
+    },
+    "TAYLOR": {
+      "purpose": ["credentials", "authentication", "destructive approval", "physical actions", "value judgments", "activation", "exceptions"],
+      "mode": "human authority"
+    },
+    "PRIVATE_VAULT": {
+      "purpose": [],
+      "mode": "outside all agent authority"
+    }
+  },
+  "risk_tiers": {
+    "TIER_0": "READ_ONLY_OBSERVATION",
+    "TIER_1": "REVERSIBLE_WORKSPACE_CHANGE",
+    "TIER_2": "CONFIGURATION_INTEGRATION_CHANGE",
+    "TIER_3": "CRITICAL_DESTRUCTIVE_IRREVERSIBLE"
+  },
+  "invariants": [
+    "DEGS-SEC-002",
+    "DEGS-SEC-003",
+    "DEGS-SEC-004",
+    "DEGS-SEC-005",
+    "DEGS-SEC-006",
+    "DEGS-AI-002",
+    "DEGS-AI-003",
+    "DEGS-AI-004",
+    "DEGS-AI-006",
+    "DEGS-DATA-001",
+    "DEGS-DATA-002",
+    "DEGS-DATA-003",
+    "DEGS-CFG-002",
+    "DEGS-CFG-003",
+    "DEGS-RISK-006",
+    "DEGS-OPS-001"
+  ],
+  "gate_requirements": {
+    "TIER_0": ["objective", "scope.read_only", "secret_handling", "authority_lane"],
+    "TIER_1": ["baseline", "requirements", "acceptance_criteria", "tests.static.status=PASS", "tests.static.evidence_path", "tests.positive.status=PASS", "tests.positive.evidence_path", "rollback", "handoff"],
+    "TIER_2": ["backup", "rollback", "risk_analysis", "deterministic_controls", "artifact_identity", "change_traceability", "data_governance", "threat_model", "ai_assurance", "monitoring", "verification.status=PASS_or_VERIFIED", "verification.evidence_path", "validation.status=PASS_or_VERIFIED", "validation.evidence_path", "tests.negative.status=PASS", "tests.negative.evidence_path", "tests.security.status=PASS", "tests.security.evidence_path", "tests.failure_path.status=PASS", "tests.failure_path.evidence_path", "tests.end_to_end.status=PASS", "tests.end_to_end.evidence_path", "independent_review", "documentation", "telemetry"],
+    "TIER_3": ["human_approval.status=APPROVED", "human_approval.approver=Taylor", "human_approval.approver_role=HUMAN", "human_approval.approval_mode=OUT_OF_BAND", "human_approval.evidence_path", "hazard_analysis.status=COMPLETE", "hazard_analysis.cross_domain_check.status=PASS", "hazard_analysis.residual_risk.acceptor_role=HUMAN_when_accepted", "recovery_validation", "independent_review.kind=AUDIT", "target_identity", "blast_radius", "stop_conditions", "post_action_validation", "dry_run", "no_unresolved_critical_warning", "authority_lane=TAYLOR"]
+  },
+  "gate_requirement_inheritance": {
+    "TIER_3": ["TIER_2"]
+  },
+  "definition_of_done": [
+    "objective",
+    "stakeholders",
+    "scope",
+    "non_goals",
+    "requirements",
+    "acceptance_criteria",
+    "risk_tier",
+    "authority_lane",
+    "security_invariants",
+    "deterministic_control_boundaries_when_applicable",
+    "data_purpose_and_minimization_when_applicable",
+    "current_threat_model_when_applicable",
+    "consequential_ai_assurance_when_applicable",
+    "monitoring_thresholds_and_safe_degradation_when_applicable",
+    "tested_hazard_analysis_and_human_residual_risk_acceptance_for_tier_3",
+    "baseline",
+    "assumptions",
+    "alternatives",
+    "implementation",
+    "static_tests",
+    "positive_tests",
+    "negative_tests",
+    "security_tests",
+    "failure_path_tests",
+    "integration_tests_when_relevant",
+    "actual_user_path",
+    "verification",
+    "validation",
+    "independent_review_or_permissible_waiver",
+    "independent_reviewer_identity_open_issue_disposition_and_retest",
+    "exact_artifact_identity_and_change_traceability_for_tier_2_and_tier_3",
+    "rollback",
+    "telemetry",
+    "canonical_documentation",
+    "secret_hygiene",
+    "handoff",
+    "human_understanding"
+  ],
+  "source_register_path": "/Users/taylor/AI-Workspace/governance/source-register.json",
+  "traceability_path": "/Users/taylor/AI-Workspace/governance/TRACEABILITY_MATRIX.md",
+  "approved_status_values": {
+    "policy": ["DRAFT", "ACTIVE", "SUPERSEDED", "RETIRED"],
+    "source": ["CURRENT REQUIREMENT", "FINAL STANDARD", "DRAFT", "AUTHORITATIVE HANDBOOK", "EDUCATIONAL", "FOUNDATIONAL", "PUBLIC INDUSTRY PRACTICE", "SUPERSEDED", "UNKNOWN"],
+    "gate": ["PASS", "PASS_WITH_WARNINGS", "BLOCKED", "FAIL"],
+    "audit": ["PENDING", "PENDING_REAUDIT", "CORRECTIONS_IN_PROGRESS", "PASS", "PASS_WITH_WARNINGS", "FAIL"],
+    "activation": ["NOT_AUTHORIZED", "AUTHORIZED"]
+  },
+  "review_interval": "P90D",
+  "last_verified_at": "2026-09-01T01:38:04-05:00",
+  "independent_audit_status": "PASS_WITH_WARNINGS",
+  "independent_audit": {
+    "verdict": "PASS_WITH_WARNINGS",
+    "report_path": "/Users/taylor/AI-Workspace/audits/degs-1.1.0-f1-f2-remediation-reaudit-20260831-213627.md",
+    "report_sha256": "2067a66dd3507fe5052f71655e8f175f31ed35879835145b298881cc12c11fd3",
+    "finding_dispositions": {
+      "F1": "RESOLVED",
+      "F2": "RESOLVED",
+      "F3": "RESOLVED_FAIL_CLOSED_DECLARED_STATUS",
+      "F6": "RESOLVED_DOCUMENTED_SCOPE_DISTINCTION"
+    },
+    "material_f1_f2_finding_remaining": false,
+    "warning_dispositions": {
+      "R1": "CLOSED_BY_SUPERVISING_VERIFICATION",
+      "R2": "RESOLVED_BY_PAIRED_CONTEXT_REFRESH",
+      "U1": "CLOSED_BY_SUPERVISING_VERIFICATION",
+      "U2": "CLOSED_BY_SUPERVISING_VERIFICATION",
+      "O1": "ACCEPTED_NON_CRITICAL_HISTORICAL_LIMITATION_BY_TAYLOR",
+      "O2": "RESOLVED_POSITIVE_VERIFIED_COVERAGE",
+      "O3": "RESOLVED_EXPLICIT_TIER_3_INHERITANCE",
+      "O4": "ACCEPTED_NON_CRITICAL_HISTORICAL_LIMITATION_BY_TAYLOR"
+    },
+    "warnings_accepted_for_activation": true,
+    "warning_acceptance_scope": "O1_O4_ONLY_FOR_ACTIVATION_REVIEW",
+    "prospective_transcript_controls": {
+      "green_transcript_required_header_fields": [
+        "command",
+        "working_directory",
+        "started_at",
+        "exit_code"
+      ],
+      "retain_red_phase_transcript": true
+    },
+    "activation_authorization": "AUTHORIZED"
+  },
+  "activation_status": "AUTHORIZED",
+  "activation_record": {
+    "change_id": "DEGS-T3-ACTIVATION-20260901-011851",
+    "activated_at": "2026-09-01T01:33:55-05:00",
+    "decision": "APPROVE",
+    "approver": "Taylor",
+    "approver_role": "HUMAN",
+    "approval_mode": "OUT_OF_BAND",
+    "authorized_pre_activation_governance_sha256": "c00b1e77f6b03e09f03e16d9bac50099b059a5ab19de8a71fbd7f28ded3135b5",
+    "approval_request_path": "/Users/taylor/AI-Workspace/approval-requests/dobeworks-egs-1.1.0-activation.json",
+    "approval_request_sha256": "404194802e95c538435934f60134aced1bcf9b225e60245cfe66f9d321b8fd55",
+    "approval_record_sha256": "820801ec0d8f8edc638e309206683a4211df9183b5bd23b2adc1e37a55b752bd",
+    "approval_checksum_sha256": "bac342ef8ce4794a26db6091a417ba21577bfb1179f431f640c3e85a657a0b92",
+    "accepted_warning_scope": "O1_O4_ONLY_FOR_ACTIVATION_REVIEW",
+    "activation_handoff_path": "/Users/taylor/AI-Workspace/handoffs/degs-tier3-activation-start-20260901-011028.md",
+    "activation_handoff_sha256": "8adfe22dc5c5448fb8c35950365966242c43a094c78723f8e55c21851f459101",
+    "pre_activation_backup": "/Users/taylor/AI-Workspace/backups/engineering-governance-tier3-activation-20260901-011851/governance",
+    "pre_activation_backup_manifest_sha256": "c00b1e77f6b03e09f03e16d9bac50099b059a5ab19de8a71fbd7f28ded3135b5"
+  },
+  "activation_requirements": {
+    "full_automated_test_suite": "REQUIRED",
+    "independent_governance_audit": "REQUIRED",
+    "accepted_non_critical_warnings": "REQUIRED_IF_PRESENT",
+    "taylor_explicit_approval": "REQUIRED"
+  }
+}

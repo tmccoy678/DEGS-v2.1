@@ -1,0 +1,762 @@
+{
+  "schema_version": 1,
+  "policy_id": "dobeworks-egs",
+  "policy_version": "1.1.0",
+  "verified_at": "2026-08-31",
+  "selection_method": "Current official, standards-body, institutional, publisher, author-hosted, or first-party public sources only; the 2026-08-31 expansion is the validated bounded 18-record set and preserves source scope, identity, licensing, and documented-practice-versus-DEGS-synthesis boundaries",
+  "approved_status_values": [
+    "CURRENT REQUIREMENT",
+    "FINAL STANDARD",
+    "DRAFT",
+    "AUTHORITATIVE HANDBOOK",
+    "EDUCATIONAL",
+    "FOUNDATIONAL",
+    "PUBLIC INDUSTRY PRACTICE",
+    "SUPERSEDED",
+    "UNKNOWN"
+  ],
+  "sources": [
+    {
+      "source_id": "DEGS-SRC-MIT-16842",
+      "organization_or_author": "Massachusetts Institute of Technology OpenCourseWare; Prof. Olivier de Weck",
+      "title": "Fundamentals of Systems Engineering",
+      "edition_version_revision": "Course 16.842, as taught Fall 2015",
+      "publication_or_effective_date": "Fall 2015; exact web-publication date UNKNOWN",
+      "current_status": "EDUCATIONAL",
+      "official_source_location": [
+        "https://ocw.mit.edu/courses/16-842-fundamentals-of-systems-engineering-fall-2015/"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Graduate introduction to stakeholder analysis, requirements, architecture, trade-space exploration, integration, safety, verification and validation, commissioning, operations, and lifecycle management.",
+      "degs_use": "Educational support for mission and stakeholder framing, measurable requirements, alternatives and trade-offs, lifecycle thinking, V&V separation, and reflective learning.",
+      "normative_weight": "TIER B — official educational material; informative, not binding",
+      "limitations": "The course is a 2015 teaching artifact and cites some editions since superseded; version-sensitive obligations use current standards records.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-NASA-SEH",
+      "organization_or_author": "NASA; Steven R. Hirshorn, Linda D. Voss, and Linda K. Bromley",
+      "title": "NASA Systems Engineering Handbook",
+      "edition_version_revision": "NASA/SP-2016-6105 Rev 2",
+      "publication_or_effective_date": "Document year 2016; NTRS publication date 2017-02-17",
+      "current_status": "AUTHORITATIVE HANDBOOK",
+      "official_source_location": [
+        "https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/20170001761.pdf",
+        "https://www.nasa.gov/reference/systems-engineering-handbook/"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Systems-engineering guidance covering fundamentals, program and project lifecycles, system design, product realization, and cross-cutting technical management.",
+      "degs_use": "Guidance for lifecycle tailoring, stakeholder expectations, technical requirements, V&V, configuration and data management, reviews, risk, and handoffs.",
+      "normative_weight": "TIER B — authoritative official handbook",
+      "limitations": "The handbook provides guidance rather than a directive. NASA applicability does not transfer to Dobeworks.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-NASA-NPR7123",
+      "organization_or_author": "NASA Office of the Chief Engineer",
+      "title": "NASA Systems Engineering Processes and Requirements",
+      "edition_version_revision": "NPR 7123.1D, updated with Change 2",
+      "publication_or_effective_date": "Effective 2023-07-05; expires 2028-07-05",
+      "current_status": "CURRENT REQUIREMENT",
+      "official_source_location": [
+        "https://nodis3.gsfc.nasa.gov/displayDir.cfm?Internal_ID=N_PR_7123_001D_"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "NASA institutional and programmatic responsibilities, common technical processes, contracted-project activities, lifecycle and technical reviews, and systems-engineering management plans.",
+      "degs_use": "Patterns for proportional tailoring, lifecycle reviews, requirements management, technical processes, verification evidence, and systems-engineering planning.",
+      "normative_weight": "TIER A — current formal NASA procedural requirement",
+      "limitations": "Mandatory only within its stated NASA applicability and contractual reach. It does not bind Dobeworks and is locally mapped without a compliance claim.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-INCOSE-SEH",
+      "organization_or_author": "International Council on Systems Engineering (INCOSE); editors David D. Walden, Thomas M. Shortell, Garry J. Roedler, Bernardo A. Delicado, Odile Mornas, Yip Yew-Seng, and David Endler",
+      "title": "INCOSE Systems Engineering Handbook: A Guide for System Life Cycle Processes and Activities",
+      "edition_version_revision": "Fifth edition; INCOSE-TP-2003-002-05-2023",
+      "publication_or_effective_date": "E-book 2023-06; paperback 2023-07",
+      "current_status": "AUTHORITATIVE HANDBOOK",
+      "official_source_location": [
+        "https://www.incose.org/resources-publications/technical-publications/se-handbook/",
+        "https://catalogimages.wiley.com/images/db/pdf/9781119814290.excerpt.pdf"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Systems-engineering good practice across concepts, lifecycle processes and methods, tailoring, application considerations, and practice; elaborates ISO/IEC/IEEE 15288:2023.",
+      "degs_use": "Handbook support for lifecycle, stakeholder, process, tailoring, architecture, risk, V&V, and review practices.",
+      "normative_weight": "TIER B — authoritative professional handbook",
+      "limitations": "The complete handbook was not publicly accessible; the official overview and publisher sample were reviewed. INCOSE use does not certify DEGS.",
+      "access": "OFFICIAL OVERVIEW AND SAMPLE ONLY"
+    },
+    {
+      "source_id": "DEGS-SRC-SEBOK",
+      "organization_or_author": "SEBoK Editorial and Governing Boards",
+      "title": "Guide to the Systems Engineering Body of Knowledge (SEBoK)",
+      "edition_version_revision": "Version 2.14",
+      "publication_or_effective_date": "Released 2026-05-18",
+      "current_status": "AUTHORITATIVE HANDBOOK",
+      "official_source_location": [
+        "https://sebokwiki.org/wiki/Main_Page",
+        "https://sebokwiki.org/wiki/Version_2.14"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Living guide to systems-engineering knowledge, sources, lifecycle practice, systems science, management, applications, enabling practices, and related disciplines.",
+      "degs_use": "Orientation and cross-checking for lifecycle, governance, tailoring, and terminology mappings.",
+      "normative_weight": "TIER B — authoritative living body of knowledge",
+      "limitations": "A living guide to knowledge rather than a formal requirement or certification scheme; article maturity varies and source-level scrutiny remains necessary.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-ISO-15288",
+      "organization_or_author": "ISO, IEC, and IEEE",
+      "title": "Systems and software engineering — System life cycle processes",
+      "edition_version_revision": "ISO/IEC/IEEE 15288:2023, Edition 2",
+      "publication_or_effective_date": "2023-05; published 2023-05-16",
+      "current_status": "FINAL STANDARD",
+      "official_source_location": [
+        "https://www.iso.org/standard/81702.html"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Common process framework and terminology for human-created systems across conception, development, production, utilization, support, retirement, acquisition, and supply.",
+      "degs_use": "Lifecycle and process structure, stakeholder involvement, acquisition and supply context, tailoring, and improvement concepts where the official scope supports the mapping.",
+      "normative_weight": "TIER A — current published international standard",
+      "limitations": "Only the official abstract, lifecycle metadata, and limited preview were reviewed. An overview-level mapping does not establish conformity.",
+      "access": "OFFICIAL OVERVIEW ONLY"
+    },
+    {
+      "source_id": "DEGS-SRC-NASA-NPR7150",
+      "organization_or_author": "NASA Office of the Chief Engineer",
+      "title": "NASA Software Engineering Requirements",
+      "edition_version_revision": "NPR 7150.2D",
+      "publication_or_effective_date": "Effective 2022-03-08; expires 2027-03-08",
+      "current_status": "CURRENT REQUIREMENT",
+      "official_source_location": [
+        "https://nodis3.gsfc.nasa.gov/displayDir.cfm?c=7150&s=2D&t=NPR"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Requirements for applicable NASA software acquisition, development, maintenance, retirement, operations, management, classification, lifecycle planning, implementation, testing, and assurance.",
+      "degs_use": "Patterns for software classification, measurable requirements, lifecycle planning, static analysis, testing, assurance, traceability, tailoring, and technical authority.",
+      "normative_weight": "TIER A — current formal NASA procedural requirement",
+      "limitations": "Mandatory only within the directive's NASA applicability and contractual reach. It does not bind Dobeworks.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-NASA-SWEHB",
+      "organization_or_author": "NASA Office of the Chief Engineer",
+      "title": "NASA Software Engineering Handbook",
+      "edition_version_revision": "NASA-HDBK-2203, version d, change 0",
+      "publication_or_effective_date": "Document date 2020-04-20",
+      "current_status": "AUTHORITATIVE HANDBOOK",
+      "official_source_location": [
+        "https://standards.nasa.gov/standard/NASA/NASA-HDBK-2203"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Implementation guidance for NPR 7150.2 and NASA software-assurance and software-safety requirements.",
+      "degs_use": "Guidance and rationale for software requirements, assurance, safety, planning, classification, tailoring, testing, and evidence.",
+      "normative_weight": "TIER B — active, endorsed NASA technical handbook; not mandatory",
+      "limitations": "NASA marks the record ACTIVE and not mandatory, but its listed next five-year review date was 2025-04-20. Freshness must be rechecked on the 90-day cadence.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-ISO-12207",
+      "organization_or_author": "ISO, IEC, and IEEE",
+      "title": "Systems and software engineering — Software life cycle processes",
+      "edition_version_revision": "ISO/IEC/IEEE 12207:2026, Edition 2",
+      "publication_or_effective_date": "2026-04; published 2026-04-29",
+      "current_status": "FINAL STANDARD",
+      "official_source_location": [
+        "https://www.iso.org/standard/90219.html"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Common framework for software lifecycle processes across acquisition, supply, development, operations, maintenance, support, disposal and retirement, and organizational process control and improvement.",
+      "degs_use": "Software lifecycle and process framing and controlled tailoring where the official scope supports the mapping.",
+      "normative_weight": "TIER A — current published international standard",
+      "limitations": "Only the official abstract, lifecycle metadata, and limited preview were reviewed. The 2017 edition is withdrawn; no conformity claim follows from this overview.",
+      "access": "OFFICIAL OVERVIEW ONLY"
+    },
+    {
+      "source_id": "DEGS-SRC-CMU-SEI-QAW",
+      "organization_or_author": "Carnegie Mellon University Software Engineering Institute; Mario R. Barbacci, Robert J. Ellison, Anthony J. Lattanze, Judith A. Stafford, Charles Weinstock, and William Wood",
+      "title": "Quality Attribute Workshops (QAWs), Third Edition",
+      "edition_version_revision": "Third edition; CMU/SEI-2003-TR-016",
+      "publication_or_effective_date": "2003-10-01",
+      "current_status": "AUTHORITATIVE HANDBOOK",
+      "official_source_location": [
+        "https://www.sei.cmu.edu/library/quality-attribute-workshops-qaws-third-edition/",
+        "https://www.sei.cmu.edu/library/quality-attribute-workshop-collection/"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Stakeholder-driven elicitation and prioritization of architecture-significant quality-attribute scenarios before an architecture exists.",
+      "degs_use": "Measurable quality attributes, stakeholder goals, scenario-based acceptance criteria, architecture trade-offs, assumptions, and early risk discovery.",
+      "normative_weight": "TIER B — authoritative SEI technical report",
+      "limitations": "A mature method rather than a universal requirement; workshop ceremony must be tailored proportionally for a small local system.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-NIST-SSDF",
+      "organization_or_author": "National Institute of Standards and Technology; Murugiah Souppaya, Karen Scarfone, and Donna Dodson",
+      "title": "Secure Software Development Framework (SSDF) Version 1.1: Recommendations for Mitigating the Risk of Software Vulnerabilities",
+      "edition_version_revision": "NIST SP 800-218; SSDF v1.1",
+      "publication_or_effective_date": "Final 2022-02-03",
+      "current_status": "FINAL STANDARD",
+      "official_source_location": [
+        "https://csrc.nist.gov/pubs/sp/800/218/final"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "High-level secure software-development practices for integration into an SDLC, covering preparation, software protection, well-secured production, and vulnerability response.",
+      "degs_use": "Current final SSDF baseline for secure-development rules, development-environment protection, provenance, vulnerability prevention and response, and acquisition communication.",
+      "normative_weight": "TIER A — current final NIST Special Publication",
+      "limitations": "Risk-based recommendations require local implementation detail and do not confer NIST certification. The later v1.2 document remains draft.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-NIST-SSDF12-DRAFT",
+      "organization_or_author": "National Institute of Standards and Technology; Harold Booth, Michael Ogata, Karen Kent, Murugiah Souppaya, and Donna Dodson",
+      "title": "Secure Software Development Framework (SSDF) Version 1.2: Recommendations for Mitigating the Risk of Software Vulnerabilities",
+      "edition_version_revision": "NIST SP 800-218 Rev. 1, Initial Public Draft; SSDF v1.2",
+      "publication_or_effective_date": "2025-12-17; comment period closed 2026-01-30",
+      "current_status": "DRAFT",
+      "official_source_location": [
+        "https://csrc.nist.gov/pubs/sp/800/218/r1/ipd"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Proposed new and improved SSDF practices, tasks, and examples for secure and reliable software development, delivery, and improvement.",
+      "degs_use": "Advisory horizon-scanning and refresh triggers only; it does not change current DEGS obligations.",
+      "normative_weight": "TIER A CANDIDATE — ADVISORY ONLY",
+      "limitations": "Initial Public Draft; it may change or be abandoned and must not replace SSDF v1.1 in DEGS v1.0.0.",
+      "access": "FULL DRAFT TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-NIST-SSDF-AI",
+      "organization_or_author": "National Institute of Standards and Technology; Harold Booth, Murugiah Souppaya, Apostol Vassilev, Michael Ogata, Martin Stanley, and Karen Scarfone",
+      "title": "Secure Software Development Practices for Generative AI and Dual-Use Foundation Models: An SSDF Community Profile",
+      "edition_version_revision": "NIST SP 800-218A",
+      "publication_or_effective_date": "Final 2024-07-26",
+      "current_status": "FINAL STANDARD",
+      "official_source_location": [
+        "https://csrc.nist.gov/pubs/sp/800/218/a/final"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "AI-model-development additions to SSDF v1.1 for model producers, AI-system producers, and acquirers.",
+      "degs_use": "AI-specific secure-development and acquisition controls used together with SP 800-218 v1.1.",
+      "normative_weight": "TIER A — final NIST Special Publication and community profile",
+      "limitations": "Applies specifically to generative-AI and dual-use-foundation-model contexts and supplements rather than replaces SSDF v1.1.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-CISA-SBD",
+      "organization_or_author": "U.S. Cybersecurity and Infrastructure Security Agency with U.S. and international government partners",
+      "title": "Shifting the Balance of Cybersecurity Risk: Principles and Approaches for Secure by Design Software",
+      "edition_version_revision": "Refined and expanded October 2023 edition; no formal version number",
+      "publication_or_effective_date": "2023-10; exact day UNKNOWN",
+      "current_status": "AUTHORITATIVE HANDBOOK",
+      "official_source_location": [
+        "https://www.cisa.gov/resources-tools/resources/secure-by-design",
+        "https://www.cisa.gov/sites/default/files/2023-10/Shifting-the-Balance-of-Cybersecurity-Risk-Principles-and-Approaches-for-Secure-by-Design-Software.pdf"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Secure-by-design principles for software manufacturers, including ownership of customer security outcomes, transparency and accountability, leadership, and safe defaults.",
+      "degs_use": "Secure defaults, upstream ownership, reduction of customer burden, transparency, leadership, and lifecycle security design.",
+      "normative_weight": "TIER B — authoritative government guidance",
+      "limitations": "Voluntary, broad, manufacturer-oriented guidance; it is neither a certification nor a universal legal requirement.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-OWASP-ASVS",
+      "organization_or_author": "OWASP Foundation, Application Security Verification Standard project",
+      "title": "OWASP Application Security Verification Standard",
+      "edition_version_revision": "Version 5.0.0",
+      "publication_or_effective_date": "2025-05-30",
+      "current_status": "FINAL STANDARD",
+      "official_source_location": [
+        "https://owasp.org/www-project-application-security-verification-standard/",
+        "https://github.com/OWASP/ASVS"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Testable application-security requirements for web applications and services with version-qualified identifiers.",
+      "degs_use": "Applicable web and API security verification, measurable security acceptance criteria, and negative and security tests.",
+      "normative_weight": "TIER A — current stable community standard",
+      "limitations": "Application-focused and subject to tailored applicability. Repository development output is not the stable release; version-qualified IDs are required.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-SLSA",
+      "organization_or_author": "SLSA Community",
+      "title": "SLSA specification",
+      "edition_version_revision": "Version 1.2; status Approved",
+      "publication_or_effective_date": "2025-11-24",
+      "current_status": "FINAL STANDARD",
+      "official_source_location": [
+        "https://slsa.dev/spec/v1.2/",
+        "https://slsa.dev/blog/2025/11/announce-slsa-v1.2"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Incremental software-supply-chain security levels and tracks, including Build and Source tracks and attestation formats.",
+      "degs_use": "Supply-chain integrity, provenance, source and build controls, and attestation concepts proportional to task and deployment risk.",
+      "normative_weight": "TIER A — current Approved specification",
+      "limitations": "Defines bounded guarantees rather than a complete secure-development program; any claimed level requires actual evidence.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-MIT-ELO-BP",
+      "organization_or_author": "MIT Office of Experiential Learning",
+      "title": "Best Practices for Experiential Learning",
+      "edition_version_revision": "Web resource; no formal version",
+      "publication_or_effective_date": "UNKNOWN",
+      "current_status": "EDUCATIONAL",
+      "official_source_location": [
+        "https://elo.mit.edu/best-practices/"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Hands-on application, rigor, mentoring, meaningful duration and intensity, structured reflection, feedback, assessment, clear goals, and scaffolded independence.",
+      "degs_use": "Mentorship rules for clear goals, communication, constructive feedback, reflection, assessment, scaffolded support, and increasing Taylor's independence.",
+      "normative_weight": "TIER B — official MIT educational guidance",
+      "limitations": "Experiential-learning guidance rather than software governance; local adaptations must be explicit and do not constitute MIT approval.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-MIT-ELO-AFR",
+      "organization_or_author": "MIT Office of Experiential Learning",
+      "title": "About the Office of Experiential Learning — What is Experiential Learning?",
+      "edition_version_revision": "Web resource; no formal version",
+      "publication_or_effective_date": "UNKNOWN",
+      "current_status": "EDUCATIONAL",
+      "official_source_location": [
+        "https://elo.mit.edu/about/"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Supported action-feedback-reflection cycles connecting authentic action, expert feedback, reflection, guidance, and learning.",
+      "degs_use": "Action-feedback-reflection cycles, authentic practice, expert feedback, structured reflection, and transfer into the next phase.",
+      "normative_weight": "TIER B — official MIT educational guidance",
+      "limitations": "Educational guidance rather than an engineering standard; DEGS mentorship controls are local adaptations, not external mandates.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-DIJKSTRA-STRUCT",
+      "organization_or_author": "Edsger W. Dijkstra; institutional archive hosted by the University of Texas at Austin",
+      "title": "Notes on Structured Programming",
+      "edition_version_revision": "EWD249; T.H. Report 70-WSK-03; second edition",
+      "publication_or_effective_date": "First text dated 1969-08; second edition 1970-04",
+      "current_status": "FOUNDATIONAL",
+      "official_source_location": [
+        "https://www.cs.utexas.edu/~EWD/transcriptions/EWD02xx/EWD249/EWD249.html",
+        "https://www.cs.utexas.edu/~EWD/ewd02xx/EWD249.PDF"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Program comprehensibility, correctness reasoning, abstraction, structured composition, program families, manageability, and stepwise decisions.",
+      "degs_use": "Clarity, manageability, structured decomposition, explicit reasoning, small decisions, alternatives, and design for change.",
+      "normative_weight": "TIER C — foundational primary literature",
+      "limitations": "Historical and not a modern lifecycle or security standard; derived principles require current safety and security support.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-PARNAS-MODULES",
+      "organization_or_author": "David L. Parnas",
+      "title": "On the Criteria To Be Used in Decomposing Systems into Modules",
+      "edition_version_revision": "Communications of the ACM, volume 15, issue 12, pages 1053–1058; DOI 10.1145/361598.361623",
+      "publication_or_effective_date": "1972-12-01",
+      "current_status": "FOUNDATIONAL",
+      "official_source_location": [
+        "https://doi.org/10.1145/361598.361623"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Modularization criteria for flexibility, comprehensibility, development independence, and information hiding.",
+      "degs_use": "Information hiding, simple interfaces, responsibility ownership, high cohesion, low unnecessary coupling, and isolating likely change.",
+      "normative_weight": "TIER C — foundational primary literature",
+      "limitations": "Historical design paper rather than a modern standard; only the official publisher metadata and abstract were reviewed in this build.",
+      "access": "OFFICIAL OVERVIEW ONLY"
+    },
+    {
+      "source_id": "DEGS-SRC-SALTZER-E2E",
+      "organization_or_author": "Jerome H. Saltzer, David P. Reed, and David D. Clark",
+      "title": "End-to-End Arguments in System Design",
+      "edition_version_revision": "ACM Transactions on Computer Systems, volume 2, issue 4, pages 277–288; DOI 10.1145/357401.357402",
+      "publication_or_effective_date": "1984-11",
+      "current_status": "FOUNDATIONAL",
+      "official_source_location": [
+        "https://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf",
+        "https://web.mit.edu/Saltzer/www/publications/pubs.html"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Placement of correctness-critical functions at the layer or endpoints with the knowledge needed to implement them completely, while allowing justified lower-layer enhancements.",
+      "degs_use": "End-to-end correctness, responsibility placement, actual user-path validation, minimal lower-layer mechanisms, and avoidance of misplaced or duplicate controls.",
+      "normative_weight": "TIER C — foundational primary literature",
+      "limitations": "A design argument rather than an absolute placement rule or modern security and lifecycle standard; lower-layer mechanisms can remain justified.",
+      "access": "FULL TEXT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-LM-SWFACTORY",
+      "organization_or_author": "Lockheed Martin",
+      "title": "Lockheed Martin Software Factory Continues to Expand with Accelerated Software Development Capability",
+      "edition_version_revision": "First-party web feature; no formal version",
+      "publication_or_effective_date": "2020-08-24",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://www.lockheedmartin.com/en-us/news/features/2020/lockheed-martin-software-factory-continues-expand-company-accelerates-software-development-capabilities.html"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Public description of software-factory operations combining secure infrastructure, automated toolkits, modern software processes, trained staff, and rapid or continuous delivery.",
+      "degs_use": "Informative example of integrating people, process, automation, security, testing, and continuous delivery; never a normative requirement.",
+      "normative_weight": "TIER D — public industry practice; informative only",
+      "limitations": "First-party corporate communication may be selective or promotional. It is not an internal standard, independent evaluation, or evidence of private procedures.",
+      "access": "FULL PUBLIC PAGE ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-LM-SKUNKWORKS",
+      "organization_or_author": "Lockheed Martin Skunk Works",
+      "title": "The Skunk Works Legacy",
+      "edition_version_revision": "First-party web page; no formal version",
+      "publication_or_effective_date": "UNKNOWN",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://www.lockheedmartin.com/en-us/who-we-are/business-areas/aeronautics/skunkworks/skunk-works-origin-story.html"
+      ],
+      "date_verified": "2026-08-30",
+      "scope": "Public description of small empowered teams, streamlined processes, rapid prototyping, and a culture of novel work.",
+      "degs_use": "Informative example for bounded rapid prototypes, empowered small teams, minimized unnecessary process, and design-build-test learning cycles.",
+      "normative_weight": "TIER D — public industry practice; informative only",
+      "limitations": "Self-reported corporate history and branding, not private internal procedures or independently validated governance. Rapid prototyping never overrides DEGS controls.",
+      "access": "FULL PUBLIC PAGE ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-NVIDIA-SDL",
+      "organization_or_author": "NVIDIA",
+      "title": "Security Development Lifecycle for NVIDIA AI Enterprise",
+      "edition_version_revision": "NVIDIA AI Enterprise Security White Paper; mutable latest page reported last updated 2026-04-15; retrieved 2026-08-31; SHA-256 c156a50ce61926f02bd7bf00b9a412bae57485d2c6dd123d5f445113adced73a",
+      "publication_or_effective_date": "Page reported last updated 2026-04-15",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://docs.nvidia.com/ai-enterprise/planning-resource/ai-enterprise-security-white-paper/latest/security-lifecycle.html"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Public product-specific description of security work across planning, requirements, design, coding, verification, release, and operations, including threat analysis, scanning, security testing, provenance artifacts, signing, and a publication-blocking readiness check.",
+      "degs_use": "Corroborates lifecycle-spanning checks, deterministic fail-closed gates, artifact provenance, and release identity. The DEGS mechanism and obligations are local synthesis.",
+      "normative_weight": "TIER D — public industry practice; informative and corroborative only",
+      "limitations": "NVIDIA AI Enterprise product guidance and corporate self-description, not an NVIDIA-wide standard, independent effectiveness evidence, or proof that DEGS is equivalent. The mutable latest page is pinned only to the recorded retrieval hash.",
+      "licensing": "COPYRIGHTED NVIDIA DOCUMENTATION; NO OPEN-CONTENT REUSE LICENSE IDENTIFIED; CITE AND PARAPHRASE",
+      "access": "FULL TEXT RETRIEVED 2026-08-31; SHA-256 c156a50ce61926f02bd7bf00b9a412bae57485d2c6dd123d5f445113adced73a"
+    },
+    {
+      "source_id": "DEGS-SRC-NVIDIA-CUDA-BPG",
+      "organization_or_author": "NVIDIA",
+      "title": "CUDA C++ Best Practices Guide",
+      "edition_version_revision": "Release 13.3 live official edition; retrieved 2026-08-31; SHA-256 adafb42af49413c1fd78cd657bcb3d2bc05d4255f10ad0d676b35d59dd515b47",
+      "publication_or_effective_date": "Release 13.3 displayed at verification; exact page publication date UNKNOWN",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "CUDA-specific guidance for Assess–Parallelize–Optimize–Deploy, realistic workloads, incremental measured change, known-good reference outputs, explicit tolerances, unit-level verification, and production error checking.",
+      "degs_use": "Supports representative baselines, correctness comparison, explicit tolerances, and incremental measurement. Applying those patterns beyond CUDA is DEGS synthesis.",
+      "normative_weight": "TIER D — public industry practice; informative only",
+      "limitations": "Authoritative only for the identified CUDA 13.3 guide, not organization-wide governance. No open-document reuse license was identified; cite and paraphrase. The mutable URL is pinned to the recorded retrieval hash.",
+      "licensing": "NO OPEN-DOCUMENT REUSE LICENSE IDENTIFIED; CITE AND PARAPHRASE",
+      "access": "FULL TEXT RETRIEVED 2026-08-31; SHA-256 adafb42af49413c1fd78cd657bcb3d2bc05d4255f10ad0d676b35d59dd515b47"
+    },
+    {
+      "source_id": "DEGS-SRC-NVIDIA-TAI-FY25",
+      "organization_or_author": "NVIDIA",
+      "title": "NVIDIA Sustainability Report Fiscal Year 2025 — Trustworthy AI",
+      "edition_version_revision": "Fiscal Year 2025 corporate sustainability report; dated self-report",
+      "publication_or_effective_date": "Covers 2024-01-29 through 2025-01-26; information stated approximately current to 2025-06-12",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://images.nvidia.com/aem-dam/Solutions/documents/NVIDIA-Sustainability-Report-Fiscal-Year-2025.pdf"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Corporate self-report describing privacy, safe and intended performance, documented limitations, bias reduction, lifecycle attention through decommissioning, cross-functional review, model cards, validation, audit, red teaming, and guardrails.",
+      "degs_use": "Corroborates lifecycle review, limitations disclosure, cross-functional accountability, and pre-release assurance for consequential AI. It is not the sole basis for any DEGS control.",
+      "normative_weight": "TIER D — dated public corporate self-report; corroborative only",
+      "limitations": "Selective dated corporate disclosure with aspirational and measurement caveats; not a technical standard, independent assurance, current private-process evidence, or proof of effectiveness. NVIDIA copyright; cite and paraphrase.",
+      "licensing": "COPYRIGHT NVIDIA; NO OPEN-CONTENT REUSE LICENSE IDENTIFIED; CITE AND PARAPHRASE",
+      "access": "FULL OFFICIAL PDF ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-APPLE-PRIV-GOV",
+      "organization_or_author": "Apple",
+      "title": "Apple Privacy Governance",
+      "edition_version_revision": "Mutable official governance page with no displayed stable version; retrieved 2026-08-31; SHA-256 48e2ebf424f556c7c75c8f16c30603e5ff87a790fd68afcdd9525e1390414002",
+      "publication_or_effective_date": "No publication date displayed; retrieved 2026-08-31",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://www.apple.com/legal/privacy/en-ww/governance/"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Public Apple description of privacy by default, collection and retention limited to a stated purpose, business-need access, privacy impact assessment during development, cross-functional governance, and risk-based reassessment of algorithmic decisions.",
+      "degs_use": "Supports purpose limitation, minimization, retention discipline, impact assessment, and reassessment triggers. DEGS evaluator fields and decisions are local synthesis.",
+      "normative_weight": "TIER D — public industry practice; informative only",
+      "limitations": "Company-authored living description, not a complete control specification, stable edition, or independent proof of implementation effectiveness. No open reuse license was identified; cite and paraphrase.",
+      "licensing": "NO OPEN-CONTENT REUSE LICENSE IDENTIFIED; CITE AND PARAPHRASE",
+      "access": "FULL TEXT RETRIEVED 2026-08-31; SHA-256 48e2ebf424f556c7c75c8f16c30603e5ff87a790fd68afcdd9525e1390414002"
+    },
+    {
+      "source_id": "DEGS-SRC-APPLE-PCC",
+      "organization_or_author": "Apple Security Research",
+      "title": "Private Cloud Compute architecture and expansion status",
+      "edition_version_revision": "Declared composite record: architecture introduction, documentation entry point, and 2026 expansion status; retrieved 2026-08-31; SHA-256 intro f4ead309193393ab3d9ef4232bedd4b39765a7b3023919a3dbd98771e0e1fc47, docs b90ca6c4bf1a73df5e5043a4b6143084cc6ed62f09ee880ec564b8724b299634, expansion 8b591d5774c0c0427bf9aaf5158b24851164825cf1b7fb1fc7865ca365dc0d01",
+      "publication_or_effective_date": "Architecture introduced 2024-06-10; expansion status page published in 2026",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://security.apple.com/blog/private-cloud-compute/",
+        "https://security.apple.com/documentation/private-cloud-compute/",
+        "https://security.apple.com/blog/expanding-pcc/"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Specialized PCC design requirements for stateless computation, technically enforceable guarantees, no privileged runtime access, non-targetability, verifiable transparency, purpose-limited processing, restricted logging, signed and attested software, and inspectable production artifacts.",
+      "degs_use": "Informs evidence identity, inspectability, deletion-after-purpose, privilege separation, and non-bypass design. The exact DEGS controls are local synthesis.",
+      "normative_weight": "TIER D — specialized public product architecture; informative only",
+      "limitations": "PCC depends on specialized Apple architecture and cannot establish equivalent DEGS guarantees. The 2026 Google Cloud deployment was described as preview ramping toward the full requirements and is not represented as complete production equivalence. Released-component licensing is not a general open-content license.",
+      "licensing": "LIMITED-USE LICENSING DESCRIBED FOR RELEASED COMPONENTS ONLY; NO GENERAL OPEN-CONTENT LICENSE",
+      "access": "FULL PUBLIC PAGES RETRIEVED; three ordered SHA-256 identities recorded in edition metadata"
+    },
+    {
+      "source_id": "DEGS-SRC-APPLE-SWIFT-EVOLUTION",
+      "organization_or_author": "Swift project; swiftlang organization",
+      "title": "Swift Evolution Process",
+      "edition_version_revision": "Pinned commit c8623621aacc8e3f364bb0f3cb07675177a1ec4e",
+      "publication_or_effective_date": "Pinned commit validated 2026-08-31; exact commit publication date UNKNOWN",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://github.com/swiftlang/swift-evolution/blob/c8623621aacc8e3f364bb0f3cb07675177a1ec4e/process.md"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Swift-project process for written proposals, open review, decisions by responsible workgroups, prototypes for relevant language changes, and explicitly gated experimental features.",
+      "degs_use": "Supports explicit proposals, accountable decision authority, review, prototypes where feasible, and bounded experiment exit conditions. Applying those patterns to DEGS is synthesis.",
+      "normative_weight": "TIER D — public project governance practice; informative only",
+      "limitations": "Swift-project governance, not Apple-wide internal change management. The repository license applies only to repository content and does not extend to other sources.",
+      "licensing": "Apache-2.0 FOR THE PINNED SWIFT-EVOLUTION REPOSITORY CONTENT ONLY",
+      "access": "FULL TEXT ACCESSIBLE AT IMMUTABLE COMMIT PIN"
+    },
+    {
+      "source_id": "DEGS-SRC-MS-SDL",
+      "organization_or_author": "Microsoft",
+      "title": "Microsoft Security Development Lifecycle",
+      "edition_version_revision": "Official Microsoft Learn description updated 2025-09-29; retrieved 2026-08-31; SHA-256 9aca50dc867129441cea55b84abbb2260c98575e2c927dc4556e54fc1f68cd55",
+      "publication_or_effective_date": "Page updated 2025-09-29",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://learn.microsoft.com/en-us/compliance/assurance/assurance-microsoft-security-development-lifecycle"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Microsoft-authored description of security and privacy work across training, requirements, design, implementation, verification, release, and response, including maintained threat models, non-author review, layered checks, remediation and resubmission, staged releases, and monitoring.",
+      "degs_use": "Corroborates review independence, remediation-and-rerun, threat-model currency, staged release, and post-release monitoring. DEGS obligations are local synthesis.",
+      "normative_weight": "TIER D — public corporate practice description; informative only",
+      "limitations": "Self-authored assurance description, not independent proof of uniform adherence or effectiveness and not a certification basis for DEGS. No per-page open reuse license was identified.",
+      "licensing": "NO PER-PAGE OPEN-CONTENT REUSE LICENSE IDENTIFIED; CITE AND PARAPHRASE",
+      "access": "FULL TEXT RETRIEVED 2026-08-31; SHA-256 9aca50dc867129441cea55b84abbb2260c98575e2c927dc4556e54fc1f68cd55"
+    },
+    {
+      "source_id": "DEGS-SRC-MS-RAI-V2",
+      "organization_or_author": "Microsoft",
+      "title": "Microsoft Responsible AI Standard v2 — General Requirements",
+      "edition_version_revision": "Version 2, June 2022 public external snapshot",
+      "publication_or_effective_date": "2022-06",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-brand/documents/Microsoft-Responsible-AI-Standard-General-Requirements.pdf"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Dated public requirements for early impact assessment, intended uses, fit-for-purpose criteria, operational bounds and error behavior, data requirements, stakeholder impacts, realistic oversight and interruption evaluation, documentation, monitoring, and discontinuation planning.",
+      "degs_use": "Supports intended-use records, measurable fitness criteria, impact assessment, human-control evaluation, monitoring, and discontinuation. DEGS mappings are synthesis.",
+      "normative_weight": "TIER D — dated public corporate snapshot; informative only",
+      "limitations": "The current private internal text is not publicly inspectable. This record does not claim that every June 2022 requirement remains unchanged or that DEGS implements Microsoft policy.",
+      "licensing": "COPYRIGHT MICROSOFT; NO OPEN-CONTENT REUSE LICENSE IDENTIFIED; CITE AND PARAPHRASE",
+      "access": "FULL OFFICIAL PUBLIC SNAPSHOT ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-MS-ISE-PLAYBOOK",
+      "organization_or_author": "Microsoft Industry Solutions Engineering",
+      "title": "Code With Engineering Playbook",
+      "edition_version_revision": "Pinned commit 016770e43d8a75be87b98c000c049f07c4a6e6f8",
+      "publication_or_effective_date": "Pinned commit validated 2026-08-31; exact commit publication date UNKNOWN",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://github.com/microsoft/code-with-engineering-playbook/tree/016770e43d8a75be87b98c000c049f07c4a6e6f8"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Public engineering playbook for Microsoft ISE work with customers and partners, emphasizing focus, incremental delivery, scope discipline, shared context, automated testing, review, delivery automation, and observability.",
+      "degs_use": "Supports focused increments, shared context, verification automation, and observability. Applying these recommendations to DEGS is local synthesis.",
+      "normative_weight": "TIER D — public customer and partner engineering playbook; informative only",
+      "limitations": "Not a universal Microsoft mandate or independent effectiveness assessment. Repository documentation and code licenses apply only to their respective repository content.",
+      "licensing": "CC BY 4.0 FOR REPOSITORY DOCUMENTATION; MIT LICENSE FOR REPOSITORY CODE; EACH LIMITED TO ITS RESPECTIVE CONTENT",
+      "access": "FULL TEXT ACCESSIBLE AT IMMUTABLE COMMIT PIN"
+    },
+    {
+      "source_id": "DEGS-SRC-IBM-SEF",
+      "organization_or_author": "IBM",
+      "title": "The IBM Secure Engineering Framework",
+      "edition_version_revision": "IBM Redpaper REDP-4641-01, published 2018-12-17; current IBM Well-Architected corroboration retrieved 2026-08-31 with SHA-256 cf2fad2a23c77f777e01957f204235ba4f93584de43dbfb5b4d11ce65b192d91",
+      "publication_or_effective_date": "2018-12-17",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://www.redbooks.ibm.com/redpapers/pdfs/redp4641.pdf",
+        "https://www.redbooks.ibm.com/abstracts/redp4641.html",
+        "https://www.ibm.com/think/architectures/well-architected/security"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Dated IBM framework describing checkpoint phase reviews, explicit success criteria and open-issue disposition, security and quality plans, threat modeling, layered scans and tests, defect rework and retest, and stop authority.",
+      "degs_use": "Supports explicit phase exits, unresolved-issue visibility, layered testing, and remediation followed by retest. DEGS implementation is synthesis.",
+      "normative_weight": "TIER D — dated public corporate engineering framework; informative only",
+      "limitations": "Some implementation examples are dated. Current IBM linking corroborates continued official availability, not that every 2018 detail is unchanged or universally practiced. IBM copyright; cite and paraphrase.",
+      "licensing": "IBM COPYRIGHT; NO OPEN-CONTENT REUSE LICENSE IDENTIFIED; CITE AND PARAPHRASE",
+      "access": "FULL OFFICIAL REDPAPER AND ABSTRACT ACCESSIBLE; CURRENT-LINK CORROBORATION HASH RECORDED"
+    },
+    {
+      "source_id": "DEGS-SRC-IBM-TRUST",
+      "organization_or_author": "IBM Policy",
+      "title": "IBM Principles for Trust and Transparency and Pillars of Trust for Artificial Intelligence",
+      "edition_version_revision": "Declared composite of two living official policy pages; retrieved 2026-08-31; SHA-256 trust page f052d61c1cd4fd7a498fd59f02f2c2b06b5d0186ed04c01b798e07c834961ef8, AI pillars page dd8aa93bde48bfcc681fa22f741b5badc71c79a1ff7ccb7b20f3425ac14f995a",
+      "publication_or_effective_date": "Living pages with no stable displayed publication dates; retrieved 2026-08-31",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://www.ibm.com/policy/blog/trust-principles",
+        "https://www.ibm.com/policy/blog/ibm-artificial-intelligence-pillars"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Declared composite whose page-level claims concern human augmentation, creator control of data and insights, agreed specific purpose, transparency, explainability, fairness, robustness, privacy, and minimum-necessary data.",
+      "claim_locators": {
+        "https://www.ibm.com/policy/blog/trust-principles": [
+          "AI should augment human intelligence.",
+          "Data and insights should remain with their creator.",
+          "Client-data use should remain limited to agreed specific purposes.",
+          "Transparency and explainability matter."
+        ],
+        "https://www.ibm.com/policy/blog/ibm-artificial-intelligence-pillars": [
+          "AI trust pillars include explainability, fairness, robustness, transparency, and privacy.",
+          "Data use should be minimum necessary and tied to an explicit purpose.",
+          "Data should resist repurposing outside that purpose."
+        ]
+      },
+      "degs_use": "Supports purpose limitation, data minimization, transparency, robustness, and human-centered responsibility. Converting principles into evaluator requirements is DEGS synthesis.",
+      "normative_weight": "TIER D — high-level public corporate principles; informative only",
+      "limitations": "The two pages are one declared logical record, not one versioned standard. Claims must remain attributable to their page. The principles are not complete pass/fail controls or evidence of implementation effectiveness.",
+      "licensing": "NO OPEN-CONTENT REUSE LICENSE IDENTIFIED FOR EITHER PAGE; CITE AND PARAPHRASE",
+      "access": "TWO FULL PUBLIC PAGES RETRIEVED; ORDERED SHA-256 IDENTITIES RECORDED"
+    },
+    {
+      "source_id": "DEGS-SRC-IBM-ZOS-INTEGRITY",
+      "organization_or_author": "IBM",
+      "title": "z/OS 3.2 System Integrity",
+      "edition_version_revision": "IBM z/OS 3.2 product documentation",
+      "publication_or_effective_date": "Version 3.2 current at validation; exact page publication date UNKNOWN",
+      "current_status": "PUBLIC INDUSTRY PRACTICE",
+      "official_source_location": [
+        "https://www.ibm.com/docs/en/zos/3.2.0?topic=aapmss-system-integrity"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Product-specific technical integrity guidance about preventing unauthorized programs from bypassing protections or obtaining authorized state and preserving equivalent checks when privileged functions are added.",
+      "degs_use": "Supports the local invariant that privileged integrations preserve existing gates and cannot create a bypass. The DEGS rule is a reasoned adaptation.",
+      "normative_weight": "TIER D — product-specific public technical guidance; informative only",
+      "limitations": "z/OS 3.2 product guidance, not IBM-wide governance, direct macOS guidance, or proof that DEGS is secure. No open reuse license was identified.",
+      "licensing": "NO OPEN-CONTENT REUSE LICENSE IDENTIFIED; CITE AND PARAPHRASE",
+      "access": "FULL OFFICIAL PRODUCT DOCUMENTATION ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-DOD-5000-88",
+      "organization_or_author": "United States Department of Defense",
+      "title": "DoDI 5000.88, Engineering of Defense Systems",
+      "edition_version_revision": "Official DoD Instruction 5000.88",
+      "publication_or_effective_date": "Effective 2020-11-18",
+      "current_status": "CURRENT REQUIREMENT",
+      "official_source_location": [
+        "https://www.esd.whs.mil/Portals/54/Documents/DD/issuances/dodi/500088p.PDF"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "DoD instruction addressing tailored systems-engineering plans, controlled technical baselines, configuration and risk management, requirements traceability, independent technical review, decision audit trails, and system safety for covered Defense systems.",
+      "degs_use": "Informs traceable baselines, review evidence, configuration control, and explicit risk ownership without importing acquisition-scale ceremony.",
+      "normative_weight": "TIER A — current formal DoD instruction within stated applicability",
+      "limitations": "Authoritative only within its stated DoD scope and applicability. It does not automatically bind Dobeworks, and public release is not an open-content license or a compliance basis.",
+      "licensing": "CLEARED FOR PUBLIC RELEASE; PUBLIC RELEASE IS NOT AN OPEN-CONTENT LICENSE",
+      "access": "FULL OFFICIAL PDF ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-DOD-5000-87",
+      "organization_or_author": "United States Department of Defense",
+      "title": "DoDI 5000.87, Operation of the Software Acquisition Pathway",
+      "edition_version_revision": "Official DoD Instruction 5000.87",
+      "publication_or_effective_date": "Effective 2020-10-02",
+      "current_status": "CURRENT REQUIREMENT",
+      "official_source_location": [
+        "https://www.esd.whs.mil/Portals/54/Documents/DD/issuances/dodi/500087p.PDF"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "DoD Software Acquisition Pathway instruction describing iterative agile and lean methods, DevSecOps, human-centered design, end-user collaboration, cybersecurity from inception, automated testing and monitoring, and incremental delivery.",
+      "degs_use": "Informs iterative, user-centered, security-integrated delivery and automation while preserving local approvals and proportionality.",
+      "normative_weight": "TIER A — current formal DoD instruction within stated applicability",
+      "limitations": "Authoritative only within its stated DoD Software Acquisition Pathway scope. It does not make DoD roles, cadence, documentation, or terminology universal for Dobeworks.",
+      "licensing": "CLEARED FOR PUBLIC RELEASE; NO OPEN-CONTENT LICENSE ESTABLISHED",
+      "access": "FULL OFFICIAL PDF ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-DOD-5000-97",
+      "organization_or_author": "United States Department of Defense",
+      "title": "DoDI 5000.97, Digital Engineering",
+      "edition_version_revision": "Official DoD Instruction 5000.97",
+      "publication_or_effective_date": "Effective 2023-12-21",
+      "current_status": "CURRENT REQUIREMENT",
+      "official_source_location": [
+        "https://www.esd.whs.mil/Portals/54/Documents/DD/issuances/dodi/500097p.pdf"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "DoD digital-engineering instruction calling for verified, validated, curated, configuration-controlled authoritative digital sources and lifecycle traceability across requirements, design, production, testing, training, and sustainment.",
+      "degs_use": "Supports controlled source identity, lifecycle traceability, validation, configuration control, and source currency. DEGS must supply its own evidence that a canonical record is authoritative.",
+      "normative_weight": "TIER A — current formal DoD instruction within stated applicability",
+      "limitations": "Authoritative only within its stated DoD scope. It does not itself govern DEGS, and naming a directory canonical does not prove accuracy, currency, completeness, or control.",
+      "licensing": "CLEARED FOR PUBLIC RELEASE; NO OPEN-CONTENT LICENSE ESTABLISHED",
+      "access": "FULL OFFICIAL PDF ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-DOD-RAI",
+      "organization_or_author": "United States Department of Defense Chief Digital and Artificial Intelligence Office",
+      "title": "Responsible Artificial Intelligence Strategy and Implementation Pathway",
+      "edition_version_revision": "Official DoD/CDAO strategy and implementation guidance",
+      "publication_or_effective_date": "2022-06",
+      "current_status": "AUTHORITATIVE HANDBOOK",
+      "official_source_location": [
+        "https://www.ai.mil/Portals/137/Documents/Resources%20Page/DoD%20Responsible%20AI%20Strategy%20and%20Implementation%20Pathway.pdf"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "Government strategy describing Responsible, Equitable, Traceable, Reliable, and Governable AI, human responsibility and judgment, auditable sources and methods, explicit uses, lifecycle assurance, unintended-consequence controls, and disengagement.",
+      "degs_use": "Informs human accountability, intended-use records, auditability, lifecycle assurance, and safe disengagement. Applying those patterns to DEGS is synthesis.",
+      "normative_weight": "TIER B — authoritative government strategy and guidance within stated context",
+      "limitations": "Strategy and guidance within its stated DoD scope, not a generally binding instruction, statute, certification, accreditation, approval, or evidence that DEGS is DoD-compliant.",
+      "licensing": "NO EXPLICIT OPEN-CONTENT LICENSE IDENTIFIED; CITE AND PARAPHRASE",
+      "access": "FULL OFFICIAL PDF ACCESSIBLE"
+    },
+    {
+      "source_id": "DEGS-SRC-DOD-MILSTD-882E",
+      "organization_or_author": "United States Department of Defense; Defense Logistics Agency ASSIST",
+      "title": "MIL-STD-882E Change 1, System Safety",
+      "edition_version_revision": "Revision E, Change 1 incorporated",
+      "publication_or_effective_date": "Change dated 2023-09-27; ASSIST metadata updated 2026-08-28; next review due 2028-09-25",
+      "current_status": "FINAL STANDARD",
+      "official_source_location": [
+        "https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=36027"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "System-safety standard prioritizing hazard elimination where practicable, mitigation and testing of remaining hazards, cross-domain impact awareness, and explicit residual-risk management under applicable DoD or contractual authority.",
+      "degs_use": "Supports the local hazard-control hierarchy, failure-path evidence, cross-domain checks, and named human residual-risk ownership without copying a military severity matrix.",
+      "normative_weight": "TIER A — final military standard within invoked government or contractual scope",
+      "limitations": "Applies only within its stated or contractually invoked scope. Distribution Statement A is not an open-content license, and DEGS is not a military system-safety program or accredited equivalent.",
+      "licensing": "Distribution Statement A permits public distribution but is not an open-content license",
+      "access": "OFFICIAL ASSIST METADATA AND PUBLIC DOCUMENT ACCESS"
+    },
+    {
+      "source_id": "DEGS-SRC-DOD-5000-101",
+      "organization_or_author": "United States Department of Defense",
+      "title": "DoDM 5000.101, Operational Test and Evaluation and Live Fire Test and Evaluation of Artificial Intelligence-Enabled and Autonomous Systems",
+      "edition_version_revision": "Official DoD Manual 5000.101",
+      "publication_or_effective_date": "Effective 2024-12-09",
+      "current_status": "CURRENT REQUIREMENT",
+      "official_source_location": [
+        "https://www.esd.whs.mil/Portals/54/Documents/DD/issuances/dodm/5000101p.PDF"
+      ],
+      "date_verified": "2026-08-31",
+      "scope": "DoD manual for covered AI and autonomous systems addressing independent test sets, operationally representative and out-of-distribution conditions, adversarial attacks, integrated human-machine testing, emergent and negative behavior, error consequences, poisoning and extraction threats, drift, safer modes, and monitoring.",
+      "degs_use": "Informs proportional independent fixtures, adversarial and negative tests, distribution-shift cases, failure-consequence analysis, fallback modes, integrated human-agent-tool tests, and monitoring.",
+      "normative_weight": "TIER A — current DoD manual within stated applicability",
+      "limitations": "Authoritative only within the manual's stated DoD test-and-evaluation scope. Military operational-test ceremony and terminology do not automatically apply to low-consequence engineering, and no DoD accreditation is implied.",
+      "licensing": "CLEARED FOR PUBLIC RELEASE; NO OPEN-CONTENT LICENSE ESTABLISHED",
+      "access": "FULL OFFICIAL PDF ACCESSIBLE"
+    }
+  ]
+}

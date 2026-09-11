@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "task_id": "DEGS-FIX-T0-PASS",
+  "title": "Read-only governance fixture",
+  "objective": "Inspect an authorized status artifact without changing system state.",
+  "stakeholders": [
+    "Taylor"
+  ],
+  "scope": {
+    "description": "Read one authorized fixture and report sanitized findings.",
+    "read_only": true
+  },
+  "non_goals": [
+    "Modify any file or configuration"
+  ],
+  "authority_lane": "COMMAND_CENTER",
+  "risk_tier": "TIER_0",
+  "requirements": [
+    "Keep the operation read-only."
+  ],
+  "acceptance_criteria": [
+    "The observation is recorded without mutation or secret disclosure."
+  ],
+  "assumptions": [],
+  "invariants": [
+    "DEGS-SEC-001",
+    "DEGS-SEC-002"
+  ],
+  "baseline": {
+    "status": "RECORDED",
+    "evidence_path": "tier0-readonly-pass.json"
+  },
+  "alternatives": [],
+  "selected_design": "Use a bounded read-only inspection.",
+  "affected_files": [],
+  "backup": {
+    "required": false,
+    "reason": "Read-only work creates no changed state."
+  },
+  "rollback": {
+    "required": false,
+    "reason": "No mutation is authorized."
+  },
+  "tests": {
+    "static": [],
+    "positive": [],
+    "negative": [],
+    "security": [],
+    "failure_path": [],
+    "integration": [],
+    "end_to_end": []
+  },
+  "verification": {
+    "status": "PASS",
+    "evidence_path": "tier0-readonly-pass.json"
+  },
+  "validation": {
+    "status": "PASS",
+    "evidence_path": "tier0-readonly-pass.json"
+  },
+  "independent_review": {
+    "required": false,
+    "status": "NOT_REQUIRED"
+  },
+  "human_approval": {
+    "required": false,
+    "status": "NOT_REQUIRED"
+  },
+  "recovery_validation": {
+    "required": false,
+    "status": "NOT_REQUIRED"
+  },
+  "target_identity": null,
+  "blast_radius": "Read-only observation of one fixture.",
+  "stop_conditions": [],
+  "post_action_validation": {
+    "status": "NOT_REQUIRED"
+  },
+  "telemetry": {
+    "status": "SANITIZED",
+    "evidence_path": "tier0-readonly-pass.json"
+  },
+  "documentation": {
+    "status": "PASS",
+    "evidence_path": "tier0-readonly-pass.json"
+  },
+  "handoff": {
+    "status": "PASS",
+    "evidence_path": "tier0-readonly-pass.json"
+  },
+  "secret_handling": {
+    "exposure_possible": false,
+    "controlled": true
+  },
+  "warnings": [],
+  "unresolved_items": [],
+  "status": "READY_FOR_EXECUTION"
+}

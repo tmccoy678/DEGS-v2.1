@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "task_author": "DEGS_FIXTURE_AUTHOR",
+  "task_id": "DEGS-FIX-T3-DRYRUN-PASS",
+  "title": "Complete critical synthetic dry run",
+  "objective": "Demonstrate complete Tier 3 readiness evidence without executing a destructive action.",
+  "stakeholders": ["Taylor"],
+  "scope": {"description": "Synthetic Tier 3 dry-run readiness evaluation only.", "read_only": false},
+  "non_goals": ["Execute any live or destructive action"],
+  "authority_lane": "TAYLOR",
+  "risk_tier": "TIER_3",
+  "requirements": ["All Tier 3 controls must be present and verified."],
+  "acceptance_criteria": ["The gate reports readiness PASS without executing the task."],
+  "assumptions": ["The target and evidence are synthetic."],
+  "invariants": ["DEGS-SEC-001", "DEGS-AI-002"],
+  "baseline": {"status": "RECORDED", "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "alternatives": ["Do not perform the synthetic action"],
+  "selected_design": "Evaluate a fully controlled synthetic dry run.",
+  "affected_files": ["synthetic-critical-target"],
+  "backup": {"required": true, "status": "VERIFIED", "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "rollback": {"required": true, "status": "VERIFIED", "procedure": "Restore the independently verified synthetic recovery image.", "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "risk_analysis": {
+    "status": "PASS",
+    "factors": {
+      "consequence": "Readiness evaluation only; no execution authority.",
+      "reversibility": "Verified synthetic backup and rollback evidence are recorded.",
+      "data_sensitivity": "Only non-sensitive synthetic fixture data is used.",
+      "operational_reach": "Bounded to the local synthetic gate fixture.",
+      "physical_effects": "None; the evaluator never executes the described task.",
+      "affected_party_impact": "Taylor receives synthetic readiness evidence only.",
+      "ai_socio_technical_risk": "Human authority, misuse, and stop paths are recorded."
+    },
+    "summary": "Synthetic critical readiness record with zero live blast radius.",
+    "evidence_path": "tier3-complete-dry-run-pass.json"
+  },
+  "deterministic_controls": {
+    "status": "VERIFIED",
+    "enforced_outside_model": true,
+    "boundaries": {
+      "filesystem_write": {"status": "ENFORCED", "mechanism": "Synthetic fixture write allowlist"},
+      "command_execution": {"status": "ENFORCED", "mechanism": "Synthetic fixture command allowlist"},
+      "network_egress": {"status": "ENFORCED", "mechanism": "Synthetic fixture egress deny-by-default"},
+      "dependency_sources": {"status": "ENFORCED", "mechanism": "Synthetic fixture pinned source list"},
+      "secret_access": {"status": "ENFORCED", "mechanism": "Synthetic fixture secret denial boundary"},
+      "approval": {"status": "ENFORCED", "mechanism": "Synthetic fixture external approval gate"}
+    },
+    "denial_test": {"status": "PASS", "evidence_path": "../tests/test_engineering_gate.py"},
+    "post_change_verification": {"status": "PASS", "evidence_path": "../tests/test_engineering_gate.py"},
+    "evidence_path": "tier3-complete-dry-run-pass.json"
+  },
+  "artifact_identity": {
+    "status": "VERIFIED",
+    "method": "SHA256",
+    "configuration_version": "synthetic-v1",
+    "canonical_path": "synthetic://tier3-complete-dry-run-pass",
+    "reviewed_identifier": "sha256:tier3-complete-dry-run-pass.json",
+    "tested_identifier": "sha256:tier3-complete-dry-run-pass.json",
+    "execution_identifier": "sha256:tier3-complete-dry-run-pass.json",
+    "handoff_identifier": "sha256:tier3-complete-dry-run-pass.json",
+    "match": true,
+    "provenance": "Locally authored synthetic DEGS fixture.",
+    "evidence_freshness": {"status": "CURRENT", "verified_at": "2026-08-31T19:00:00-05:00", "basis": "Identity checked by the current fixture suite."},
+    "evidence_path": "tier3-complete-dry-run-pass.json"
+  },
+  "change_traceability": {
+    "status": "VERIFIED",
+    "orphan_count": 0,
+    "links": [
+      {
+        "requirement": "Synthetic fixture readiness requirement",
+        "artifact": "synthetic fixture artifact",
+        "tests": ["tests/test_engineering_gate.py"],
+        "evidence_path": "tier3-complete-dry-run-pass.json"
+      }
+    ],
+    "evidence_path": "tier3-complete-dry-run-pass.json"
+  },
+  "data_governance": {
+    "applicable": true,
+    "status": "VERIFIED",
+    "purpose": "Exercise the gate with non-sensitive synthetic fixture metadata.",
+    "owner": "Taylor",
+    "data_classes": ["Synthetic governance fixture metadata"],
+    "necessary_fields": ["Control status and synthetic evidence paths"],
+    "minimum_necessary": true,
+    "provenance": "Locally authored synthetic fixture.",
+    "authority": "Taylor",
+    "retention": "Retain with the versioned governance test suite.",
+    "deletion_or_archival_conditions": "Archive with a superseded policy version.",
+    "access_boundary": "Canonical governance fixture directory.",
+    "repurposing": {"planned": false},
+    "evidence_path": "tier3-complete-dry-run-pass.json"
+  },
+  "threat_model": {
+    "applicable": true,
+    "status": "CURRENT",
+    "reviewed_after_last_material_change": true,
+    "threats": ["An incomplete record could bypass a readiness control."],
+    "mitigations": ["Fail-closed evaluator checks and adversarial tests."],
+    "evidence_path": "../tests/test_engineering_gate.py"
+  },
+  "monitoring": {
+    "applicable": true,
+    "status": "VERIFIED",
+    "owner": "Taylor",
+    "expected_operating_range": ["Only controlled gate decisions are emitted."],
+    "alert_thresholds": ["Any policy, artifact, or evidence mismatch."],
+    "stop_thresholds": ["Unknown risk, unknown control state, or critical warning."],
+    "reassessment_triggers": ["Policy, schema, permission, dependency, or environment change."],
+    "safe_degradation": "Stop and report sanitized unmet requirements without executing the task.",
+    "evidence_path": "../tests/test_engineering_gate.py"
+  },
+  "ai_assurance": {
+    "applicable": true,
+    "status": "VERIFIED",
+    "consequential": true,
+    "intended_uses": ["Evaluate synthetic readiness records."],
+    "unsupported_uses": ["Authorize or execute a configuration change."],
+    "affected_stakeholders": ["Taylor"],
+    "provenance": "The deterministic gate and synthetic fixture are identified in this record.",
+    "foreseeable_misuse": ["Treating readiness PASS as execution authority."],
+    "operating_bounds": ["Schema-version-1 DEGS task records only."],
+    "criteria": {
+      "quality": [{"measure": "All required functional controls are satisfied.", "threshold": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}],
+      "safety": [{"measure": "All required stop and recovery controls are satisfied.", "threshold": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}],
+      "security": [{"measure": "All required deterministic and security tests are satisfied.", "threshold": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}],
+      "fairness": [{"measure": "The synthetic fixture introduces no differentiated affected-party treatment.", "threshold": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}]
+    },
+    "human_decision_owner": "Taylor",
+    "override_path": "Taylor may stop before any separately authorized execution.",
+    "stop_path": "A BLOCKED or FAIL decision stops the workflow.",
+    "fallback_path": "Return sanitized unmet requirements without changing state.",
+    "rollback_path": "Restore the verified pre-change configuration after a separately authorized failed action.",
+    "monitoring_and_reassessment_triggers": ["Policy, artifact, permission, dependency, or environment drift."],
+    "retirement_condition": "Retire when the schema or policy version is superseded.",
+    "representative_tests": {
+      "status": "PASS",
+      "representative": true,
+      "adversarial": true,
+      "human_handoff": true,
+      "evidence_path": "../tests/test_engineering_gate.py"
+    },
+    "limitations": ["The fixture proves gate behavior, not evidence authenticity or human identity."],
+    "evidence_path": "tier3-complete-dry-run-pass.json"
+  },
+  "hazard_analysis": {
+    "status": "COMPLETE",
+    "hazards": [
+      {
+        "hazard_id": "SYNTHETIC-001",
+        "description": "A synthetic readiness control could be bypassed.",
+        "disposition": "MITIGATED",
+        "control": "Fail-closed evaluator checks and explicit stop conditions.",
+        "test_status": "PASS",
+        "evidence_path": "../tests/test_engineering_gate.py"
+      }
+    ],
+    "cross_domain_check": {"status": "PASS", "evidence_path": "../tests/test_engineering_gate.py"},
+    "residual_risk": {"status": "NONE", "description": "No live action occurs in this synthetic fixture."},
+    "evidence_path": "tier3-complete-dry-run-pass.json"
+  },
+  "tests": {
+    "static": [{"status": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}],
+    "positive": [{"status": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}],
+    "negative": [{"status": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}],
+    "security": [{"status": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}],
+    "failure_path": [{"status": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}],
+    "integration": [{"status": "PASS", "evidence_path": "../tests/test_engineering_gate.py"}],
+    "end_to_end": [{"status": "PASS", "mode": "DRY_RUN", "evidence_path": "../tests/test_engineering_gate.py"}]
+  },
+  "verification": {"status": "PASS", "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "validation": {"status": "PASS", "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "independent_review": {
+    "required": true,
+    "status": "PASS",
+    "kind": "AUDIT",
+    "reviewer": "DEGS_FIXTURE_REVIEWER",
+    "reviewer_role": "INDEPENDENT_AUDITOR",
+    "open_issues_status": "NONE",
+    "retest_status": "PASS",
+    "evidence_path": "tier3-complete-dry-run-pass.json"
+  },
+  "human_approval": {"required": true, "status": "APPROVED", "approver": "Taylor", "approver_role": "HUMAN", "approval_mode": "OUT_OF_BAND", "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "recovery_validation": {"required": true, "status": "PASS", "independently_verified": true, "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "target_identity": {"identifier": "DEGS-SYNTHETIC-TARGET-001", "verified": true},
+  "blast_radius": {"description": "Synthetic fixture only.", "bounded": true},
+  "stop_conditions": ["Any live target is detected", "Any control becomes unverified"],
+  "post_action_validation": {"status": "PASS", "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "dry_run": {"applicable": true, "performed": true, "status": "PASS", "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "telemetry": {"status": "SANITIZED", "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "documentation": {"status": "PASS", "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "handoff": {"status": "PASS", "evidence_path": "tier3-complete-dry-run-pass.json"},
+  "secret_handling": {"exposure_possible": false, "controlled": true},
+  "warnings": [],
+  "unresolved_items": [],
+  "status": "READY_FOR_EXECUTION"
+}
