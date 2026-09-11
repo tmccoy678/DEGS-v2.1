@@ -21,3 +21,7 @@ Sashiko builds on [Chris Mason's review-prompts](https://github.com/masoncl/revi
 The existing DEGS source and original draft integration/test code remain covered by the root MIT license, except for the explicitly identified Apache-derived portions above. The baseline manifest identifies unchanged DEGS source. The optional Rust test harness uses pinned serde/serde_json dependencies recorded in its Cargo files; dependency sources and binaries are not bundled in this repository. Their own licenses continue to apply when building or redistributing them.
 
 Kernel patches displayed by Sashiko and Sashiko's Linux submodule were not imported. The service's Apache license is not a license for every patch it displays.
+
+## Benchmark corpus
+
+The files in `benchmarks/data/` come from [json-schema-org/JSON-Schema-Test-Suite](https://github.com/json-schema-org/JSON-Schema-Test-Suite/tree/f6fd52a0a95472e079cbfc6ef7f089702b80e045), commit `f6fd52a0a95472e079cbfc6ef7f089702b80e045`. Copyright (c) 2012 Julian Berman. Distributed under MIT. The complete original [license](benchmarks/data/LICENSE) is included. Our runners, selection, and results are separate from the upstream test data. This notice does not change any existing project, source-port, or asset licensing.

@@ -1,8 +1,16 @@
 # DEGS — v2.1 development draft
 
+## Figures and references
+
+[Read the illustrated system guide](docs/figures/README.md) for the relevant PDF figures and reflowable HTML equivalents. The [44-work APA reference edition](references/engineering-foundations-references.pdf) includes a [source-verification audit](references/verification.md).
+
+## Public-data benchmark
+
+**241 of 241 cases matched after the recursive equality correction. All 14 former false acceptances now reject correctly; the first run is preserved.** See [benchmark results and reproduction](benchmarks/benchmark.md).
+
 DEGS evaluates engineering task records and explains whether their recorded evidence satisfies its rules. Missing recovery evidence or an agent's claimed human approval can block a task. A passing result does not prove the evidence true, approve the work, or execute it.
 
-**Private development draft. No versioned public release.** This copy preserves the current standalone gate and adds a small, Sashiko-derived Python review-data component. It does not activate governance on your computer.
+**Private development draft. No versioned public release.** This copy applies a bounded recursive JSON-equality correction to the standalone gate and adds a small, Sashiko-derived Python review-data component. It does not activate governance on your computer.
 
 ## Try the gate
 
@@ -40,9 +48,9 @@ The Python port retains Sashiko's selected state names, independent list default
 python3 -B -m unittest discover -s tests -v
 ```
 
-The recorded run passed **64 tests**: 58 existing gate tests and 6 port tests. The tests exercise ordinary command input, valid and invalid records, required evidence, approval boundaries, and Python value semantics. A separate comparison passed **331 cases** against an executable harness containing the selected upstream Rust source. Instructions, raw outputs, source hashes, and exact environment are in [the test report](docs/test-report.md).
+The earlier run passed **64 tests**: 58 existing gate tests and 6 port tests. The current run passes **67 tests**, including three added regression methods covering recursive equality, all 14 public failures, and deep decoded containers; five benchmark tests also pass. The tests exercise ordinary command input, valid and invalid records, required evidence, approval boundaries, and Python value semantics. A separate comparison passed **331 cases** against an executable harness containing the selected upstream Rust source. Instructions, raw outputs, source hashes, and exact environment are in [the test report](docs/test-report.md).
 
-These results concern the recorded scenarios. They do not establish defect freedom, semantic truth, AI review accuracy, security certification, full-system integration, or support for other platforms. The copied core is identified in [the baseline manifest](provenance/degs-baseline.json). Local activation history, private audits, context-skill integration, and the Workbench adapter are excluded, along with tests requiring those dependencies. The core's existing rules are unchanged.
+These results concern the recorded scenarios. They do not establish defect freedom, semantic truth, AI review accuracy, security certification, full-system integration, or support for other platforms. The copied core is identified in [the baseline manifest](provenance/degs-baseline.json). Local activation history, private audits, context-skill integration, and the Workbench adapter are excluded, along with tests requiring those dependencies. The policy rules remain unchanged. The comparator now distinguishes nested booleans from numbers; all 14 fixture CLI outputs remain identical. See the [correction record](docs/benchmark-correction.md) and [source identity](provenance/recursive-equality-correction.json).
 
 ## Purpose, credit, and help
 

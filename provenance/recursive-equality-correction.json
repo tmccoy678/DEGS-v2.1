@@ -1,0 +1,16 @@
+{
+  "base_commit": "5cbeb5b1aedf6ee85f02c2cc2e1c01895a728928",
+  "original_sha256": "44c33ba743851d7befe11ebf93f2f4d9021b126f951a4587562adfca21f65c1e",
+  "corrected_sha256": "cdaf77937cbe54a7611825edddd9502a058245a933ef3fae683870d28de0bbde",
+  "path": "bin/engineering-gate.py",
+  "line_count": 1213,
+  "change": "The existing json_values_equal helper uses an explicit worklist to compare nested JSON arrays and objects without reducing supported nesting depth. No policy, schema, or fixture edits.",
+  "source": "Original local correction; no third-party implementation copied. Existing license retained.",
+  "original_baseline_manifest": "provenance/degs-baseline.json",
+  "historical_observation": "benchmarks/results/apple-silicon.json",
+  "current_observation": "benchmarks/results/apple-silicon-v3.json",
+  "canonical_fixture_cli_invocations_unchanged": 14,
+  "unresolved_target": "Separate staged system v1 pair has not been identified.",
+  "intermediate_observation": "benchmarks/results/apple-silicon-v2.json",
+  "intermediate_limitation": "Recursive generator implementation passed the public subset but regressed deep JSON equality; retained for traceability."
+}

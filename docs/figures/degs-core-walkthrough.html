@@ -1,0 +1,1393 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>DEGS: the current core, line by line</title><style>body{font-family:"Times New Roman",serif;color:#1F2933;background:white;max-width:75ch;margin:2rem auto;padding:0 1rem;font-size:1.15rem;line-height:1.6}h1,h2{color:#005A78}section{margin-bottom:3rem}a{color:#005A78}pre,code{font-family:monospace}pre{white-space:pre-wrap;overflow-wrap:anywhere}li{margin-bottom:1rem}</style></head><body><section><h1>DEGS | complete source plate</h1><p>1,213 numbered source lines. Privacy-edited display; source listing only. Read columns left to right.</p>
+<p>Owner-name tokens are replaced with Operator or OPERATOR. Line numbers and other source text are preserved. This display is not a byte-exact runnable copy. Source SHA-256: cdaf77937cbe54a7611825edddd9502a058245a933ef3fae683870d28de0bbde</p>
+<h2>Complete privacy-edited source</h2><pre>
+0001  #!/usr/bin/env python3
+0002  &quot;&quot;&quot;Evaluate DEGS task records without executing the described work.&quot;&quot;&quot;
+0003&#32;&#32;
+0004  import argparse
+0005  import json
+0006  import re
+0007  import sys
+0008  from pathlib import Path
+0009&#32;&#32;
+0010&#32;&#32;
+0011  EXIT_CODES = {
+0012      &quot;PASS&quot;: 0,
+0013      &quot;PASS_WITH_WARNINGS&quot;: 1,
+0014      &quot;BLOCKED&quot;: 2,
+0015      &quot;FAIL&quot;: 3,
+0016  }
+0017&#32;&#32;
+0018  SECRET_LIKE_KEYS = {
+0019      &quot;api_key&quot;,
+0020      &quot;auth&quot;,
+0021      &quot;authorization&quot;,
+0022      &quot;credential&quot;,
+0023      &quot;credentials&quot;,
+0024      &quot;password&quot;,
+0025      &quot;private_key&quot;,
+0026      &quot;recovery_key&quot;,
+0027      &quot;secret&quot;,
+0028      &quot;secret_value&quot;,
+0029      &quot;token&quot;,
+0030  }
+0031&#32;&#32;
+0032  SUPPORTED_RISK_TIERS = {&quot;TIER_0&quot;, &quot;TIER_1&quot;, &quot;TIER_2&quot;, &quot;TIER_3&quot;}
+0033  SUPPORTED_AUTHORITY_LANES = {
+0034      &quot;COMMAND_CENTER&quot;,
+0035      &quot;OPERATOR_AI_WORKBENCH&quot;,
+0036      &quot;AGENTOPS&quot;,
+0037      &quot;OPERATOR&quot;,
+0038  }
+0039&#32;&#32;
+0040  DETERMINISTIC_BOUNDARIES = {
+0041      &quot;filesystem_write&quot;,
+0042      &quot;command_execution&quot;,
+0043      &quot;network_egress&quot;,
+0044      &quot;dependency_sources&quot;,
+0045      &quot;secret_access&quot;,
+0046      &quot;approval&quot;,
+0047  }
+0048&#32;&#32;
+0049  ARTIFACT_IDENTITY_METHODS = {
+0050      &quot;SHA256&quot;,
+0051      &quot;SIGNATURE&quot;,
+0052      &quot;COMMIT&quot;,
+0053      &quot;RELEASE_DIGEST&quot;,
+0054      &quot;EQUIVALENT&quot;,
+0055  }
+0056&#32;&#32;
+0057  AI_CRITERIA_CATEGORIES = {&quot;quality&quot;, &quot;safety&quot;, &quot;security&quot;, &quot;fairness&quot;}
+0058&#32;&#32;
+0059  RISK_ANALYSIS_FACTORS = {
+0060      &quot;consequence&quot;,
+0061      &quot;reversibility&quot;,
+0062      &quot;data_sensitivity&quot;,
+0063      &quot;operational_reach&quot;,
+0064      &quot;physical_effects&quot;,
+0065      &quot;affected_party_impact&quot;,
+0066      &quot;ai_socio_technical_risk&quot;,
+0067  }
+0068&#32;&#32;
+0069  SCHEMA_PATH = Path(__file__).resolve().parents[1] / &quot;gate.schema.json&quot;
+0070&#32;&#32;
+0071  SCHEMA_RULE_BY_FIELD = {
+0072      &quot;objective&quot;: &quot;DEGS-MISSION-001&quot;,
+0073      &quot;authority_lane&quot;: &quot;DEGS-AI-001&quot;,
+0074      &quot;risk_tier&quot;: &quot;DEGS-RISK-001&quot;,
+0075      &quot;risk_analysis&quot;: &quot;DEGS-RISK-001&quot;,
+0076      &quot;deterministic_controls&quot;: &quot;DEGS-SEC-006&quot;,
+0077      &quot;artifact_identity&quot;: &quot;DEGS-CFG-005&quot;,
+0078      &quot;change_traceability&quot;: &quot;DEGS-CFG-006&quot;,
+0079      &quot;data_governance&quot;: &quot;DEGS-DATA-003&quot;,
+0080      &quot;threat_model&quot;: &quot;DEGS-SEC-001&quot;,
+0081      &quot;ai_assurance&quot;: &quot;DEGS-AI-006&quot;,
+0082      &quot;monitoring&quot;: &quot;DEGS-OPS-002&quot;,
+0083      &quot;hazard_analysis&quot;: &quot;DEGS-RISK-006&quot;,
+0084      &quot;human_approval&quot;: &quot;DEGS-RISK-003&quot;,
+0085      &quot;independent_review&quot;: &quot;DEGS-VV-007&quot;,
+0086      &quot;verification&quot;: &quot;DEGS-VV-001&quot;,
+0087      &quot;validation&quot;: &quot;DEGS-VV-001&quot;,
+0088      &quot;status&quot;: &quot;DEGS-OPS-001&quot;,
+0089  }
+0090&#32;&#32;
+0091&#32;&#32;
+0092  def nonempty(value):
+0093      if value is None or value is False:
+0094          return False
+0095      if isinstance(value, (str, list, dict)):
+0096          return bool(value)
+0097      return True
+0098&#32;&#32;
+0099&#32;&#32;
+0100  def nonblank_string(value):
+0101      return isinstance(value, str) and bool(value.strip())
+0102&#32;&#32;
+0103&#32;&#32;
+0104  def nonblank_string_list(value):
+0105      return (
+0106          isinstance(value, list)
+0107          and bool(value)
+0108          and all(nonblank_string(item) for item in value)
+0109      )
+0110&#32;&#32;
+0111&#32;&#32;
+0112  def status_is(value, *allowed):
+0113      if not isinstance(value, dict):
+0114          return False
+0115      status = value.get(&quot;status&quot;)
+0116      return isinstance(status, str) and status.upper() in set(allowed)
+0117&#32;&#32;
+0118&#32;&#32;
+0119  def status_with_evidence_path_is(value, *allowed):
+0120      return (
+0121          isinstance(value, dict)
+0122          and value.get(&quot;status&quot;) in allowed
+0123          and nonblank_string(value.get(&quot;evidence_path&quot;))
+0124      )
+0125&#32;&#32;
+0126&#32;&#32;
+0127  def test_category_passes(task, category):
+0128      tests = task.get(&quot;tests&quot;)
+0129      if not isinstance(tests, dict):
+0130          return False
+0131      evidence = tests.get(category)
+0132      return (
+0133          isinstance(evidence, list)
+0134          and bool(evidence)
+0135          and all(
+0136              status_with_evidence_path_is(item, &quot;PASS&quot;)
+0137              for item in evidence
+0138          )
+0139      )
+0140&#32;&#32;
+0141&#32;&#32;
+0142  def deterministic_controls_valid(value):
+0143      if not (
+0144          isinstance(value, dict)
+0145          and value.get(&quot;status&quot;) == &quot;VERIFIED&quot;
+0146          and value.get(&quot;enforced_outside_model&quot;) is True
+0147          and nonblank_string(value.get(&quot;evidence_path&quot;))
+0148          and status_is(value.get(&quot;denial_test&quot;), &quot;PASS&quot;)
+0149          and nonblank_string(value.get(&quot;denial_test&quot;, {}).get(&quot;evidence_path&quot;))
+0150          and status_is(value.get(&quot;post_change_verification&quot;), &quot;PASS&quot;)
+0151          and nonblank_string(
+0152              value.get(&quot;post_change_verification&quot;, {}).get(&quot;evidence_path&quot;)
+0153          )
+0154      ):
+0155          return False
+0156      boundaries = value.get(&quot;boundaries&quot;)
+0157      if not isinstance(boundaries, dict) or set(boundaries) != DETERMINISTIC_BOUNDARIES:
+0158          return False
+0159      for boundary in boundaries.values():
+0160          if not isinstance(boundary, dict):
+0161              return False
+0162          if boundary.get(&quot;status&quot;) == &quot;ENFORCED&quot;:
+0163              if not nonblank_string(boundary.get(&quot;mechanism&quot;)):
+0164                  return False
+0165          elif boundary.get(&quot;status&quot;) == &quot;NOT_APPLICABLE&quot;:
+0166              if not nonblank_string(boundary.get(&quot;reason&quot;)):
+0167                  return False
+0168          else:
+0169              return False
+0170      return True
+0171&#32;&#32;
+0172&#32;&#32;
+0173  def artifact_identity_valid(value):
+0174      if not isinstance(value, dict):
+0175          return False
+0176      identifiers = [
+0177          value.get(&quot;reviewed_identifier&quot;),
+0178          value.get(&quot;tested_identifier&quot;),
+0179          value.get(&quot;execution_identifier&quot;),
+0180          value.get(&quot;handoff_identifier&quot;),
+0181      ]
+0182      freshness = value.get(&quot;evidence_freshness&quot;)
+0183      return (
+0184          value.get(&quot;status&quot;) == &quot;VERIFIED&quot;
+0185          and value.get(&quot;method&quot;) in ARTIFACT_IDENTITY_METHODS
+0186          and nonblank_string(value.get(&quot;configuration_version&quot;))
+0187          and nonblank_string(value.get(&quot;canonical_path&quot;))
+0188          and all(nonblank_string(identifier) for identifier in identifiers)
+0189          and len(set(identifiers)) == 1
+0190          and value.get(&quot;match&quot;) is True
+0191          and nonblank_string(value.get(&quot;provenance&quot;))
+0192          and isinstance(freshness, dict)
+0193          and freshness.get(&quot;status&quot;) == &quot;CURRENT&quot;
+0194          and nonblank_string(freshness.get(&quot;verified_at&quot;))
+0195          and nonblank_string(freshness.get(&quot;basis&quot;))
+0196          and nonblank_string(value.get(&quot;evidence_path&quot;))
+0197      )
+0198&#32;&#32;
+0199&#32;&#32;
+0200  def risk_analysis_valid(value):
+0201      if not (
+0202          isinstance(value, dict)
+0203          and status_is(value, &quot;PASS&quot;, &quot;COMPLETE&quot;)
+0204          and nonblank_string(value.get(&quot;summary&quot;))
+0205          and nonblank_string(value.get(&quot;evidence_path&quot;))
+0206      ):
+0207          return False
+0208      factors = value.get(&quot;factors&quot;)
+0209      return (
+0210          isinstance(factors, dict)
+0211          and set(factors) == RISK_ANALYSIS_FACTORS
+0212          and all(nonblank_string(factor) for factor in factors.values())
+0213      )
+0214&#32;&#32;
+0215&#32;&#32;
+0216  def change_traceability_valid(value):
+0217      if not (
+0218          isinstance(value, dict)
+0219          and value.get(&quot;status&quot;) == &quot;VERIFIED&quot;
+0220          and value.get(&quot;orphan_count&quot;) == 0
+0221          and nonblank_string(value.get(&quot;evidence_path&quot;))
+0222      ):
+0223          return False
+0224      links = value.get(&quot;links&quot;)
+0225      if not isinstance(links, list) or not links:
+0226          return False
+0227      return all(
+0228          isinstance(link, dict)
+0229          and nonblank_string(link.get(&quot;requirement&quot;))
+0230          and nonblank_string(link.get(&quot;artifact&quot;))
+0231          and nonblank_string_list(link.get(&quot;tests&quot;))
+0232          and nonblank_string(link.get(&quot;evidence_path&quot;))
+0233          for link in links
+0234      )
+0235&#32;&#32;
+0236&#32;&#32;
+0237  def explicit_non_applicability(value):
+0238      return (
+0239          isinstance(value, dict)
+0240          and value.get(&quot;applicable&quot;) is False
+0241          and value.get(&quot;status&quot;) == &quot;NOT_APPLICABLE&quot;
+0242          and nonblank_string(value.get(&quot;reason&quot;))
+0243      )
+0244&#32;&#32;
+0245&#32;&#32;
+0246  def data_governance_valid(value):
+0247      if explicit_non_applicability(value):
+0248          return True
+0249      if not (
+0250          isinstance(value, dict)
+0251          and value.get(&quot;applicable&quot;) is True
+0252          and value.get(&quot;status&quot;) == &quot;VERIFIED&quot;
+0253          and nonblank_string(value.get(&quot;purpose&quot;))
+0254          and nonblank_string(value.get(&quot;owner&quot;))
+0255          and nonblank_string_list(value.get(&quot;data_classes&quot;))
+0256          and nonblank_string_list(value.get(&quot;necessary_fields&quot;))
+0257          and value.get(&quot;minimum_necessary&quot;) is True
+0258          and nonblank_string(value.get(&quot;provenance&quot;))
+0259          and nonblank_string(value.get(&quot;authority&quot;))
+0260          and str(value.get(&quot;authority&quot;)).upper() != &quot;UNKNOWN&quot;
+0261          and nonblank_string(value.get(&quot;retention&quot;))
+0262          and nonblank_string(value.get(&quot;deletion_or_archival_conditions&quot;))
+0263          and nonblank_string(value.get(&quot;access_boundary&quot;))
+0264          and nonblank_string(value.get(&quot;evidence_path&quot;))
+0265      ):
+0266          return False
+0267      repurposing = value.get(&quot;repurposing&quot;)
+0268      if not isinstance(repurposing, dict) or not isinstance(
+0269          repurposing.get(&quot;planned&quot;), bool
+0270      ):
+0271          return False
+0272      if repurposing.get(&quot;planned&quot;) is False:
+0273          return True
+0274      return (
+0275          repurposing.get(&quot;status&quot;) == &quot;AUTHORIZED&quot;
+0276          and nonblank_string(repurposing.get(&quot;purpose&quot;))
+0277          and nonblank_string(repurposing.get(&quot;authority&quot;))
+0278          and str(repurposing.get(&quot;authority&quot;)).upper() != &quot;UNKNOWN&quot;
+0279          and nonblank_string(repurposing.get(&quot;evidence_path&quot;))
+0280      )
+0281&#32;&#32;
+0282&#32;&#32;
+0283  def threat_model_valid(value):
+0284      if explicit_non_applicability(value):
+0285          return True
+0286      return (
+0287          isinstance(value, dict)
+0288          and value.get(&quot;applicable&quot;) is True
+0289          and value.get(&quot;status&quot;) == &quot;CURRENT&quot;
+0290          and value.get(&quot;reviewed_after_last_material_change&quot;) is True
+0291          and nonblank_string_list(value.get(&quot;threats&quot;))
+0292          and nonblank_string_list(value.get(&quot;mitigations&quot;))
+0293          and nonblank_string(value.get(&quot;evidence_path&quot;))
+0294      )
+0295&#32;&#32;
+0296&#32;&#32;
+0297  def monitoring_valid(value):
+0298      if explicit_non_applicability(value):
+0299          return True
+0300      return (
+0301          isinstance(value, dict)
+0302          and value.get(&quot;applicable&quot;) is True
+0303          and value.get(&quot;status&quot;) == &quot;VERIFIED&quot;
+0304          and nonblank_string(value.get(&quot;owner&quot;))
+0305          and nonblank_string_list(value.get(&quot;expected_operating_range&quot;))
+0306          and nonblank_string_list(value.get(&quot;alert_thresholds&quot;))
+0307          and nonblank_string_list(value.get(&quot;stop_thresholds&quot;))
+0308          and nonblank_string_list(value.get(&quot;reassessment_triggers&quot;))
+0309          and nonblank_string(value.get(&quot;safe_degradation&quot;))
+0310          and nonblank_string(value.get(&quot;evidence_path&quot;))
+0311      )
+0312&#32;&#32;
+0313&#32;&#32;
+0314  def measurable_ai_criteria_valid(value):
+0315      if not isinstance(value, dict) or set(value) != AI_CRITERIA_CATEGORIES:
+0316          return False
+0317      for records in value.values():
+0318          if not isinstance(records, list) or not records:
+0319              return False
+0320          if not all(
+0321              isinstance(record, dict)
+0322              and nonblank_string(record.get(&quot;measure&quot;))
+0323              and nonblank_string(record.get(&quot;threshold&quot;))
+0324              and nonblank_string(record.get(&quot;evidence_path&quot;))
+0325              for record in records
+0326          ):
+0327              return False
+0328      return True
+0329&#32;&#32;
+0330&#32;&#32;
+0331  def ai_assurance_valid(value):
+0332      if explicit_non_applicability(value):
+0333          return True
+0334      if not (
+0335          isinstance(value, dict)
+0336          and value.get(&quot;applicable&quot;) is True
+0337          and value.get(&quot;status&quot;) == &quot;VERIFIED&quot;
+0338          and value.get(&quot;consequential&quot;) is True
+0339          and nonblank_string_list(value.get(&quot;intended_uses&quot;))
+0340          and nonblank_string_list(value.get(&quot;unsupported_uses&quot;))
+0341          and nonblank_string_list(value.get(&quot;affected_stakeholders&quot;))
+0342          and nonblank_string(value.get(&quot;provenance&quot;))
+0343          and nonblank_string_list(value.get(&quot;foreseeable_misuse&quot;))
+0344          and nonblank_string_list(value.get(&quot;operating_bounds&quot;))
+0345          and measurable_ai_criteria_valid(value.get(&quot;criteria&quot;))
+0346          and value.get(&quot;human_decision_owner&quot;) == &quot;Operator&quot;
+0347          and nonblank_string(value.get(&quot;override_path&quot;))
+0348          and nonblank_string(value.get(&quot;stop_path&quot;))
+0349          and nonblank_string(value.get(&quot;fallback_path&quot;))
+0350          and nonblank_string(value.get(&quot;rollback_path&quot;))
+0351          and nonblank_string_list(
+0352              value.get(&quot;monitoring_and_reassessment_triggers&quot;)
+0353          )
+0354          and nonblank_string(value.get(&quot;retirement_condition&quot;))
+0355          and nonblank_string_list(value.get(&quot;limitations&quot;))
+0356          and nonblank_string(value.get(&quot;evidence_path&quot;))
+0357      ):
+0358          return False
+0359      tests = value.get(&quot;representative_tests&quot;)
+0360      return (
+0361          status_is(tests, &quot;PASS&quot;)
+0362          and tests.get(&quot;representative&quot;) is True
+0363          and tests.get(&quot;adversarial&quot;) is True
+0364          and tests.get(&quot;human_handoff&quot;) is True
+0365          and nonblank_string(tests.get(&quot;evidence_path&quot;))
+0366      )
+0367&#32;&#32;
+0368&#32;&#32;
+0369  def hazard_analysis_valid(value):
+0370      if not (
+0371          isinstance(value, dict)
+0372          and value.get(&quot;status&quot;) == &quot;COMPLETE&quot;
+0373          and nonblank_string(value.get(&quot;evidence_path&quot;))
+0374      ):
+0375          return False
+0376      hazards = value.get(&quot;hazards&quot;)
+0377      if not isinstance(hazards, list) or not hazards:
+0378          return False
+0379      for hazard in hazards:
+0380          if not (
+0381              isinstance(hazard, dict)
+0382              and nonblank_string(hazard.get(&quot;hazard_id&quot;))
+0383              and nonblank_string(hazard.get(&quot;description&quot;))
+0384              and hazard.get(&quot;disposition&quot;) in {&quot;ELIMINATED&quot;, &quot;MITIGATED&quot;}
+0385              and nonblank_string(hazard.get(&quot;control&quot;))
+0386              and hazard.get(&quot;test_status&quot;) == &quot;PASS&quot;
+0387              and nonblank_string(hazard.get(&quot;evidence_path&quot;))
+0388          ):
+0389              return False
+0390      cross_domain = value.get(&quot;cross_domain_check&quot;)
+0391      if not (
+0392          status_is(cross_domain, &quot;PASS&quot;)
+0393          and nonblank_string(cross_domain.get(&quot;evidence_path&quot;))
+0394      ):
+0395          return False
+0396      residual = value.get(&quot;residual_risk&quot;)
+0397      if not isinstance(residual, dict) or not nonblank_string(
+0398          residual.get(&quot;description&quot;)
+0399      ):
+0400          return False
+0401      if residual.get(&quot;status&quot;) == &quot;NONE&quot;:
+0402          return True
+0403      return (
+0404          residual.get(&quot;status&quot;) == &quot;ACCEPTED&quot;
+0405          and residual.get(&quot;acceptor&quot;) == &quot;Operator&quot;
+0406          and residual.get(&quot;acceptor_role&quot;) == &quot;HUMAN&quot;
+0407          and residual.get(&quot;acceptance_mode&quot;) == &quot;OUT_OF_BAND&quot;
+0408          and nonblank_string(residual.get(&quot;evidence_path&quot;))
+0409      )
+0410&#32;&#32;
+0411&#32;&#32;
+0412  def independent_review_valid(task):
+0413      review = task.get(&quot;independent_review&quot;)
+0414      author = task.get(&quot;task_author&quot;)
+0415      reviewer = review.get(&quot;reviewer&quot;) if isinstance(review, dict) else None
+0416      return (
+0417          status_is(review, &quot;PASS&quot;, &quot;PASS_WITH_WARNINGS&quot;)
+0418          and nonblank_string(author)
+0419          and nonblank_string(reviewer)
+0420          and str(author).strip().casefold() != str(reviewer).strip().casefold()
+0421          and nonblank_string(review.get(&quot;reviewer_role&quot;))
+0422          and nonblank_string(review.get(&quot;evidence_path&quot;))
+0423          and review.get(&quot;open_issues_status&quot;) in {&quot;NONE&quot;, &quot;DISPOSITIONED&quot;}
+0424          and review.get(&quot;retest_status&quot;) == &quot;PASS&quot;
+0425      )
+0426&#32;&#32;
+0427&#32;&#32;
+0428  def add_unmet(unmet, field, rule_id, message):
+0429      unmet.append({&quot;field&quot;: field, &quot;rule_id&quot;: rule_id, &quot;message&quot;: message})
+0430&#32;&#32;
+0431&#32;&#32;
+0432  def collect_evidence_paths(value):
+0433      paths = []
+0434      if isinstance(value, dict):
+0435          for key, child in value.items():
+0436              if key == &quot;evidence_path&quot; and isinstance(child, str) and child:
+0437                  paths.append(child)
+0438              else:
+0439                  paths.extend(collect_evidence_paths(child))
+0440      elif isinstance(value, list):
+0441          for child in value:
+0442              paths.extend(collect_evidence_paths(child))
+0443      return list(dict.fromkeys(paths))
+0444&#32;&#32;
+0445&#32;&#32;
+0446  def contains_secret_like_field(value):
+0447      if isinstance(value, dict):
+0448          for key, child in value.items():
+0449              normalized = str(key).lower().replace(&quot;-&quot;, &quot;_&quot;)
+0450              if normalized in SECRET_LIKE_KEYS:
+0451                  return True
+0452              if contains_secret_like_field(child):
+0453                  return True
+0454      elif isinstance(value, list):
+0455          return any(contains_secret_like_field(child) for child in value)
+0456      return False
+0457&#32;&#32;
+0458&#32;&#32;
+0459  def result(decision, task, unmet=None, warnings=None, rule_ids=None):
+0460      return {
+0461          &quot;decision&quot;: decision,
+0462          &quot;unmet_requirements&quot;: unmet or [],
+0463          &quot;warnings&quot;: warnings or [],
+0464          &quot;applicable_rule_ids&quot;: rule_ids or [],
+0465          &quot;risk_tier&quot;: task.get(&quot;risk_tier&quot;),
+0466          &quot;authority_lane&quot;: task.get(&quot;authority_lane&quot;),
+0467          &quot;evidence_paths&quot;: collect_evidence_paths(task),
+0468      }
+0469&#32;&#32;
+0470&#32;&#32;
+0471  def invalid_result(message, task=None):
+0472      task = task if isinstance(task, dict) else {}
+0473      payload = result(
+0474          &quot;FAIL&quot;,
+0475          task,
+0476          unmet=[
+0477              {
+0478                  &quot;field&quot;: &quot;input&quot;,
+0479                  &quot;rule_id&quot;: &quot;DEGS-REQ-001&quot;,
+0480                  &quot;message&quot;: message,
+0481              }
+0482          ],
+0483          rule_ids=[&quot;DEGS-REQ-001&quot;],
+0484      )
+0485      return payload, 4
+0486&#32;&#32;
+0487&#32;&#32;
+0488  def load_task(path):
+0489      try:
+0490          with path.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as handle:
+0491              task = json.load(handle)
+0492      except (OSError, json.JSONDecodeError) as error:
+0493          return None, f&quot;Task input is not readable valid JSON: {error.__class__.__name__}&quot;
+0494      if not isinstance(task, dict):
+0495          return None, &quot;Task input must be a JSON object.&quot;
+0496      if task.get(&quot;schema_version&quot;) != 1:
+0497          return task, &quot;schema_version must be 1.&quot;
+0498      if contains_secret_like_field(task.get(&quot;telemetry&quot;)) or contains_secret_like_field(task.get(&quot;state&quot;)):
+0499          return task, &quot;Telemetry or state contains a prohibited secret-like field.&quot;
+0500      return task, None
+0501&#32;&#32;
+0502&#32;&#32;
+0503  def json_values_equal(left, right):
+0504      # Finite decoded JSON trees: each pair visits one corresponding subtree.
+0505      pending = [(left, right)]
+0506      while pending:
+0507          left, right = pending.pop()
+0508          if isinstance(left, bool) or isinstance(right, bool):
+0509              if type(left) is not type(right) or left != right:
+0510                  return False
+0511          elif isinstance(left, list) or isinstance(right, list):
+0512              if not (isinstance(left, list) and isinstance(right, list)):
+0513                  return False
+0514              if len(left) != len(right):
+0515                  return False
+0516              pending.extend(zip(left, right))
+0517          elif isinstance(left, dict) or isinstance(right, dict):
+0518              if not (isinstance(left, dict) and isinstance(right, dict)):
+0519                  return False
+0520              if left.keys() != right.keys():
+0521                  return False
+0522              pending.extend((left[key], right[key]) for key in left)
+0523          elif left != right:
+0524              return False
+0525      return True
+0526&#32;&#32;
+0527&#32;&#32;
+0528  def json_type_matches(value, expected):
+0529      return {
+0530          &quot;object&quot;: isinstance(value, dict),
+0531          &quot;array&quot;: isinstance(value, list),
+0532          &quot;string&quot;: isinstance(value, str),
+0533          &quot;boolean&quot;: isinstance(value, bool),
+0534          &quot;null&quot;: value is None,
+0535      }.get(expected, False)
+0536&#32;&#32;
+0537&#32;&#32;
+0538  def child_schema_path(path, child):
+0539      return f&quot;{path}.{child}&quot; if path else str(child)
+0540&#32;&#32;
+0541&#32;&#32;
+0542  def resolve_local_schema_ref(reference, root_schema):
+0543      if not isinstance(reference, str) or not reference.startswith(&quot;#/&quot;):
+0544          raise ValueError(&quot;Only local JSON Schema references are supported.&quot;)
+0545      node = root_schema
+0546      for raw_token in reference[2:].split(&quot;/&quot;):
+0547          token = raw_token.replace(&quot;~1&quot;, &quot;/&quot;).replace(&quot;~0&quot;, &quot;~&quot;)
+0548          if not isinstance(node, dict) or token not in node:
+0549              raise ValueError(&quot;JSON Schema reference cannot be resolved.&quot;)
+0550          node = node[token]
+0551      return node
+0552&#32;&#32;
+0553&#32;&#32;
+0554  def json_schema_errors(value, schema, root_schema, path=&quot;&quot;):
+0555      &quot;&quot;&quot;Evaluate the JSON Schema keywords used by the canonical task schema.&quot;&quot;&quot;
+0556      if not isinstance(schema, dict):
+0557          return [(path or &quot;input&quot;, &quot;Schema node must be an object.&quot;)]
+0558      if &quot;$ref&quot; in schema:
+0559          try:
+0560              target = resolve_local_schema_ref(schema[&quot;$ref&quot;], root_schema)
+0561          except ValueError as error:
+0562              return [(path or &quot;input&quot;, str(error))]
+0563          return json_schema_errors(value, target, root_schema, path)
+0564&#32;&#32;
+0565      errors = []
+0566      for subschema in schema.get(&quot;allOf&quot;, []):
+0567          errors.extend(json_schema_errors(value, subschema, root_schema, path))
+0568&#32;&#32;
+0569      conditional = schema.get(&quot;if&quot;)
+0570      if isinstance(conditional, dict) and not json_schema_errors(
+0571          value, conditional, root_schema, path
+0572      ):
+0573          then_schema = schema.get(&quot;then&quot;)
+0574          if isinstance(then_schema, dict):
+0575              errors.extend(
+0576                  json_schema_errors(value, then_schema, root_schema, path)
+0577              )
+0578&#32;&#32;
+0579      branches = schema.get(&quot;oneOf&quot;)
+0580      if isinstance(branches, list):
+0581          branch_results = [
+0582              json_schema_errors(value, branch, root_schema, path)
+0583              for branch in branches
+0584          ]
+0585          matches = sum(not branch_errors for branch_errors in branch_results)
+0586          if matches == 0:
+0587              errors.extend(min(branch_results, key=len, default=[]))
+0588          elif matches &gt; 1:
+0589              errors.append(
+0590                  (path or &quot;input&quot;, &quot;Value must match exactly one allowed schema.&quot;)
+0591              )
+0592&#32;&#32;
+0593      prohibited = schema.get(&quot;not&quot;)
+0594      if isinstance(prohibited, dict) and not json_schema_errors(
+0595          value, prohibited, root_schema, path
+0596      ):
+0597          errors.append((path or &quot;input&quot;, &quot;Value matches a prohibited schema.&quot;))
+0598&#32;&#32;
+0599      expected_types = schema.get(&quot;type&quot;)
+0600      if expected_types is not None:
+0601          if isinstance(expected_types, str):
+0602              expected_types = [expected_types]
+0603          if not (
+0604              isinstance(expected_types, list)
+0605              and any(json_type_matches(value, item) for item in expected_types)
+0606          ):
+0607              errors.append(
+0608                  (
+0609                      path or &quot;input&quot;,
+0610                      &quot;Value has the wrong JSON type; expected &quot;
+0611                      + &quot;, &quot;.join(str(item) for item in expected_types),
+0612                  )
+0613              )
+0614              return errors
+0615&#32;&#32;
+0616      if &quot;const&quot; in schema and not json_values_equal(value, schema[&quot;const&quot;]):
+0617          errors.append((path or &quot;input&quot;, &quot;Value does not match the required constant.&quot;))
+0618      if &quot;enum&quot; in schema and not any(
+0619          json_values_equal(value, candidate) for candidate in schema[&quot;enum&quot;]
+0620      ):
+0621          errors.append((path or &quot;input&quot;, &quot;Value is not in the allowed set.&quot;))
+0622&#32;&#32;
+0623      if isinstance(value, str) and len(value) &lt; schema.get(&quot;minLength&quot;, 0):
+0624          errors.append((path or &quot;input&quot;, &quot;String is shorter than the minimum length.&quot;))
+0625      if isinstance(value, str) and &quot;pattern&quot; in schema:
+0626          pattern = schema[&quot;pattern&quot;]
+0627          try:
+0628              pattern_matches = isinstance(pattern, str) and re.search(pattern, value)
+0629          except re.error:
+0630              pattern_matches = False
+0631          if not pattern_matches:
+0632              errors.append((path or &quot;input&quot;, &quot;String does not match the required pattern.&quot;))
+0633      if isinstance(value, list):
+0634          if len(value) &lt; schema.get(&quot;minItems&quot;, 0):
+0635              errors.append((path or &quot;input&quot;, &quot;Array has too few items.&quot;))
+0636          item_schema = schema.get(&quot;items&quot;)
+0637          if isinstance(item_schema, dict):
+0638              for index, item in enumerate(value):
+0639                  errors.extend(
+0640                      json_schema_errors(
+0641                          item,
+0642                          item_schema,
+0643                          root_schema,
+0644                          f&quot;{path}[{index}]&quot; if path else f&quot;[{index}]&quot;,
+0645                      )
+0646                  )
+0647      if isinstance(value, dict):
+0648          properties = schema.get(&quot;properties&quot;, {})
+0649          for required in schema.get(&quot;required&quot;, []):
+0650              if required not in value:
+0651                  errors.append(
+0652                      (
+0653                          child_schema_path(path, required),
+0654                          &quot;Required property is missing.&quot;,
+0655                      )
+0656                  )
+0657          if isinstance(properties, dict):
+0658              for key, child in value.items():
+0659                  if key in properties:
+0660                      errors.extend(
+0661                          json_schema_errors(
+0662                              child,
+0663                              properties[key],
+0664                              root_schema,
+0665                              child_schema_path(path, key),
+0666                          )
+0667                      )
+0668                  elif schema.get(&quot;additionalProperties&quot;) is False:
+0669                      errors.append(
+0670                          (
+0671                              child_schema_path(path, key),
+0672                              &quot;Additional property is not allowed.&quot;,
+0673                          )
+0674                      )
+0675      return errors
+0676&#32;&#32;
+0677&#32;&#32;
+0678  def schema_rule_for_path(path):
+0679      top_level = path.split(&quot;.&quot;, 1)[0].split(&quot;[&quot;, 1)[0]
+0680      return SCHEMA_RULE_BY_FIELD.get(top_level, &quot;DEGS-REQ-001&quot;)
+0681&#32;&#32;
+0682&#32;&#32;
+0683  def validate_structure(task):
+0684      &quot;&quot;&quot;Validate the complete canonical task schema with the standard library.&quot;&quot;&quot;
+0685      try:
+0686          schema = json.loads(SCHEMA_PATH.read_text(encoding=&quot;utf-8&quot;))
+0687      except (OSError, json.JSONDecodeError) as error:
+0688          return result(
+0689              &quot;FAIL&quot;,
+0690              task,
+0691              unmet=[
+0692                  {
+0693                      &quot;field&quot;: &quot;input&quot;,
+0694                      &quot;rule_id&quot;: &quot;DEGS-REQ-001&quot;,
+0695                      &quot;message&quot;: f&quot;Canonical task schema is unavailable: {error.__class__.__name__}.&quot;,
+0696                  }
+0697              ],
+0698              rule_ids=[&quot;DEGS-REQ-001&quot;],
+0699          )
+0700      raw_errors = json_schema_errors(task, schema, schema)
+0701      unmet = []
+0702      seen = set()
+0703      for field, message in raw_errors:
+0704          identity = (field, message)
+0705          if identity in seen:
+0706              continue
+0707          seen.add(identity)
+0708          add_unmet(unmet, field, schema_rule_for_path(field), message)
+0709      rules = list(dict.fromkeys(item[&quot;rule_id&quot;] for item in unmet))
+0710      return result(&quot;FAIL&quot; if unmet else &quot;PASS&quot;, task, unmet=unmet, rule_ids=rules or [&quot;DEGS-REQ-001&quot;])
+0711&#32;&#32;
+0712&#32;&#32;
+0713  def evaluate_tier0(task):
+0714      unmet = []
+0715      scope = task.get(&quot;scope&quot;)
+0716      read_only = isinstance(scope, dict) and scope.get(&quot;read_only&quot;) is True
+0717      if not nonempty(task.get(&quot;objective&quot;)):
+0718          unmet.append(
+0719              {
+0720                  &quot;field&quot;: &quot;objective&quot;,
+0721                  &quot;rule_id&quot;: &quot;DEGS-MISSION-001&quot;,
+0722                  &quot;message&quot;: &quot;Tier 0 requires an objective.&quot;,
+0723              }
+0724          )
+0725      if not (nonempty(scope) and read_only):
+0726          unmet.append(
+0727              {
+0728                  &quot;field&quot;: &quot;scope.read_only&quot;,
+0729                  &quot;rule_id&quot;: &quot;DEGS-RISK-001&quot;,
+0730                  &quot;message&quot;: &quot;Tier 0 requires an explicit read-only scope.&quot;,
+0731              }
+0732          )
+0733      secret_handling = task.get(&quot;secret_handling&quot;)
+0734      secret_controlled = isinstance(secret_handling, dict) and (
+0735          secret_handling.get(&quot;exposure_possible&quot;) is False
+0736          or secret_handling.get(&quot;controlled&quot;) is True
+0737      )
+0738      if not secret_controlled:
+0739          unmet.append(
+0740              {
+0741                  &quot;field&quot;: &quot;secret_handling&quot;,
+0742                  &quot;rule_id&quot;: &quot;DEGS-SEC-002&quot;,
+0743                  &quot;message&quot;: &quot;Tier 0 must rule out or control secret exposure.&quot;,
+0744              }
+0745          )
+0746      if task.get(&quot;authority_lane&quot;) != &quot;COMMAND_CENTER&quot;:
+0747          add_unmet(unmet, &quot;authority_lane&quot;, &quot;DEGS-AI-001&quot;, &quot;Tier 0 requires the read-mostly Command Center lane.&quot;)
+0748      rules = [&quot;DEGS-RISK-001&quot;, &quot;DEGS-MISSION-001&quot;, &quot;DEGS-SEC-002&quot;, &quot;DEGS-AI-001&quot;]
+0749      decision = &quot;BLOCKED&quot; if unmet else &quot;PASS&quot;
+0750      return result(decision, task, unmet=unmet, rule_ids=rules)
+0751&#32;&#32;
+0752&#32;&#32;
+0753  def tier1_controls(task):
+0754      unmet = []
+0755      rules = [
+0756          &quot;DEGS-MISSION-001&quot;,
+0757          &quot;DEGS-REQ-001&quot;,
+0758          &quot;DEGS-REQ-002&quot;,
+0759          &quot;DEGS-ARCH-002&quot;,
+0760          &quot;DEGS-CFG-001&quot;,
+0761          &quot;DEGS-VV-001&quot;,
+0762          &quot;DEGS-VV-002&quot;,
+0763          &quot;DEGS-OPS-001&quot;,
+0764          &quot;DEGS-CONTEXT-001&quot;,
+0765          &quot;DEGS-AI-001&quot;,
+0766      ]
+0767      if not nonempty(task.get(&quot;objective&quot;)):
+0768          add_unmet(unmet, &quot;objective&quot;, &quot;DEGS-MISSION-001&quot;, &quot;An objective is required.&quot;)
+0769      if not nonempty(task.get(&quot;scope&quot;)):
+0770          add_unmet(unmet, &quot;scope&quot;, &quot;DEGS-REQ-001&quot;, &quot;A bounded scope is required.&quot;)
+0771      # This is the task-record evaluation scope: Operator&#x27;s human authority may
+0772      # submit Tier 1 or Tier 2 evidence directly. It is intentionally broader
+0773      # than the phase-boundary context-routing scope.
+0774      allowed_lanes = {
+0775          &quot;TIER_1&quot;: {&quot;OPERATOR_AI_WORKBENCH&quot;, &quot;AGENTOPS&quot;, &quot;OPERATOR&quot;},
+0776          &quot;TIER_2&quot;: {&quot;OPERATOR_AI_WORKBENCH&quot;, &quot;AGENTOPS&quot;, &quot;OPERATOR&quot;},
+0777          &quot;TIER_3&quot;: {&quot;OPERATOR&quot;},
+0778      }.get(task.get(&quot;risk_tier&quot;), set())
+0779      if task.get(&quot;authority_lane&quot;) not in allowed_lanes:
+0780          add_unmet(unmet, &quot;authority_lane&quot;, &quot;DEGS-AI-001&quot;, &quot;A supported authority lane appropriate to the risk tier is required.&quot;)
+0781      if not nonempty(task.get(&quot;requirements&quot;)):
+0782          add_unmet(unmet, &quot;requirements&quot;, &quot;DEGS-REQ-002&quot;, &quot;Tier 1 requires measurable requirements.&quot;)
+0783      if not nonempty(task.get(&quot;acceptance_criteria&quot;)):
+0784          add_unmet(unmet, &quot;acceptance_criteria&quot;, &quot;DEGS-REQ-002&quot;, &quot;Tier 1 requires acceptance criteria.&quot;)
+0785      if not status_is(task.get(&quot;baseline&quot;), &quot;RECORDED&quot;, &quot;PASS&quot;, &quot;VERIFIED&quot;):
+0786          add_unmet(unmet, &quot;baseline&quot;, &quot;DEGS-CFG-001&quot;, &quot;Tier 1 requires a recorded baseline.&quot;)
+0787      if not test_category_passes(task, &quot;static&quot;):
+0788          add_unmet(unmet, &quot;tests.static&quot;, &quot;DEGS-VV-001&quot;, &quot;Tier 1 requires passing static checks.&quot;)
+0789      if not test_category_passes(task, &quot;positive&quot;):
+0790          add_unmet(unmet, &quot;tests.positive&quot;, &quot;DEGS-VV-002&quot;, &quot;Tier 1 requires passing positive tests.&quot;)
+0791      rollback = task.get(&quot;rollback&quot;)
+0792      rollback_is_trivial = (
+0793          isinstance(rollback, dict)
+0794          and rollback.get(&quot;required&quot;) is False
+0795          and nonempty(rollback.get(&quot;reason&quot;))
+0796      )
+0797      rollback_is_verified = status_is(rollback, &quot;PASS&quot;, &quot;VERIFIED&quot;) and nonempty(
+0798          rollback.get(&quot;procedure&quot;)
+0799      )
+0800      if task.get(&quot;risk_tier&quot;) == &quot;TIER_1&quot; and not (
+0801          rollback_is_trivial or rollback_is_verified
+0802      ):
+0803          add_unmet(unmet, &quot;rollback&quot;, &quot;DEGS-ARCH-002&quot;, &quot;Tier 1 requires rollback or an explicit reason it is trivial.&quot;)
+0804      if not status_is(task.get(&quot;handoff&quot;), &quot;PASS&quot;, &quot;COMPLETE&quot;):
+0805          add_unmet(unmet, &quot;handoff&quot;, &quot;DEGS-CONTEXT-001&quot;, &quot;Tier 1 requires a completed handoff.&quot;)
+0806      return unmet, rules
+0807&#32;&#32;
+0808&#32;&#32;
+0809  def evaluate_tier1(task):
+0810      unmet, rules = tier1_controls(task)
+0811      return result(&quot;BLOCKED&quot; if unmet else &quot;PASS&quot;, task, unmet=unmet, rule_ids=rules)
+0812&#32;&#32;
+0813&#32;&#32;
+0814  def tier2_controls(task):
+0815      unmet, rules = tier1_controls(task)
+0816      rules.extend(
+0817          [
+0818              &quot;DEGS-CFG-002&quot;,
+0819              &quot;DEGS-CFG-003&quot;,
+0820              &quot;DEGS-CFG-004&quot;,
+0821              &quot;DEGS-CFG-005&quot;,
+0822              &quot;DEGS-CFG-006&quot;,
+0823              &quot;DEGS-RISK-001&quot;,
+0824              &quot;DEGS-RISK-002&quot;,
+0825              &quot;DEGS-VV-003&quot;,
+0826              &quot;DEGS-SEC-001&quot;,
+0827              &quot;DEGS-SEC-006&quot;,
+0828              &quot;DEGS-DATA-003&quot;,
+0829              &quot;DEGS-AI-006&quot;,
+0830              &quot;DEGS-VV-004&quot;,
+0831              &quot;DEGS-VV-005&quot;,
+0832              &quot;DEGS-VV-006&quot;,
+0833              &quot;DEGS-VV-007&quot;,
+0834              &quot;DEGS-OPS-002&quot;,
+0835          ]
+0836      )
+0837      rules = list(dict.fromkeys(rules))
+0838      backup = task.get(&quot;backup&quot;)
+0839      if not (
+0840          status_is(backup, &quot;PASS&quot;, &quot;VERIFIED&quot;)
+0841          and nonempty(backup.get(&quot;evidence_path&quot;))
+0842      ):
+0843          add_unmet(unmet, &quot;backup&quot;, &quot;DEGS-RISK-002&quot;, &quot;Tier 2 requires a verified pre-change backup.&quot;)
+0844      rollback = task.get(&quot;rollback&quot;)
+0845      if not (
+0846          status_is(rollback, &quot;PASS&quot;, &quot;VERIFIED&quot;)
+0847          and nonempty(rollback.get(&quot;procedure&quot;))
+0848      ):
+0849          add_unmet(unmet, &quot;rollback&quot;, &quot;DEGS-CFG-004&quot;, &quot;Tier 2 requires an explicit verified rollback procedure.&quot;)
+0850      if not risk_analysis_valid(task.get(&quot;risk_analysis&quot;)):
+0851          add_unmet(
+0852              unmet,
+0853              &quot;risk_analysis&quot;,
+0854              &quot;DEGS-RISK-001&quot;,
+0855              &quot;Tier 2 requires an evidenced risk analysis covering consequence, reversibility, data sensitivity, operational reach, physical effects, affected-party impact, and AI or socio-technical risk.&quot;,
+0856          )
+0857      if not deterministic_controls_valid(task.get(&quot;deterministic_controls&quot;)):
+0858          add_unmet(
+0859              unmet,
+0860              &quot;deterministic_controls&quot;,
+0861              &quot;DEGS-SEC-006&quot;,
+0862              &quot;Tier 2 requires verified deterministic boundaries outside the model, denial tests, and post-change verification; prompt-only or unknown controls fail closed.&quot;,
+0863          )
+0864      if not artifact_identity_valid(task.get(&quot;artifact_identity&quot;)):
+0865          add_unmet(
+0866              unmet,
+0867              &quot;artifact_identity&quot;,
+0868              &quot;DEGS-CFG-005&quot;,
+0869              &quot;Tier 2 requires the reviewed and execution artifact identities to match using a controlled immutable identity method.&quot;,
+0870          )
+0871      if not change_traceability_valid(task.get(&quot;change_traceability&quot;)):
+0872          add_unmet(
+0873              unmet,
+0874              &quot;change_traceability&quot;,
+0875              &quot;DEGS-CFG-006&quot;,
+0876              &quot;Tier 2 requires verified requirement-to-artifact-to-test evidence with no orphan links.&quot;,
+0877          )
+0878      if not data_governance_valid(task.get(&quot;data_governance&quot;)):
+0879          add_unmet(
+0880              unmet,
+0881              &quot;data_governance&quot;,
+0882              &quot;DEGS-DATA-003&quot;,
+0883              &quot;Tier 2 requires explicit data-purpose, minimum-necessary, authority, retention, access, and repurposing evidence, or a reasoned non-applicability record.&quot;,
+0884          )
+0885      if not threat_model_valid(task.get(&quot;threat_model&quot;)):
+0886          add_unmet(
+0887              unmet,
+0888              &quot;threat_model&quot;,
+0889              &quot;DEGS-SEC-001&quot;,
+0890              &quot;Tier 2 requires a current threat model reviewed after the last material change, or a reasoned non-applicability record.&quot;,
+0891          )
+0892      if not monitoring_valid(task.get(&quot;monitoring&quot;)):
+0893          add_unmet(
+0894              unmet,
+0895              &quot;monitoring&quot;,
+0896              &quot;DEGS-OPS-002&quot;,
+0897              &quot;Tier 2 requires owned monitoring with operating ranges, alert and stop thresholds, reassessment triggers, and safe degradation, or a reasoned non-applicability record.&quot;,
+0898          )
+0899      if not ai_assurance_valid(task.get(&quot;ai_assurance&quot;)):
+0900          add_unmet(
+0901              unmet,
+0902              &quot;ai_assurance&quot;,
+0903              &quot;DEGS-AI-006&quot;,
+0904              &quot;Consequential AI work requires intended and unsupported uses, affected stakeholders, human control, representative and adversarial whole-system tests, monitoring triggers, limitations, and retirement criteria; other work requires a reasoned non-applicability record.&quot;,
+0905          )
+0906      for category, rule_id, label in (
+0907          (&quot;negative&quot;, &quot;DEGS-VV-003&quot;, &quot;negative tests&quot;),
+0908          (&quot;security&quot;, &quot;DEGS-SEC-001&quot;, &quot;security tests&quot;),
+0909          (&quot;failure_path&quot;, &quot;DEGS-VV-004&quot;, &quot;failure-path tests&quot;),
+0910          (&quot;end_to_end&quot;, &quot;DEGS-VV-006&quot;, &quot;an actual end-to-end user-path test&quot;),
+0911      ):
+0912          if not test_category_passes(task, category):
+0913              add_unmet(unmet, f&quot;tests.{category}&quot;, rule_id, f&quot;Tier 2 requires passing {label}.&quot;)
+0914              if rule_id not in rules:
+0915                  rules.append(rule_id)
+0916      verification = task.get(&quot;verification&quot;)
+0917      if not status_with_evidence_path_is(verification, &quot;PASS&quot;, &quot;VERIFIED&quot;):
+0918          add_unmet(
+0919              unmet,
+0920              &quot;verification&quot;,
+0921              &quot;DEGS-VV-001&quot;,
+0922              &quot;Tier 2 requires passing verification evidence with a nonblank evidence path.&quot;,
+0923          )
+0924      validation = task.get(&quot;validation&quot;)
+0925      if not status_with_evidence_path_is(validation, &quot;PASS&quot;, &quot;VERIFIED&quot;):
+0926          add_unmet(
+0927              unmet,
+0928              &quot;validation&quot;,
+0929              &quot;DEGS-VV-001&quot;,
+0930              &quot;Tier 2 requires passing validation evidence with a nonblank evidence path.&quot;,
+0931          )
+0932      if not independent_review_valid(task):
+0933          add_unmet(
+0934              unmet,
+0935              &quot;independent_review&quot;,
+0936              &quot;DEGS-VV-007&quot;,
+0937              &quot;Tier 2 requires a reviewer distinct from the task author, review evidence, open-issue disposition, and passing retest evidence.&quot;,
+0938          )
+0939      if not status_is(task.get(&quot;documentation&quot;), &quot;PASS&quot;, &quot;COMPLETE&quot;):
+0940          add_unmet(unmet, &quot;documentation&quot;, &quot;DEGS-CONTEXT-001&quot;, &quot;Tier 2 requires canonical documentation.&quot;)
+0941      if not status_is(task.get(&quot;telemetry&quot;), &quot;SANITIZED&quot;, &quot;PASS&quot;):
+0942          add_unmet(unmet, &quot;telemetry&quot;, &quot;DEGS-OPS-002&quot;, &quot;Tier 2 requires sanitized telemetry or status evidence.&quot;)
+0943      return unmet, rules
+0944&#32;&#32;
+0945&#32;&#32;
+0946  def evaluate_tier2(task):
+0947      unmet, rules = tier2_controls(task)
+0948      return result(&quot;BLOCKED&quot; if unmet else &quot;PASS&quot;, task, unmet=unmet, rule_ids=rules)
+0949&#32;&#32;
+0950&#32;&#32;
+0951  def unresolved_critical_warning(task):
+0952      for field in (&quot;warnings&quot;, &quot;unresolved_items&quot;):
+0953          values = task.get(field)
+0954          if not isinstance(values, list):
+0955              continue
+0956          for item in values:
+0957              if not isinstance(item, dict):
+0958                  continue
+0959              severity = str(item.get(&quot;severity&quot;, &quot;&quot;)).upper()
+0960              resolved = item.get(&quot;resolved&quot;) is True or str(item.get(&quot;status&quot;, &quot;&quot;)).upper() == &quot;RESOLVED&quot;
+0961              if severity == &quot;CRITICAL&quot; and not resolved:
+0962                  return True
+0963      return False
+0964&#32;&#32;
+0965&#32;&#32;
+0966  def unresolved_warning_summaries(task):
+0967      summaries = []
+0968      values = task.get(&quot;warnings&quot;)
+0969      if not isinstance(values, list):
+0970          return summaries
+0971      for item in values:
+0972          if not isinstance(item, dict):
+0973              continue
+0974          resolved = item.get(&quot;resolved&quot;) is True or str(item.get(&quot;status&quot;, &quot;&quot;)).upper() == &quot;RESOLVED&quot;
+0975          if resolved:
+0976              continue
+0977          severity = str(item.get(&quot;severity&quot;, &quot;WARNING&quot;)).upper()
+0978          summaries.append(
+0979              {
+0980                  &quot;severity&quot;: severity,
+0981                  &quot;message&quot;: &quot;An unresolved warning is recorded in the task input.&quot;,
+0982              }
+0983          )
+0984      return summaries
+0985&#32;&#32;
+0986&#32;&#32;
+0987  def apply_warning_policy(task, payload):
+0988      warnings = unresolved_warning_summaries(task)
+0989      payload[&quot;warnings&quot;] = warnings
+0990      if payload[&quot;decision&quot;] != &quot;PASS&quot; or not warnings:
+0991          return payload
+0992      if any(item[&quot;severity&quot;] == &quot;CRITICAL&quot; for item in warnings):
+0993          payload[&quot;decision&quot;] = &quot;BLOCKED&quot;
+0994          add_unmet(
+0995              payload[&quot;unmet_requirements&quot;],
+0996              &quot;warnings&quot;,
+0997              &quot;DEGS-RISK-004&quot;,
+0998              &quot;An unresolved critical warning blocks completion.&quot;,
+0999          )
+1000          if &quot;DEGS-RISK-004&quot; not in payload[&quot;applicable_rule_ids&quot;]:
+1001              payload[&quot;applicable_rule_ids&quot;].append(&quot;DEGS-RISK-004&quot;)
+1002      else:
+1003          payload[&quot;decision&quot;] = &quot;PASS_WITH_WARNINGS&quot;
+1004      return payload
+1005&#32;&#32;
+1006&#32;&#32;
+1007  def apply_declared_status_policy(task, payload):
+1008      declared_status = task.get(&quot;status&quot;)
+1009      if (
+1010          declared_status not in {&quot;FAILED&quot;, &quot;BLOCKED&quot;}
+1011          or payload[&quot;decision&quot;] not in {&quot;PASS&quot;, &quot;PASS_WITH_WARNINGS&quot;}
+1012      ):
+1013          return payload
+1014      payload[&quot;decision&quot;] = &quot;BLOCKED&quot;
+1015      add_unmet(
+1016          payload[&quot;unmet_requirements&quot;],
+1017          &quot;status&quot;,
+1018          &quot;DEGS-OPS-001&quot;,
+1019          f&quot;Declared task status {declared_status} is an authoritative stop signal.&quot;,
+1020      )
+1021      if &quot;DEGS-OPS-001&quot; not in payload[&quot;applicable_rule_ids&quot;]:
+1022          payload[&quot;applicable_rule_ids&quot;].append(&quot;DEGS-OPS-001&quot;)
+1023      return payload
+1024&#32;&#32;
+1025&#32;&#32;
+1026  def evaluate_tier3(task):
+1027      unmet, rules = tier2_controls(task)
+1028      rules.extend(
+1029          [
+1030              &quot;DEGS-RISK-003&quot;,
+1031              &quot;DEGS-RISK-004&quot;,
+1032              &quot;DEGS-RISK-005&quot;,
+1033              &quot;DEGS-RISK-006&quot;,
+1034              &quot;DEGS-SEC-004&quot;,
+1035              &quot;DEGS-VV-006&quot;,
+1036              &quot;DEGS-VV-008&quot;,
+1037              &quot;DEGS-AI-001&quot;,
+1038          ]
+1039      )
+1040      rules = list(dict.fromkeys(rules))
+1041      if task.get(&quot;authority_lane&quot;) != &quot;OPERATOR&quot;:
+1042          add_unmet(unmet, &quot;authority_lane&quot;, &quot;DEGS-AI-001&quot;, &quot;Tier 3 requires the Operator authority lane.&quot;)
+1043      if not hazard_analysis_valid(task.get(&quot;hazard_analysis&quot;)):
+1044          add_unmet(
+1045              unmet,
+1046              &quot;hazard_analysis&quot;,
+1047              &quot;DEGS-RISK-006&quot;,
+1048              &quot;Tier 3 requires a complete tested hazard analysis, a passing cross-domain check, and human-only evidence for any accepted residual risk.&quot;,
+1049          )
+1050      approval = task.get(&quot;human_approval&quot;)
+1051      if not (
+1052          isinstance(approval, dict)
+1053          and approval.get(&quot;status&quot;) == &quot;APPROVED&quot;
+1054          and approval.get(&quot;approver&quot;) == &quot;Operator&quot;
+1055          and approval.get(&quot;approver_role&quot;) == &quot;HUMAN&quot;
+1056          and approval.get(&quot;approval_mode&quot;) == &quot;OUT_OF_BAND&quot;
+1057          and nonempty(approval.get(&quot;evidence_path&quot;))
+1058      ):
+1059          add_unmet(
+1060              unmet,
+1061              &quot;human_approval&quot;,
+1062              &quot;DEGS-RISK-003&quot;,
+1063              &quot;Tier 3 requires an APPROVED out-of-band HUMAN approval record from Operator with an evidence path.&quot;,
+1064          )
+1065      recovery = task.get(&quot;recovery_validation&quot;)
+1066      if not (
+1067          status_is(recovery, &quot;PASS&quot;, &quot;VERIFIED&quot;)
+1068          and recovery.get(&quot;independently_verified&quot;) is True
+1069          and nonempty(recovery.get(&quot;evidence_path&quot;))
+1070      ):
+1071          add_unmet(unmet, &quot;recovery_validation&quot;, &quot;DEGS-RISK-005&quot;, &quot;Tier 3 requires an independently verified recovery path.&quot;)
+1072      review = task.get(&quot;independent_review&quot;)
+1073      if not (
+1074          status_is(review, &quot;PASS&quot;, &quot;PASS_WITH_WARNINGS&quot;)
+1075          and review.get(&quot;kind&quot;) == &quot;AUDIT&quot;
+1076          and nonempty(review.get(&quot;reviewer_role&quot;))
+1077          and nonempty(review.get(&quot;evidence_path&quot;))
+1078      ):
+1079          add_unmet(unmet, &quot;independent_review&quot;, &quot;DEGS-VV-008&quot;, &quot;Tier 3 requires an independent audit by a separate role or model.&quot;)
+1080      target = task.get(&quot;target_identity&quot;)
+1081      if not (
+1082          isinstance(target, dict)
+1083          and target.get(&quot;verified&quot;) is True
+1084          and nonempty(target.get(&quot;identifier&quot;))
+1085      ):
+1086          add_unmet(unmet, &quot;target_identity&quot;, &quot;DEGS-RISK-004&quot;, &quot;Tier 3 requires exact verified target identity.&quot;)
+1087      blast_radius = task.get(&quot;blast_radius&quot;)
+1088      if not (
+1089          isinstance(blast_radius, dict)
+1090          and blast_radius.get(&quot;bounded&quot;) is True
+1091          and nonempty(blast_radius.get(&quot;description&quot;))
+1092      ):
+1093          add_unmet(unmet, &quot;blast_radius&quot;, &quot;DEGS-RISK-004&quot;, &quot;Tier 3 requires a bounded blast radius.&quot;)
+1094      if not nonempty(task.get(&quot;stop_conditions&quot;)):
+1095          add_unmet(unmet, &quot;stop_conditions&quot;, &quot;DEGS-RISK-004&quot;, &quot;Tier 3 requires explicit stop conditions.&quot;)
+1096      if not status_is(task.get(&quot;post_action_validation&quot;), &quot;PASS&quot;, &quot;VERIFIED&quot;):
+1097          add_unmet(unmet, &quot;post_action_validation&quot;, &quot;DEGS-RISK-004&quot;, &quot;Tier 3 requires post-action validation evidence.&quot;)
+1098      dry_run = task.get(&quot;dry_run&quot;)
+1099      dry_run_satisfied = isinstance(dry_run, dict) and (
+1100          (
+1101              dry_run.get(&quot;applicable&quot;) is True
+1102              and dry_run.get(&quot;performed&quot;) is True
+1103              and status_is(dry_run, &quot;PASS&quot;)
+1104          )
+1105          or (
+1106              dry_run.get(&quot;applicable&quot;) is False
+1107              and nonempty(dry_run.get(&quot;reason&quot;))
+1108          )
+1109      )
+1110      if not dry_run_satisfied:
+1111          add_unmet(unmet, &quot;dry_run&quot;, &quot;DEGS-VV-008&quot;, &quot;Tier 3 requires a dry run where possible or a documented reason it is not applicable.&quot;)
+1112      if unresolved_critical_warning(task):
+1113          add_unmet(unmet, &quot;warnings&quot;, &quot;DEGS-RISK-004&quot;, &quot;An unresolved critical warning blocks Tier 3.&quot;)
+1114      return result(&quot;BLOCKED&quot; if unmet else &quot;PASS&quot;, task, unmet=unmet, rule_ids=rules)
+1115&#32;&#32;
+1116&#32;&#32;
+1117  def evaluate(task):
+1118      if task.get(&quot;risk_tier&quot;) == &quot;TIER_0&quot;:
+1119          payload = evaluate_tier0(task)
+1120      elif task.get(&quot;risk_tier&quot;) == &quot;TIER_1&quot;:
+1121          payload = evaluate_tier1(task)
+1122      elif task.get(&quot;risk_tier&quot;) == &quot;TIER_2&quot;:
+1123          payload = evaluate_tier2(task)
+1124      elif task.get(&quot;risk_tier&quot;) == &quot;TIER_3&quot;:
+1125          payload = evaluate_tier3(task)
+1126      else:
+1127          payload = result(
+1128              &quot;FAIL&quot;,
+1129              task,
+1130              unmet=[
+1131                  {
+1132                      &quot;field&quot;: &quot;risk_tier&quot;,
+1133                      &quot;rule_id&quot;: &quot;DEGS-RISK-001&quot;,
+1134                      &quot;message&quot;: &quot;Unsupported risk tier; the gate fails closed.&quot;,
+1135                  }
+1136              ],
+1137              rule_ids=[&quot;DEGS-RISK-001&quot;],
+1138          )
+1139      return apply_warning_policy(task, payload)
+1140&#32;&#32;
+1141&#32;&#32;
+1142  def render_human(payload):
+1143      lines = [
+1144          f&quot;Decision: {payload[&#x27;decision&#x27;]}&quot;,
+1145          f&quot;Risk tier: {payload.get(&#x27;risk_tier&#x27;)}&quot;,
+1146          f&quot;Authority lane: {payload.get(&#x27;authority_lane&#x27;)}&quot;,
+1147      ]
+1148      if payload[&quot;unmet_requirements&quot;]:
+1149          lines.append(&quot;Unmet requirements:&quot;)
+1150          lines.extend(f&quot;- {item[&#x27;rule_id&#x27;]}: {item[&#x27;message&#x27;]}&quot; for item in payload[&quot;unmet_requirements&quot;])
+1151      if payload[&quot;warnings&quot;]:
+1152          lines.append(&quot;Warnings:&quot;)
+1153          lines.extend(f&quot;- {item}&quot; for item in payload[&quot;warnings&quot;])
+1154      lines.append(&quot;Applicable DEGS rules: &quot; + &quot;, &quot;.join(payload[&quot;applicable_rule_ids&quot;]))
+1155      if payload[&quot;evidence_paths&quot;]:
+1156          lines.append(&quot;Evidence paths:&quot;)
+1157          lines.extend(f&quot;- {path}&quot; for path in payload[&quot;evidence_paths&quot;])
+1158      return &quot;\n&quot;.join(lines)
+1159&#32;&#32;
+1160&#32;&#32;
+1161  def parse_args(argv):
+1162      json_output = &quot;--json&quot; in argv
+1163      filtered = [argument for argument in argv if argument != &quot;--json&quot;]
+1164      parser = argparse.ArgumentParser(description=__doc__)
+1165      parser.add_argument(&quot;command&quot;, choices=(&quot;validate&quot;, &quot;evaluate&quot;, &quot;explain&quot;))
+1166      parser.add_argument(&quot;task&quot;, type=Path)
+1167      parsed = parser.parse_args(filtered)
+1168      parsed.json_output = json_output
+1169      return parsed
+1170&#32;&#32;
+1171&#32;&#32;
+1172  def main(argv=None):
+1173      args = parse_args(list(sys.argv[1:] if argv is None else argv))
+1174      task, error = load_task(args.task)
+1175      if error:
+1176          payload, exit_code = invalid_result(error, task)
+1177      elif args.command == &quot;validate&quot;:
+1178          payload = validate_structure(task)
+1179          exit_code = 4 if payload[&quot;decision&quot;] == &quot;FAIL&quot; else 0
+1180      else:
+1181          schema_payload = validate_structure(task)
+1182          payload = evaluate(task)
+1183          if (
+1184              schema_payload[&quot;decision&quot;] == &quot;FAIL&quot;
+1185              and payload[&quot;decision&quot;] in {&quot;PASS&quot;, &quot;PASS_WITH_WARNINGS&quot;}
+1186          ):
+1187              # Preserve rule-specific BLOCKED diagnostics for intentionally
+1188              # incomplete negative records, but never allow a schema-invalid
+1189              # record to receive a passing evaluation.
+1190              payload = schema_payload
+1191              exit_code = 4
+1192          else:
+1193              # Schema-invalid passing records fail before declared task status
+1194              # can turn them into ordinary workflow stops. Rule-specific
+1195              # BLOCKED diagnostics for incomplete negative records remain.
+1196              payload = apply_declared_status_policy(task, payload)
+1197              exit_code = EXIT_CODES[payload[&quot;decision&quot;]]
+1198&#32;&#32;
+1199      if args.command == &quot;explain&quot; and not error:
+1200          payload[&quot;explanations&quot;] = {
+1201              rule_id: &quot;Applicable readiness or completion control.&quot;
+1202              for rule_id in payload[&quot;applicable_rule_ids&quot;]
+1203          }
+1204&#32;&#32;
+1205      if args.json_output:
+1206          print(json.dumps(payload, indent=2, sort_keys=True))
+1207      else:
+1208          print(render_human(payload))
+1209      return exit_code
+1210&#32;&#32;
+1211&#32;&#32;
+1212  if __name__ == &quot;__main__&quot;:
+1213      sys.exit(main())
+</pre>
+</section>
+<section><h1>DEGS | what the core does</h1><p>A deterministic evaluator for engineering task records. Current corrected source: 1,213 lines.</p>
+<p><b>Figure 1</b><br/><i>The evaluator’s main path</i></p>
+<h2>1. Read and shape</h2>
+<p>Parse the supplied record. Check supported schema constraints and reject invalid input.</p>
+<h2>2. Scale the controls</h2>
+<p>Choose the tier and allowed recorded authority. Higher-consequence work requires more evidence.</p>
+<h2>3. Preserve stop states</h2>
+<p>Apply warning and declared-status policies. Missing evidence and explicit failures remain visible.</p>
+<h2>4. Return a decision</h2>
+<p>Emit readiness, rule-linked diagnostics, warnings, and recorded evidence paths. Do not execute the task.</p>
+<h2>Why the boundaries matter</h2>
+<p>A source path is not proof that its contents are correct. A recorded approval is not an approval granted by the program. The code checks the structured claim against its rules; people retain responsibility for consequential evidence and action.</p>
+<p>The staged gate includes a bounded JSON equality correction; policy rules and canonical fixture outcomes are preserved. Local activation state, private audit history, and the Workbench adapter are outside this draft. The Sashiko-derived concern collections are a separate component, not part of this gate path.</p>
+</section>
+<section><h1>DEGS | function map</h1><p>The complete source plate preserves line coverage. This map identifies each top-level unit and its role.</p>
+<p>92-97</p>
+<p><code>nonempty</code></p>
+<p>Rejects null, false, and empty strings or containers; other values count as present.</p>
+<p>100-101</p>
+<p><code>nonblank_string</code></p>
+<p>Requires a string containing at least one non-whitespace character.</p>
+<p>104-109</p>
+<p><code>nonblank_string_list</code></p>
+<p>Requires at least one string and rejects blank or non-string entries.</p>
+<p>112-116</p>
+<p><code>status_is</code></p>
+<p>Compares an object&#x27;s status, converted to uppercase, against allowed labels.</p>
+<p>119-124</p>
+<p><code>status_with_evidence_path_is</code></p>
+<p>Requires an exact allowed status and a nonblank evidence-path string.</p>
+<p>127-139</p>
+<p><code>test_category_passes</code></p>
+<p>Requires every recorded test in a named category to claim PASS and provide an evidence path.</p>
+<p>142-170</p>
+<p><code>deterministic_controls_valid</code></p>
+<p>Checks recorded external boundaries, enforcement reasons, denial tests, and follow-up evidence.</p>
+<p>173-197</p>
+<p><code>artifact_identity_valid</code></p>
+<p>Checks matching recorded artifact identifiers and a declared current evidence basis.</p>
+<p>200-213</p>
+<p><code>risk_analysis_valid</code></p>
+<p>Requires a passing recorded analysis covering every defined risk factor.</p>
+<p>216-234</p>
+<p><code>change_traceability_valid</code></p>
+<p>Checks recorded requirement-to-artifact-to-test links and a declared zero orphan count.</p>
+<p>237-243</p>
+<p><code>explicit_non_applicability</code></p>
+<p>Accepts a recorded non-applicable status only with false applicability and a reason.</p>
+<p>246-280</p>
+<p><code>data_governance_valid</code></p>
+<p>Checks recorded data purpose, access, retention, authority, and any planned repurposing.</p>
+<p>283-294</p>
+<p><code>threat_model_valid</code></p>
+<p>Checks a declared current threat model or a reasoned non-applicability record.</p>
+<p>297-311</p>
+<p><code>monitoring_valid</code></p>
+<p>Checks recorded ownership, thresholds, reassessment, and degradation or non-applicability.</p>
+<p>314-328</p>
+<p><code>measurable_ai_criteria_valid</code></p>
+<p>Requires measures, thresholds, and evidence paths in all four AI criteria categories.</p>
+<p>331-366</p>
+<p><code>ai_assurance_valid</code></p>
+<p>Checks recorded consequential-AI controls and tests or reasoned non-applicability.</p>
+<p>Imports, constants, gaps between definitions, and the final entry-point guard remain visible in the complete source plate. Source labels are explanatory; the repository source is authoritative.</p>
+</section>
+<section><h1>DEGS | function map</h1><p>The complete source plate preserves line coverage. This map identifies each top-level unit and its role.</p>
+<p>369-409</p>
+<p><code>hazard_analysis_valid</code></p>
+<p>Checks recorded hazard controls, tests, and any human acceptance of residual risk.</p>
+<p>412-425</p>
+<p><code>independent_review_valid</code></p>
+<p>Requires a named reviewer distinct from the author, issue disposition, and passing retest evidence.</p>
+<p>428-429</p>
+<p><code>add_unmet</code></p>
+<p>Appends one unmet requirement with its field, rule identifier, and explanation.</p>
+<p>432-443</p>
+<p><code>collect_evidence_paths</code></p>
+<p>Recursively gathers unique nonempty evidence-path strings without opening their files.</p>
+<p>446-456</p>
+<p><code>contains_secret_like_field</code></p>
+<p>Recursively flags prohibited field names in dictionaries and lists.</p>
+<p>459-468</p>
+<p><code>result</code></p>
+<p>Builds a decision record with unmet requirements, warnings, rule identifiers, and evidence paths.</p>
+<p>471-485</p>
+<p><code>invalid_result</code></p>
+<p>Builds an input-failure record and returns the input-error exit code 4.</p>
+<p>488-500</p>
+<p><code>load_task</code></p>
+<p>Reads a task object and checks its version plus prohibited telemetry or state field names.</p>
+<p>503-525</p>
+<p><code>json_values_equal</code></p>
+<p>Compares nested JSON with a worklist, preserving numeric equality and separating booleans.</p>
+<p>528-535</p>
+<p><code>json_type_matches</code></p>
+<p>Recognizes object, array, string, boolean, and null; other type labels do not match.</p>
+<p>538-539</p>
+<p><code>child_schema_path</code></p>
+<p>Builds a dotted field path for a nested validation finding.</p>
+<p>542-551</p>
+<p><code>resolve_local_schema_ref</code></p>
+<p>Resolves a local JSON pointer and rejects external or missing schema references.</p>
+<p>554-675</p>
+<p><code>json_schema_errors</code></p>
+<p>Evaluates selected schema keywords recursively and returns field-specific errors.</p>
+<p>678-680</p>
+<p><code>schema_rule_for_path</code></p>
+<p>Maps a field&#x27;s top-level name to its DEGS rule identifier.</p>
+<p>683-710</p>
+<p><code>validate_structure</code></p>
+<p>Loads the fixed task schema and turns distinct structural errors into a PASS or FAIL record.</p>
+<p>713-750</p>
+<p><code>evaluate_tier0</code></p>
+<p>Checks recorded read-only scope, objective, secret handling, and Command Center lane.</p>
+<p>Imports, constants, gaps between definitions, and the final entry-point guard remain visible in the complete source plate. Source labels are explanatory; the repository source is authoritative.</p>
+</section>
+<section><h1>DEGS | function map</h1><p>The complete source plate preserves line coverage. This map identifies each top-level unit and its role.</p>
+<p>753-806</p>
+<p><code>tier1_controls</code></p>
+<p>Collects missing scope, requirements, baseline, tests, rollback, handoff, and lane evidence.</p>
+<p>809-811</p>
+<p><code>evaluate_tier1</code></p>
+<p>Returns BLOCKED when Tier 1 has unmet controls; otherwise returns PASS.</p>
+<p>814-943</p>
+<p><code>tier2_controls</code></p>
+<p>Extends Tier 1 with recorded recovery, risk, identity, review, and operational evidence checks.</p>
+<p>946-948</p>
+<p><code>evaluate_tier2</code></p>
+<p>Returns BLOCKED when Tier 2 has unmet controls; otherwise returns PASS.</p>
+<p>951-963</p>
+<p><code>unresolved_critical_warning</code></p>
+<p>Finds unresolved critical entries among warnings and unresolved items.</p>
+<p>966-984</p>
+<p><code>unresolved_warning_summaries</code></p>
+<p>Summarizes unresolved warning severities without copying their supplied messages.</p>
+<p>987-1004</p>
+<p><code>apply_warning_policy</code></p>
+<p>Changes a passing result to BLOCKED for critical warnings or PASS_WITH_WARNINGS otherwise.</p>
+<p>1007-1023</p>
+<p><code>apply_declared_status_policy</code></p>
+<p>Stops an otherwise passing task when its declared status is FAILED or BLOCKED.</p>
+<p>1026-1114</p>
+<p><code>evaluate_tier3</code></p>
+<p>Adds recorded human approval, audit, hazards, recovery, target, and dry-run checks to Tier 2.</p>
+<p>1117-1139</p>
+<p><code>evaluate</code></p>
+<p>Selects the tier checks, fails unsupported tiers, and applies the warning policy.</p>
+<p>1142-1158</p>
+<p><code>render_human</code></p>
+<p>Formats the decision, unmet requirements, warnings, rules, and evidence paths for reading.</p>
+<p>1161-1169</p>
+<p><code>parse_args</code></p>
+<p>Parses validate, evaluate, or explain with a task path and optional JSON output.</p>
+<p>1172-1209</p>
+<p><code>main</code></p>
+<p>Loads and checks a task, prevents schema-invalid passes, then emits the result and exit code.</p>
+<p>Imports, constants, gaps between definitions, and the final entry-point guard remain visible in the complete source plate. Source labels are explanatory; the repository source is authoritative.</p>
+</section>
+<section><h1>DEGS | the defect the public examples exposed</h1><p>Fourteen manifestations. One comparator defect. A tested correction with its history preserved.</p>
+<h2>The distinction must survive nesting</h2>
+<p>JavaScript Object Notation (JSON) distinguishes booleans from numbers. The corrected helper preserves that distinction through arrays and objects. A const schema requiring [false] now rejects [0], while 1 and 1.0 remain equal. The first implementation delegated container equality to Python; all 14 original failures came from that defect.</p>
+<h2>What the independent review established</h2>
+<p>All 14 invalid labels and false acceptances were reproduced from the pinned public corpus: six enum cases and eight const cases. The current canonical schema has 53 const nodes and 16 enum nodes, with no container-valued comparison operands. Four scalar boolean/number substitutions failed structure checks. No current canonical task bypass was demonstrated.</p>
+<h2>What the correction preserves</h2>
+<p>An explicit worklist compares nested arrays and objects without consuming a Python call frame per level. Booleans remain distinct from numbers; 1 and 1.0 remain equal. Array order and length matter; object member order does not. Independent review caught a depth regression in the intermediate correction. New 600-level array/object tests now pass (Wright et al., 2022).</p>
+<p>Benchmark: 241/241 matched in the unchanged supported subset. This is helper interoperability evidence, not full JSON Schema conformance or whole-system accuracy. The original 227/241 observation remains intact. Harness corrections preserve timeout diagnostics, require stale freshness, and record actual invocation arguments.</p>
+</section>
+<section><h1>Source license</h1><p>The DEGS source listing retains the repository&#x27;s original license notice.</p>
+<p>MIT License<br/><br/>Copyright (c) 2026 tmccoy678<br/><br/>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<br/><br/>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.<br/><br/>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. </p>
+</section>
+<section><h1>References</h1><p></p>
+<p>Hirshorn, S. R., Voss, L. D., &amp; Bromley, L. K. (2017). <i>NASA systems engineering handbook</i> (NASA/SP-2016-6105 Rev. 2). National Aeronautics and Space Administration. <a href="https://ntrs.nasa.gov/citations/20170001761">https://ntrs.nasa.gov/citations/20170001761</a></p>
+<p>Souppaya, M., Scarfone, K., &amp; Dodson, D. (2022). <i>Secure software development framework (SSDF) version 1.1: Recommendations for mitigating the risk of software vulnerabilities</i> (NIST Special Publication 800-218). <a href="https://doi.org/10.6028/NIST.SP.800-218">https://doi.org/10.6028/NIST.SP.800-218</a></p>
+<p>Wright, A., Andrews, H., Hutton, B., &amp; Dennis, G. (2022, June 16). <i>JSON Schema: A media type for describing JSON documents</i> (Internet-Draft draft-bhutton-json-schema-01, Section 4.2.2; work in progress). <a href="https://json-schema.org/draft/2020-12/json-schema-core#section-4.2.2">https://json-schema.org/draft/2020-12/json-schema-core#section-4.2.2</a></p>
+</section></body></html>

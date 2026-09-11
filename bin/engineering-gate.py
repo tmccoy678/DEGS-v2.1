@@ -501,9 +501,28 @@ def load_task(path):
 
 
 def json_values_equal(left, right):
-    if isinstance(left, bool) or isinstance(right, bool):
-        return type(left) is type(right) and left == right
-    return left == right
+    # Finite decoded JSON trees: each pair visits one corresponding subtree.
+    pending = [(left, right)]
+    while pending:
+        left, right = pending.pop()
+        if isinstance(left, bool) or isinstance(right, bool):
+            if type(left) is not type(right) or left != right:
+                return False
+        elif isinstance(left, list) or isinstance(right, list):
+            if not (isinstance(left, list) and isinstance(right, list)):
+                return False
+            if len(left) != len(right):
+                return False
+            pending.extend(zip(left, right))
+        elif isinstance(left, dict) or isinstance(right, dict):
+            if not (isinstance(left, dict) and isinstance(right, dict)):
+                return False
+            if left.keys() != right.keys():
+                return False
+            pending.extend((left[key], right[key]) for key in left)
+        elif left != right:
+            return False
+    return True
 
 
 def json_type_matches(value, expected):
