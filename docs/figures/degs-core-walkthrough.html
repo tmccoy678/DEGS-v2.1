@@ -3,21 +3,21 @@
 <h2>Complete privacy-edited source</h2><pre>
 0001  #!/usr/bin/env python3
 0002  &quot;&quot;&quot;Evaluate DEGS task records without executing the described work.&quot;&quot;&quot;
-0003  
+0003&#32;&#32;
 0004  import argparse
 0005  import json
 0006  import re
 0007  import sys
 0008  from pathlib import Path
-0009  
-0010  
+0009&#32;&#32;
+0010&#32;&#32;
 0011  EXIT_CODES = {
 0012      &quot;PASS&quot;: 0,
 0013      &quot;PASS_WITH_WARNINGS&quot;: 1,
 0014      &quot;BLOCKED&quot;: 2,
 0015      &quot;FAIL&quot;: 3,
 0016  }
-0017  
+0017&#32;&#32;
 0018  SECRET_LIKE_KEYS = {
 0019      &quot;api_key&quot;,
 0020      &quot;auth&quot;,
@@ -31,7 +31,7 @@
 0028      &quot;secret_value&quot;,
 0029      &quot;token&quot;,
 0030  }
-0031  
+0031&#32;&#32;
 0032  SUPPORTED_RISK_TIERS = {&quot;TIER_0&quot;, &quot;TIER_1&quot;, &quot;TIER_2&quot;, &quot;TIER_3&quot;}
 0033  SUPPORTED_AUTHORITY_LANES = {
 0034      &quot;COMMAND_CENTER&quot;,
@@ -39,7 +39,7 @@
 0036      &quot;AGENTOPS&quot;,
 0037      &quot;OPERATOR&quot;,
 0038  }
-0039  
+0039&#32;&#32;
 0040  DETERMINISTIC_BOUNDARIES = {
 0041      &quot;filesystem_write&quot;,
 0042      &quot;command_execution&quot;,
@@ -48,7 +48,7 @@
 0045      &quot;secret_access&quot;,
 0046      &quot;approval&quot;,
 0047  }
-0048  
+0048&#32;&#32;
 0049  ARTIFACT_IDENTITY_METHODS = {
 0050      &quot;SHA256&quot;,
 0051      &quot;SIGNATURE&quot;,
@@ -56,9 +56,9 @@
 0053      &quot;RELEASE_DIGEST&quot;,
 0054      &quot;EQUIVALENT&quot;,
 0055  }
-0056  
+0056&#32;&#32;
 0057  AI_CRITERIA_CATEGORIES = {&quot;quality&quot;, &quot;safety&quot;, &quot;security&quot;, &quot;fairness&quot;}
-0058  
+0058&#32;&#32;
 0059  RISK_ANALYSIS_FACTORS = {
 0060      &quot;consequence&quot;,
 0061      &quot;reversibility&quot;,
@@ -68,9 +68,9 @@
 0065      &quot;affected_party_impact&quot;,
 0066      &quot;ai_socio_technical_risk&quot;,
 0067  }
-0068  
+0068&#32;&#32;
 0069  SCHEMA_PATH = Path(__file__).resolve().parents[1] / &quot;gate.schema.json&quot;
-0070  
+0070&#32;&#32;
 0071  SCHEMA_RULE_BY_FIELD = {
 0072      &quot;objective&quot;: &quot;DEGS-MISSION-001&quot;,
 0073      &quot;authority_lane&quot;: &quot;DEGS-AI-001&quot;,
@@ -90,43 +90,43 @@
 0087      &quot;validation&quot;: &quot;DEGS-VV-001&quot;,
 0088      &quot;status&quot;: &quot;DEGS-OPS-001&quot;,
 0089  }
-0090  
-0091  
+0090&#32;&#32;
+0091&#32;&#32;
 0092  def nonempty(value):
 0093      if value is None or value is False:
 0094          return False
 0095      if isinstance(value, (str, list, dict)):
 0096          return bool(value)
 0097      return True
-0098  
-0099  
+0098&#32;&#32;
+0099&#32;&#32;
 0100  def nonblank_string(value):
 0101      return isinstance(value, str) and bool(value.strip())
-0102  
-0103  
+0102&#32;&#32;
+0103&#32;&#32;
 0104  def nonblank_string_list(value):
 0105      return (
 0106          isinstance(value, list)
 0107          and bool(value)
 0108          and all(nonblank_string(item) for item in value)
 0109      )
-0110  
-0111  
+0110&#32;&#32;
+0111&#32;&#32;
 0112  def status_is(value, *allowed):
 0113      if not isinstance(value, dict):
 0114          return False
 0115      status = value.get(&quot;status&quot;)
 0116      return isinstance(status, str) and status.upper() in set(allowed)
-0117  
-0118  
+0117&#32;&#32;
+0118&#32;&#32;
 0119  def status_with_evidence_path_is(value, *allowed):
 0120      return (
 0121          isinstance(value, dict)
 0122          and value.get(&quot;status&quot;) in allowed
 0123          and nonblank_string(value.get(&quot;evidence_path&quot;))
 0124      )
-0125  
-0126  
+0125&#32;&#32;
+0126&#32;&#32;
 0127  def test_category_passes(task, category):
 0128      tests = task.get(&quot;tests&quot;)
 0129      if not isinstance(tests, dict):
@@ -140,8 +140,8 @@
 0137              for item in evidence
 0138          )
 0139      )
-0140  
-0141  
+0140&#32;&#32;
+0141&#32;&#32;
 0142  def deterministic_controls_valid(value):
 0143      if not (
 0144          isinstance(value, dict)
@@ -171,8 +171,8 @@
 0168          else:
 0169              return False
 0170      return True
-0171  
-0172  
+0171&#32;&#32;
+0172&#32;&#32;
 0173  def artifact_identity_valid(value):
 0174      if not isinstance(value, dict):
 0175          return False
@@ -198,8 +198,8 @@
 0195          and nonblank_string(freshness.get(&quot;basis&quot;))
 0196          and nonblank_string(value.get(&quot;evidence_path&quot;))
 0197      )
-0198  
-0199  
+0198&#32;&#32;
+0199&#32;&#32;
 0200  def risk_analysis_valid(value):
 0201      if not (
 0202          isinstance(value, dict)
@@ -214,8 +214,8 @@
 0211          and set(factors) == RISK_ANALYSIS_FACTORS
 0212          and all(nonblank_string(factor) for factor in factors.values())
 0213      )
-0214  
-0215  
+0214&#32;&#32;
+0215&#32;&#32;
 0216  def change_traceability_valid(value):
 0217      if not (
 0218          isinstance(value, dict)
@@ -235,8 +235,8 @@
 0232          and nonblank_string(link.get(&quot;evidence_path&quot;))
 0233          for link in links
 0234      )
-0235  
-0236  
+0235&#32;&#32;
+0236&#32;&#32;
 0237  def explicit_non_applicability(value):
 0238      return (
 0239          isinstance(value, dict)
@@ -244,8 +244,8 @@
 0241          and value.get(&quot;status&quot;) == &quot;NOT_APPLICABLE&quot;
 0242          and nonblank_string(value.get(&quot;reason&quot;))
 0243      )
-0244  
-0245  
+0244&#32;&#32;
+0245&#32;&#32;
 0246  def data_governance_valid(value):
 0247      if explicit_non_applicability(value):
 0248          return True
@@ -281,8 +281,8 @@
 0278          and str(repurposing.get(&quot;authority&quot;)).upper() != &quot;UNKNOWN&quot;
 0279          and nonblank_string(repurposing.get(&quot;evidence_path&quot;))
 0280      )
-0281  
-0282  
+0281&#32;&#32;
+0282&#32;&#32;
 0283  def threat_model_valid(value):
 0284      if explicit_non_applicability(value):
 0285          return True
@@ -295,8 +295,8 @@
 0292          and nonblank_string_list(value.get(&quot;mitigations&quot;))
 0293          and nonblank_string(value.get(&quot;evidence_path&quot;))
 0294      )
-0295  
-0296  
+0295&#32;&#32;
+0296&#32;&#32;
 0297  def monitoring_valid(value):
 0298      if explicit_non_applicability(value):
 0299          return True
@@ -312,8 +312,8 @@
 0309          and nonblank_string(value.get(&quot;safe_degradation&quot;))
 0310          and nonblank_string(value.get(&quot;evidence_path&quot;))
 0311      )
-0312  
-0313  
+0312&#32;&#32;
+0313&#32;&#32;
 0314  def measurable_ai_criteria_valid(value):
 0315      if not isinstance(value, dict) or set(value) != AI_CRITERIA_CATEGORIES:
 0316          return False
@@ -329,8 +329,8 @@
 0326          ):
 0327              return False
 0328      return True
-0329  
-0330  
+0329&#32;&#32;
+0330&#32;&#32;
 0331  def ai_assurance_valid(value):
 0332      if explicit_non_applicability(value):
 0333          return True
@@ -367,8 +367,8 @@
 0364          and tests.get(&quot;human_handoff&quot;) is True
 0365          and nonblank_string(tests.get(&quot;evidence_path&quot;))
 0366      )
-0367  
-0368  
+0367&#32;&#32;
+0368&#32;&#32;
 0369  def hazard_analysis_valid(value):
 0370      if not (
 0371          isinstance(value, dict)
@@ -410,8 +410,8 @@
 0407          and residual.get(&quot;acceptance_mode&quot;) == &quot;OUT_OF_BAND&quot;
 0408          and nonblank_string(residual.get(&quot;evidence_path&quot;))
 0409      )
-0410  
-0411  
+0410&#32;&#32;
+0411&#32;&#32;
 0412  def independent_review_valid(task):
 0413      review = task.get(&quot;independent_review&quot;)
 0414      author = task.get(&quot;task_author&quot;)
@@ -426,12 +426,12 @@
 0423          and review.get(&quot;open_issues_status&quot;) in {&quot;NONE&quot;, &quot;DISPOSITIONED&quot;}
 0424          and review.get(&quot;retest_status&quot;) == &quot;PASS&quot;
 0425      )
-0426  
-0427  
+0426&#32;&#32;
+0427&#32;&#32;
 0428  def add_unmet(unmet, field, rule_id, message):
 0429      unmet.append({&quot;field&quot;: field, &quot;rule_id&quot;: rule_id, &quot;message&quot;: message})
-0430  
-0431  
+0430&#32;&#32;
+0431&#32;&#32;
 0432  def collect_evidence_paths(value):
 0433      paths = []
 0434      if isinstance(value, dict):
@@ -444,8 +444,8 @@
 0441          for child in value:
 0442              paths.extend(collect_evidence_paths(child))
 0443      return list(dict.fromkeys(paths))
-0444  
-0445  
+0444&#32;&#32;
+0445&#32;&#32;
 0446  def contains_secret_like_field(value):
 0447      if isinstance(value, dict):
 0448          for key, child in value.items():
@@ -457,8 +457,8 @@
 0454      elif isinstance(value, list):
 0455          return any(contains_secret_like_field(child) for child in value)
 0456      return False
-0457  
-0458  
+0457&#32;&#32;
+0458&#32;&#32;
 0459  def result(decision, task, unmet=None, warnings=None, rule_ids=None):
 0460      return {
 0461          &quot;decision&quot;: decision,
@@ -469,8 +469,8 @@
 0466          &quot;authority_lane&quot;: task.get(&quot;authority_lane&quot;),
 0467          &quot;evidence_paths&quot;: collect_evidence_paths(task),
 0468      }
-0469  
-0470  
+0469&#32;&#32;
+0470&#32;&#32;
 0471  def invalid_result(message, task=None):
 0472      task = task if isinstance(task, dict) else {}
 0473      payload = result(
@@ -486,8 +486,8 @@
 0483          rule_ids=[&quot;DEGS-REQ-001&quot;],
 0484      )
 0485      return payload, 4
-0486  
-0487  
+0486&#32;&#32;
+0487&#32;&#32;
 0488  def load_task(path):
 0489      try:
 0490          with path.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as handle:
@@ -501,8 +501,8 @@
 0498      if contains_secret_like_field(task.get(&quot;telemetry&quot;)) or contains_secret_like_field(task.get(&quot;state&quot;)):
 0499          return task, &quot;Telemetry or state contains a prohibited secret-like field.&quot;
 0500      return task, None
-0501  
-0502  
+0501&#32;&#32;
+0502&#32;&#32;
 0503  def json_values_equal(left, right):
 0504      # Finite decoded JSON trees: each pair visits one corresponding subtree.
 0505      pending = [(left, right)]
@@ -526,8 +526,8 @@
 0523          elif left != right:
 0524              return False
 0525      return True
-0526  
-0527  
+0526&#32;&#32;
+0527&#32;&#32;
 0528  def json_type_matches(value, expected):
 0529      return {
 0530          &quot;object&quot;: isinstance(value, dict),
@@ -536,12 +536,12 @@
 0533          &quot;boolean&quot;: isinstance(value, bool),
 0534          &quot;null&quot;: value is None,
 0535      }.get(expected, False)
-0536  
-0537  
+0536&#32;&#32;
+0537&#32;&#32;
 0538  def child_schema_path(path, child):
 0539      return f&quot;{path}.{child}&quot; if path else str(child)
-0540  
-0541  
+0540&#32;&#32;
+0541&#32;&#32;
 0542  def resolve_local_schema_ref(reference, root_schema):
 0543      if not isinstance(reference, str) or not reference.startswith(&quot;#/&quot;):
 0544          raise ValueError(&quot;Only local JSON Schema references are supported.&quot;)
@@ -552,8 +552,8 @@
 0549              raise ValueError(&quot;JSON Schema reference cannot be resolved.&quot;)
 0550          node = node[token]
 0551      return node
-0552  
-0553  
+0552&#32;&#32;
+0553&#32;&#32;
 0554  def json_schema_errors(value, schema, root_schema, path=&quot;&quot;):
 0555      &quot;&quot;&quot;Evaluate the JSON Schema keywords used by the canonical task schema.&quot;&quot;&quot;
 0556      if not isinstance(schema, dict):
@@ -564,11 +564,11 @@
 0561          except ValueError as error:
 0562              return [(path or &quot;input&quot;, str(error))]
 0563          return json_schema_errors(value, target, root_schema, path)
-0564  
+0564&#32;&#32;
 0565      errors = []
 0566      for subschema in schema.get(&quot;allOf&quot;, []):
 0567          errors.extend(json_schema_errors(value, subschema, root_schema, path))
-0568  
+0568&#32;&#32;
 0569      conditional = schema.get(&quot;if&quot;)
 0570      if isinstance(conditional, dict) and not json_schema_errors(
 0571          value, conditional, root_schema, path
@@ -578,7 +578,7 @@
 0575              errors.extend(
 0576                  json_schema_errors(value, then_schema, root_schema, path)
 0577              )
-0578  
+0578&#32;&#32;
 0579      branches = schema.get(&quot;oneOf&quot;)
 0580      if isinstance(branches, list):
 0581          branch_results = [
@@ -592,13 +592,13 @@
 0589              errors.append(
 0590                  (path or &quot;input&quot;, &quot;Value must match exactly one allowed schema.&quot;)
 0591              )
-0592  
+0592&#32;&#32;
 0593      prohibited = schema.get(&quot;not&quot;)
 0594      if isinstance(prohibited, dict) and not json_schema_errors(
 0595          value, prohibited, root_schema, path
 0596      ):
 0597          errors.append((path or &quot;input&quot;, &quot;Value matches a prohibited schema.&quot;))
-0598  
+0598&#32;&#32;
 0599      expected_types = schema.get(&quot;type&quot;)
 0600      if expected_types is not None:
 0601          if isinstance(expected_types, str):
@@ -615,14 +615,14 @@
 0612                  )
 0613              )
 0614              return errors
-0615  
+0615&#32;&#32;
 0616      if &quot;const&quot; in schema and not json_values_equal(value, schema[&quot;const&quot;]):
 0617          errors.append((path or &quot;input&quot;, &quot;Value does not match the required constant.&quot;))
 0618      if &quot;enum&quot; in schema and not any(
 0619          json_values_equal(value, candidate) for candidate in schema[&quot;enum&quot;]
 0620      ):
 0621          errors.append((path or &quot;input&quot;, &quot;Value is not in the allowed set.&quot;))
-0622  
+0622&#32;&#32;
 0623      if isinstance(value, str) and len(value) &lt; schema.get(&quot;minLength&quot;, 0):
 0624          errors.append((path or &quot;input&quot;, &quot;String is shorter than the minimum length.&quot;))
 0625      if isinstance(value, str) and &quot;pattern&quot; in schema:
@@ -676,13 +676,13 @@
 0673                          )
 0674                      )
 0675      return errors
-0676  
-0677  
+0676&#32;&#32;
+0677&#32;&#32;
 0678  def schema_rule_for_path(path):
 0679      top_level = path.split(&quot;.&quot;, 1)[0].split(&quot;[&quot;, 1)[0]
 0680      return SCHEMA_RULE_BY_FIELD.get(top_level, &quot;DEGS-REQ-001&quot;)
-0681  
-0682  
+0681&#32;&#32;
+0682&#32;&#32;
 0683  def validate_structure(task):
 0684      &quot;&quot;&quot;Validate the complete canonical task schema with the standard library.&quot;&quot;&quot;
 0685      try:
@@ -711,8 +711,8 @@
 0708          add_unmet(unmet, field, schema_rule_for_path(field), message)
 0709      rules = list(dict.fromkeys(item[&quot;rule_id&quot;] for item in unmet))
 0710      return result(&quot;FAIL&quot; if unmet else &quot;PASS&quot;, task, unmet=unmet, rule_ids=rules or [&quot;DEGS-REQ-001&quot;])
-0711  
-0712  
+0711&#32;&#32;
+0712&#32;&#32;
 0713  def evaluate_tier0(task):
 0714      unmet = []
 0715      scope = task.get(&quot;scope&quot;)
@@ -751,8 +751,8 @@
 0748      rules = [&quot;DEGS-RISK-001&quot;, &quot;DEGS-MISSION-001&quot;, &quot;DEGS-SEC-002&quot;, &quot;DEGS-AI-001&quot;]
 0749      decision = &quot;BLOCKED&quot; if unmet else &quot;PASS&quot;
 0750      return result(decision, task, unmet=unmet, rule_ids=rules)
-0751  
-0752  
+0751&#32;&#32;
+0752&#32;&#32;
 0753  def tier1_controls(task):
 0754      unmet = []
 0755      rules = [
@@ -807,13 +807,13 @@
 0804      if not status_is(task.get(&quot;handoff&quot;), &quot;PASS&quot;, &quot;COMPLETE&quot;):
 0805          add_unmet(unmet, &quot;handoff&quot;, &quot;DEGS-CONTEXT-001&quot;, &quot;Tier 1 requires a completed handoff.&quot;)
 0806      return unmet, rules
-0807  
-0808  
+0807&#32;&#32;
+0808&#32;&#32;
 0809  def evaluate_tier1(task):
 0810      unmet, rules = tier1_controls(task)
 0811      return result(&quot;BLOCKED&quot; if unmet else &quot;PASS&quot;, task, unmet=unmet, rule_ids=rules)
-0812  
-0813  
+0812&#32;&#32;
+0813&#32;&#32;
 0814  def tier2_controls(task):
 0815      unmet, rules = tier1_controls(task)
 0816      rules.extend(
@@ -944,13 +944,13 @@
 0941      if not status_is(task.get(&quot;telemetry&quot;), &quot;SANITIZED&quot;, &quot;PASS&quot;):
 0942          add_unmet(unmet, &quot;telemetry&quot;, &quot;DEGS-OPS-002&quot;, &quot;Tier 2 requires sanitized telemetry or status evidence.&quot;)
 0943      return unmet, rules
-0944  
-0945  
+0944&#32;&#32;
+0945&#32;&#32;
 0946  def evaluate_tier2(task):
 0947      unmet, rules = tier2_controls(task)
 0948      return result(&quot;BLOCKED&quot; if unmet else &quot;PASS&quot;, task, unmet=unmet, rule_ids=rules)
-0949  
-0950  
+0949&#32;&#32;
+0950&#32;&#32;
 0951  def unresolved_critical_warning(task):
 0952      for field in (&quot;warnings&quot;, &quot;unresolved_items&quot;):
 0953          values = task.get(field)
@@ -964,8 +964,8 @@
 0961              if severity == &quot;CRITICAL&quot; and not resolved:
 0962                  return True
 0963      return False
-0964  
-0965  
+0964&#32;&#32;
+0965&#32;&#32;
 0966  def unresolved_warning_summaries(task):
 0967      summaries = []
 0968      values = task.get(&quot;warnings&quot;)
@@ -985,8 +985,8 @@
 0982              }
 0983          )
 0984      return summaries
-0985  
-0986  
+0985&#32;&#32;
+0986&#32;&#32;
 0987  def apply_warning_policy(task, payload):
 0988      warnings = unresolved_warning_summaries(task)
 0989      payload[&quot;warnings&quot;] = warnings
@@ -1005,8 +1005,8 @@
 1002      else:
 1003          payload[&quot;decision&quot;] = &quot;PASS_WITH_WARNINGS&quot;
 1004      return payload
-1005  
-1006  
+1005&#32;&#32;
+1006&#32;&#32;
 1007  def apply_declared_status_policy(task, payload):
 1008      declared_status = task.get(&quot;status&quot;)
 1009      if (
@@ -1024,8 +1024,8 @@
 1021      if &quot;DEGS-OPS-001&quot; not in payload[&quot;applicable_rule_ids&quot;]:
 1022          payload[&quot;applicable_rule_ids&quot;].append(&quot;DEGS-OPS-001&quot;)
 1023      return payload
-1024  
-1025  
+1024&#32;&#32;
+1025&#32;&#32;
 1026  def evaluate_tier3(task):
 1027      unmet, rules = tier2_controls(task)
 1028      rules.extend(
@@ -1115,8 +1115,8 @@
 1112      if unresolved_critical_warning(task):
 1113          add_unmet(unmet, &quot;warnings&quot;, &quot;DEGS-RISK-004&quot;, &quot;An unresolved critical warning blocks Tier 3.&quot;)
 1114      return result(&quot;BLOCKED&quot; if unmet else &quot;PASS&quot;, task, unmet=unmet, rule_ids=rules)
-1115  
-1116  
+1115&#32;&#32;
+1116&#32;&#32;
 1117  def evaluate(task):
 1118      if task.get(&quot;risk_tier&quot;) == &quot;TIER_0&quot;:
 1119          payload = evaluate_tier0(task)
@@ -1140,8 +1140,8 @@
 1137              rule_ids=[&quot;DEGS-RISK-001&quot;],
 1138          )
 1139      return apply_warning_policy(task, payload)
-1140  
-1141  
+1140&#32;&#32;
+1141&#32;&#32;
 1142  def render_human(payload):
 1143      lines = [
 1144          f&quot;Decision: {payload[&#x27;decision&#x27;]}&quot;,
@@ -1159,8 +1159,8 @@
 1156          lines.append(&quot;Evidence paths:&quot;)
 1157          lines.extend(f&quot;- {path}&quot; for path in payload[&quot;evidence_paths&quot;])
 1158      return &quot;\n&quot;.join(lines)
-1159  
-1160  
+1159&#32;&#32;
+1160&#32;&#32;
 1161  def parse_args(argv):
 1162      json_output = &quot;--json&quot; in argv
 1163      filtered = [argument for argument in argv if argument != &quot;--json&quot;]
@@ -1170,8 +1170,8 @@
 1167      parsed = parser.parse_args(filtered)
 1168      parsed.json_output = json_output
 1169      return parsed
-1170  
-1171  
+1170&#32;&#32;
+1171&#32;&#32;
 1172  def main(argv=None):
 1173      args = parse_args(list(sys.argv[1:] if argv is None else argv))
 1174      task, error = load_task(args.task)
@@ -1198,20 +1198,20 @@
 1195              # BLOCKED diagnostics for incomplete negative records remain.
 1196              payload = apply_declared_status_policy(task, payload)
 1197              exit_code = EXIT_CODES[payload[&quot;decision&quot;]]
-1198  
+1198&#32;&#32;
 1199      if args.command == &quot;explain&quot; and not error:
 1200          payload[&quot;explanations&quot;] = {
 1201              rule_id: &quot;Applicable readiness or completion control.&quot;
 1202              for rule_id in payload[&quot;applicable_rule_ids&quot;]
 1203          }
-1204  
+1204&#32;&#32;
 1205      if args.json_output:
 1206          print(json.dumps(payload, indent=2, sort_keys=True))
 1207      else:
 1208          print(render_human(payload))
 1209      return exit_code
-1210  
-1211  
+1210&#32;&#32;
+1211&#32;&#32;
 1212  if __name__ == &quot;__main__&quot;:
 1213      sys.exit(main())
 </pre>

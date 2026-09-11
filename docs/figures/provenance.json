@@ -43,7 +43,7 @@
     },
     {
       "path": "docs/figures/degs-core-walkthrough.html",
-      "sha256": "dc1c0681c119177b98c484ab4eb654a8e872fcfacd5d0aa9ec0bdc66ef858e91"
+      "sha256": "d3cfaf3e31c77837872f09a943883f92e368ea0961daadd41194eda4dd1f9dbf"
     },
     {
       "path": "docs/figures/dobeworks-operating-architecture.html",
@@ -125,7 +125,7 @@
   "accessibility_limit": "Tagged and structurally checked; not certified PDF/UA. Reading with a specific screen reader was not tested.",
   "benchmark_scope": "Existing recorded results only; runtime suites not rerun for this documentation change.",
   "build": {
-    "renderer_sha256": "478e2b595f65d76fb6060f7b2cb6de8f105d4d5d7d77fa55adb1068829293d28",
+    "renderer_sha256": "f0a283225836d5042c3746c24906f015f42e7952e0fe17b96eb9ac6c6a4c57b8",
     "checker_sha256": "4edc19e54af79b952f23eba8f1de9430a6f3d24472bf66fa2786d8ca19b1349d",
     "method": "Local ReportLab authoring, pypdf tagging, Poppler render inspection; no external design service."
   }
