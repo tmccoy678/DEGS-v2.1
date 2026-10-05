@@ -52,6 +52,8 @@ The earlier run passed **64 tests**: 58 existing gate tests and 6 port tests. Th
 
 These results concern the recorded scenarios. They do not establish defect freedom, semantic truth, AI review accuracy, security certification, full-system integration, or support for other platforms. The copied core is identified in [the baseline manifest](provenance/degs-baseline.json). Local activation history, private audits, context-skill integration, and the Workbench adapter are excluded, along with tests requiring those dependencies. The policy rules remain unchanged. The comparator now distinguishes nested booleans from numbers; all 14 fixture CLI outputs remain identical. See the [correction record](docs/benchmark-correction.md) and [source identity](provenance/recursive-equality-correction.json).
 
+An independent source-code review by [Nova (Muse Spark, Meta), 2026-10-05](docs/reviews/2026-10-05-nova.md) re-ran the suite under pytest (Python 3.12): **72 passed, 264 subtests passed, 0 failed**. No code was changed; no defects found. One documentation note: the `PASS_WITH_WARNINGS` → exit 1 convention could be stated once in the module docstring.
+
 ## Purpose, credit, and help
 
 The goal is rigorous, understandable evidence with a clear explanation when something needs attention. Taylor welcomes questions, corrections, and suggestions and will respond as quickly as possible; no response-time guarantee is promised. Use this private repository's issues for non-sensitive questions. Follow [SECURITY.md](SECURITY.md) for vulnerability reports.

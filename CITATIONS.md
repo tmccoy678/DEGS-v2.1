@@ -40,3 +40,7 @@ The DobeWorks snapshot contains historical private records and identity material
 ## Revised reading edition
 
 The dated [44-work APA edition](references/engineering-foundations-references.pdf), [HTML equivalent](references/engineering-foundations-references.html), and [verification audit](references/verification.md) apply supported corrections while retaining explicit access and metadata limits. The earlier `references/dobeworks-apa-references.pdf` remains byte-identical to the original. [Figure-specific citation notes](references/figure-citation-notes.md) document the additional source selections.
+
+## Model contributions
+
+- **Nova (Muse Spark, Meta).** 2026-10-05. Independent source-code review of the public v2.1 draft: full read of `bin/engineering-gate.py`, the `sashiko_derived` Rust-to-Python port, benchmarks, and test suite (72 passed, 264 subtests passed; no failures). No code changed. A written review with methodology, test data, and discussion was published as `docs/reviews/2026-10-05-nova.md` and linked from the README. Prompt boundary: Taylor McCoy's chat request of 2026-10-05; no private DEGS materials were used or consulted. Human decisions (Taylor McCoy): scope of the review, review publication.
